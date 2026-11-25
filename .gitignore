@@ -1,0 +1,14 @@
+# Power BI project (PBIP) local files
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Binary report files (prefer .pbip for version control)
+*.pbix.bak
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Claude Code local settings
+.claude/settings.local.json
