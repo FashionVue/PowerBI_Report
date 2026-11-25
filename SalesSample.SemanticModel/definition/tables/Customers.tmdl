@@ -1,0 +1,68 @@
+/// Customer dimension imported from the Customers table in SalesSample.xlsx
+table Customers
+	lineageTag: a0831293-d7dd-4e31-bd3f-7d551031d15b
+
+	column CustomerID
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a8b79a4-2429-43be-9f28-0fbd980a33ad
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = User
+
+	column CustomerName
+		dataType: string
+		lineageTag: a1479568-3b52-48f5-9da7-f520b5f027f5
+		summarizeBy: none
+		sourceColumn: CustomerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 2d36ef5d-6824-4966-a717-f9d908bda8a7
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: d5b0ca4d-e07c-49ec-8f6c-84c4fc60552b
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		lineageTag: 415d3bd8-6402-45ab-a7cf-df92efea63d0
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column JoinDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 71be3e03-3e54-4367-adb8-be75c159d86f
+		summarizeBy: none
+		sourceColumn: JoinDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Customers = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
+					#"Customers Table" = Source{[Item="Customers",Kind="Table"]}[Data],
+					#"Set Column Types" = Table.TransformColumnTypes(#"Customers Table", {{"CustomerID", Int64.Type}, {"CustomerName", type text}, {"City", type text}, {"Region", type text}, {"Segment", type text}, {"JoinDate", type date}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,59 @@
+/// Product dimension imported from the Products table in SalesSample.xlsx
+table Products
+	lineageTag: f2de96cd-1f83-4054-bd07-c10fbb49d6bc
+
+	column ProductID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7060c3b5-5ea3-417b-b4d2-07e167896c5b
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = User
+
+	column ProductName
+		dataType: string
+		lineageTag: 753bc24a-5098-44d5-bd4d-be627d84ed90
+		summarizeBy: none
+		sourceColumn: ProductName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		lineageTag: 593dd49c-bc42-4ce7-ae20-b406ca49b9c9
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitCost
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 36d20dba-6d06-491a-ae99-eb0108c46332
+		summarizeBy: sum
+		sourceColumn: UnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+	column ListPrice
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 064c22d0-401b-420b-9991-d8fe2863f961
+		summarizeBy: sum
+		sourceColumn: ListPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Products = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
+					#"Products Table" = Source{[Item="Products",Kind="Table"]}[Data],
+					#"Set Column Types" = Table.TransformColumnTypes(#"Products Table", {{"ProductID", Int64.Type}, {"ProductName", type text}, {"Category", type text}, {"UnitCost", Currency.Type}, {"ListPrice", Currency.Type}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,12 @@
+relationship 687fbfc1-3d82-407a-86e4-e04766778589
+	fromColumn: Sales.CustomerID
+	toColumn: Customers.CustomerID
+
+relationship 6bfd1f3b-a7c9-48aa-891a-66d37dcd7448
+	fromColumn: Sales.ProductID
+	toColumn: Products.ProductID
+
+relationship 3dd07d0f-189e-41e4-ab0b-93656aeead93
+	fromColumn: Sales.OrderDate
+	toColumn: Date.Date
+

@@ -1,0 +1,110 @@
+/// Order lines imported from the Sales table in SalesSample.xlsx (one row per order)
+table Sales
+	lineageTag: 5d575466-5a9e-4bc5-b0cb-fe73edd1125a
+
+	column OrderID
+		dataType: int64
+		formatString: 0
+		lineageTag: 7aab5f15-8ca8-4064-8ba4-2da7664c800d
+		summarizeBy: none
+		sourceColumn: OrderID
+
+		annotation SummarizationSetBy = User
+
+	column OrderDate
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: cb67ac19-a323-40e0-8e26-440c9c01aedf
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CustomerID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8539ea56-6b38-4192-8db0-7ef9ac6378bc
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = User
+
+	column ProductID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 61480f2e-bdc2-4127-a21c-ba1ebd8b51ca
+		summarizeBy: none
+		sourceColumn: ProductID
+
+		annotation SummarizationSetBy = User
+
+	column Channel
+		dataType: string
+		lineageTag: 29831482-361a-415f-a46f-e58c83cb3db5
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: #,##0
+		lineageTag: d283f2c8-1426-457b-af3b-7870e323ff20
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 0a4a3734-3091-4c8e-a95a-d7c6f7f81bef
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount
+		dataType: double
+		formatString: 0%
+		lineageTag: e81fafd5-0f6a-485b-b678-8f695d7f0588
+		summarizeBy: sum
+		sourceColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesAmount
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: 2f83537d-6041-4540-996d-162b2eb6f86b
+		summarizeBy: sum
+		sourceColumn: SalesAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column CostAmount
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: f20dfd91-46d9-4e0c-9370-e368ce08671d
+		summarizeBy: sum
+		sourceColumn: CostAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
+					#"Sales Table" = Source{[Item="Sales",Kind="Table"]}[Data],
+					#"Set Column Types" = Table.TransformColumnTypes(#"Sales Table", {{"OrderID", Int64.Type}, {"OrderDate", type date}, {"CustomerID", Int64.Type}, {"ProductID", Int64.Type}, {"Channel", type text}, {"Quantity", Int64.Type}, {"UnitPrice", Currency.Type}, {"Discount", type number}, {"SalesAmount", Currency.Type}, {"CostAmount", Currency.Type}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

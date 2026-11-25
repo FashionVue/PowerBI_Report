@@ -1,0 +1,80 @@
+/// Calendar table generated in Power Query (2024-01-01 to 2025-12-31), marked as the date table
+table Date
+	lineageTag: e65ada00-62d4-439b-a2cd-81c45148fdd2
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		lineageTag: e4bc2388-52ff-4a65-8cdd-fd43d03c5c03
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: c9ae6c01-550f-4c3e-8b3b-4f0d119f15d9
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = User
+
+	column 'Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 502d200c-1083-4a12-b6a3-f5cdcf7136f4
+		summarizeBy: none
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = User
+
+	column Month
+		dataType: string
+		lineageTag: 71a8d610-55dd-44f0-b528-4bf9910af3bb
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: 'Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year-Month
+		dataType: string
+		lineageTag: 621aa909-d88e-48e8-b05f-6e7258e27d8a
+		summarizeBy: none
+		sourceColumn: Year-Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 351a20ca-4f33-4891-989a-d0ec5f7c2177
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = m
+		mode: import
+		source =
+				let
+					StartDate = #date(2024, 1, 1),
+					EndDate = #date(2025, 12, 31),
+					#"Date List" = List.Dates(StartDate, Duration.Days(EndDate - StartDate) + 1, #duration(1, 0, 0, 0)),
+					#"Date Table" = Table.FromList(#"Date List", Splitter.SplitByNothing(), {"Date"}),
+					#"Added Year" = Table.AddColumn(#"Date Table", "Year", each Date.Year([Date])),
+					#"Added Month Number" = Table.AddColumn(#"Added Year", "Month Number", each Date.Month([Date])),
+					#"Added Month" = Table.AddColumn(#"Added Month Number", "Month", each Date.ToText([Date], "MMM", "en-US")),
+					#"Added Year-Month" = Table.AddColumn(#"Added Month", "Year-Month", each Text.From(Date.Year([Date])) & "-" & Text.PadStart(Text.From(Date.Month([Date])), 2, "0")),
+					#"Added Quarter" = Table.AddColumn(#"Added Year-Month", "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date]))),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Quarter", {{"Date", type date}, {"Year", Int64.Type}, {"Month Number", Int64.Type}, {"Month", type text}, {"Year-Month", type text}, {"Quarter", type text}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

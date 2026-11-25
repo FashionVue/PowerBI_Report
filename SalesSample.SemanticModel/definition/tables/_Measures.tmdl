@@ -1,0 +1,82 @@
+/// Holds the report measures; its only column is a hidden placeholder
+table _Measures
+	lineageTag: 406c5d78-e162-443e-93cf-12ac15138ca7
+
+	/// Sum of Sales[SalesAmount] (after discount).
+	measure 'Total Sales' = SUM ( Sales[SalesAmount] )
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: 0e889259-9b66-42ef-8946-16f7426cbb9c
+
+	/// Sum of Sales[CostAmount].
+	measure 'Total Cost' = SUM ( Sales[CostAmount] )
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: 36d47e0f-34ec-41da-8e2d-78565eca879d
+
+	/// Total Sales minus Total Cost.
+	measure 'Gross Margin' =
+			VAR _Sales = [Total Sales]
+			VAR _Cost = [Total Cost]
+			RETURN
+			    _Sales - _Cost
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: 1c1efe1a-48a0-4941-9304-f3491ff77c90
+
+	/// Gross Margin as a share of Total Sales; blank when there are no sales.
+	measure 'Margin %' = DIVIDE ( [Gross Margin], [Total Sales] )
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: 89f09a49-155f-46e1-8cf7-8a3ba5786315
+
+	/// Number of distinct orders (Sales[OrderID]).
+	measure 'Total Orders' = DISTINCTCOUNT ( Sales[OrderID] )
+		formatString: #,##0
+		displayFolder: Volume
+		lineageTag: e12fc27d-0432-4dc2-b795-066cd6ee0d86
+
+	/// Sum of units sold (Sales[Quantity]).
+	measure 'Total Quantity' = SUM ( Sales[Quantity] )
+		formatString: #,##0
+		displayFolder: Volume
+		lineageTag: 4b58caef-a57f-450c-beac-d8afcf9a3260
+
+	/// Total Sales for the same period one year earlier (uses the marked Date table).
+	measure 'Sales PY' = CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+		formatString: #,##0
+		displayFolder: Time Intelligence
+		lineageTag: 1bbc3012-a7b5-4941-9611-bfd8067c6f3b
+
+	/// Growth of Total Sales versus Sales PY. Returns blank unless exactly one year is in context, because a multi-year total would compare against only part of the previous period.
+	measure 'Sales YoY %' =
+			VAR _CurrentSales = [Total Sales]
+			VAR _PreviousSales = [Sales PY]
+			RETURN
+			    IF (
+			        HASONEVALUE ( 'Date'[Year] ),
+			        DIVIDE ( _CurrentSales - _PreviousSales, _PreviousSales )
+			    )
+		formatString: 0.0%
+		displayFolder: Time Intelligence
+		lineageTag: 0609cf90-bcc8-4f24-94cd-84dd8bdb3e4b
+
+	column Column1
+		dataType: string
+		isHidden
+		lineageTag: 5d2c7a74-7447-49b3-a135-96eb0d9e7f2e
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+					Source = #table(type table [Column1 = text], {})
+				in
+					Source
+
+	annotation PBI_ResultType = Table
+
