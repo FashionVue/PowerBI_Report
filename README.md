@@ -66,6 +66,27 @@ claude
 
 الأوامر المختصرة: `/dax-measure` ، `/model-review` ، `/power-query` ، `/model-docs`
 
+## تجربة سريعة بملف الإكسل التجريبي
+
+في `data/SalesSample.xlsx` بيانات مبيعات وهمية لمتجر أزياء (2024–2025)، فيها 3 جداول: `Sales` (فيه 3,106 طلب)، و`Products`، و`Customers`. والسكربت الذي ولّدها موجود في `data/make_sample.py`.
+
+1. في Power BI Desktop اختر: **Get data ← Excel workbook**، ثم اختر الملف وحدد الجداول الثلاثة (Sales و Products و Customers) واضغط **Load**.
+2. شغّل `claude` من مجلد المستودع واكتب الطلبات التالية واحداً بعد الآخر:
+   - «اتصل بالملف المفتوح في Power BI Desktop وابنِ نموذج Star Schema: علاقات Sales مع Products و Customers وجدول تاريخ مُعلَّم»
+   - «اعمل مقاييس Total Sales و Total Cost و Margin % و Sales YoY %»
+   - «اعرض المبيعات حسب السنة، والمبيعات حسب الفئة لسنة 2025»
+   - `/model-review`
+3. قارن نتائج الـ agent بهذه الأرقام الصحيحة (حسبتها مباشرة من ملف الإكسل):
+
+| المقياس | القيمة الصحيحة |
+|---|---|
+| Total Sales 2024 | 734,612 |
+| Total Sales 2025 | 1,004,890 |
+| Sales YoY % (2025) | 36.8% |
+| Margin % (لكل سنة) | 60.1% |
+| مبيعات 2025 حسب الفئة | Dresses 316,286 · Abayas 277,509 · Thobes 145,087 · Accessories 143,704 · Shoes 122,304 |
+| مبيعات 2025 حسب القناة | App 369,412 · Website 332,907 · Store 302,571 |
+
 ## طرق وصول الـ agent إلى التقرير
 
 1. **مباشرة إلى Power BI Desktop المفتوح** عبر خادم MCP: يقرأ النموذج ويعدّله ويشغّل استعلامات DAX للتحقق من النتائج. التعديلات تظهر فوراً في Desktop.
