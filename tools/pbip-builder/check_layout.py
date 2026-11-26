@@ -3,7 +3,7 @@
 import json, sys
 L = json.load(open(sys.argv[1])); bad = 0
 for p in L["pages"]:
-    vs = p["visuals"]; boxes = p["panels"] + p["tiles"] + p.get("controls", [])
+    vs = p["visuals"]; boxes = p["panels"] + p["tiles"] + p.get("controls", []) + [b for b in (p.get("extra") or {}).values() if isinstance(b, dict) and "w" in b]
     for i, a in enumerate(vs):
         for b in vs[i + 1:]:
             if a["x"] < b["x"] + b["w"] and b["x"] < a["x"] + a["w"] and a["y"] < b["y"] + b["h"] and b["y"] < a["y"] + a["h"]:

@@ -1,0 +1,93 @@
+/// Customers (individuals, companies, government).
+table Customers
+	lineageTag: 265d4aab-bba4-5a11-857c-3bbd25e42258
+
+	column CustomerID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3c0a4879-2e9d-5c2c-a18c-f41f15058f41
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerName
+		dataType: string
+		lineageTag: e800dc46-15e8-5b43-a6fa-e2d73a482328
+		summarizeBy: none
+		sourceColumn: CustomerName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: ee96ec45-eafa-534d-ba5f-ce92d6a86b39
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeGroup
+		dataType: string
+		lineageTag: 6762993e-e3b7-5232-9455-a1bf4e034738
+		summarizeBy: none
+		sourceColumn: AgeGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nationality
+		dataType: string
+		lineageTag: 75c96b2d-4757-5058-aad5-896b907ed831
+		summarizeBy: none
+		sourceColumn: Nationality
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 2a8a9125-4fce-5c33-8318-1c239b72f9ac
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 02986381-e740-5a9f-876c-2bce2b6e4e9d
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerType
+		dataType: string
+		lineageTag: c9f3e408-4064-5563-a790-ebced7ae8b73
+		summarizeBy: none
+		sourceColumn: CustomerType
+
+		annotation SummarizationSetBy = Automatic
+
+	column JoinDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 6b1afe9f-4b7e-5eb0-97a3-efa7d8290040
+		summarizeBy: none
+		sourceColumn: JoinDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Customers = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "VehicleSales.xlsx"), null, true),
+					#"Customers Table" = Source{[Item="Customers",Kind="Table"]}[Data],
+					#"Set Column Types" = Table.TransformColumnTypes(#"Customers Table", {{"CustomerID", Int64.Type}, {"CustomerName", type text}, {"Gender", type text}, {"AgeGroup", type text}, {"Nationality", type text}, {"City", type text}, {"Region", type text}, {"CustomerType", type text}, {"JoinDate", type date}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,91 @@
+/// Sales leads and test drives (funnel).
+table Leads
+	lineageTag: 2f407b34-8bf8-5e40-9358-71e2c3bc85f3
+
+	column LeadID
+		dataType: int64
+		formatString: 0
+		lineageTag: d35efd9b-a919-58e7-a80e-e90377d4f155
+		summarizeBy: none
+		sourceColumn: LeadID
+
+		annotation SummarizationSetBy = Automatic
+
+	column LeadDate
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 0a3a4948-6c7c-5947-af36-aa4018dc7bc0
+		summarizeBy: none
+		sourceColumn: LeadDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Source
+		dataType: string
+		lineageTag: 1d9afdc7-be81-5996-ad4a-84602319069f
+		summarizeBy: none
+		sourceColumn: Source
+
+		annotation SummarizationSetBy = Automatic
+
+	column BranchID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 1a01add7-7bac-5ca1-947c-ce0e55bb367d
+		summarizeBy: none
+		sourceColumn: BranchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column VehicleID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8bc198af-9a8b-5408-97ee-9cd4fe87f74d
+		summarizeBy: none
+		sourceColumn: VehicleID
+
+		annotation SummarizationSetBy = Automatic
+
+	column TestDrive
+		dataType: boolean
+		lineageTag: ee16e993-7472-57e0-9963-76863a5e1a15
+		summarizeBy: none
+		sourceColumn: TestDrive
+
+		annotation SummarizationSetBy = Automatic
+
+	column Converted
+		dataType: boolean
+		lineageTag: 2ce1db53-05b6-520b-83f4-715e24b19ea1
+		summarizeBy: none
+		sourceColumn: Converted
+
+		annotation SummarizationSetBy = Automatic
+
+	column DealID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0561026e-b45f-5349-908b-bd50000ec524
+		summarizeBy: none
+		sourceColumn: DealID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Leads = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "VehicleSales.xlsx"), null, true),
+					#"Leads Table" = Source{[Item="Leads",Kind="Table"]}[Data],
+					#"Set Column Types" = Table.TransformColumnTypes(#"Leads Table", {{"LeadID", Int64.Type}, {"LeadDate", type date}, {"Source", type text}, {"BranchID", Int64.Type}, {"VehicleID", Int64.Type}, {"TestDrive", type logical}, {"Converted", type logical}, {"DealID", Int64.Type}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

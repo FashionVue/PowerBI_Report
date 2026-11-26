@@ -1,0 +1,6 @@
+/// Folder that contains VehicleSales.xlsx (must end with a backslash)
+expression DataFolder = "C:\PowerBI_Report\data\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 0bfb5f1e-b89e-58b3-b91f-9ba8b65d1947
+
+	annotation PBI_ResultType = Text
+

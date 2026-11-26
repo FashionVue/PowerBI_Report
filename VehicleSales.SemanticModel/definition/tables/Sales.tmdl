@@ -1,0 +1,250 @@
+/// Vehicle deals (one row per vehicle sold), 2023-2025.
+table Sales
+	lineageTag: 93ff4dd1-3f5f-5841-87cd-2e64c7ca473a
+
+	column DealID
+		dataType: int64
+		formatString: 0
+		lineageTag: b18bd883-9b43-5d45-8eb5-64086ed36acd
+		summarizeBy: none
+		sourceColumn: DealID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DealDate
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: da9c08ef-1672-5770-8c0c-ea0b7d4e08eb
+		summarizeBy: none
+		sourceColumn: DealDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column BranchID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e93263d5-3608-5a3f-85d3-77e8d1088741
+		summarizeBy: none
+		sourceColumn: BranchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 079421bb-da15-5628-9f6e-059a412226e2
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 093aa5d9-bc76-5580-8c74-91f3e8f6f46d
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column VehicleID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6c6bd14b-6dba-51b0-be91-08de6ca26bcc
+		summarizeBy: none
+		sourceColumn: VehicleID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Condition
+		dataType: string
+		lineageTag: 4cce5854-e1ef-5a80-b8bf-bad75ef7deb6
+		summarizeBy: none
+		sourceColumn: Condition
+
+		annotation SummarizationSetBy = Automatic
+
+	column ListPrice
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 130768d1-dfe2-5cb8-a560-8c34f938dfa5
+		summarizeBy: sum
+		sourceColumn: ListPrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiscountAmount
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 307b9766-46d7-59af-b90f-b9bb8590331a
+		summarizeBy: sum
+		sourceColumn: DiscountAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalePrice
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 0e3fe160-7276-559e-9cc8-49f5611e5106
+		summarizeBy: sum
+		sourceColumn: SalePrice
+
+		annotation SummarizationSetBy = Automatic
+
+	column VehicleCost
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 765f1bb9-445a-550e-97b4-e724b74353fd
+		summarizeBy: sum
+		sourceColumn: VehicleCost
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentType
+		dataType: string
+		lineageTag: 80f66fcc-e8d2-54eb-be68-e1cc6dd96e84
+		summarizeBy: none
+		sourceColumn: PaymentType
+
+		annotation SummarizationSetBy = Automatic
+
+	column FinancePartner
+		dataType: string
+		lineageTag: 9b4b03e0-2ea5-54ad-b474-abdf89cfbd79
+		summarizeBy: none
+		sourceColumn: FinancePartner
+
+		annotation SummarizationSetBy = Automatic
+
+	column DownPayment
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 90f553a8-12b2-5bec-bacd-7cc6af85a9c9
+		summarizeBy: sum
+		sourceColumn: DownPayment
+
+		annotation SummarizationSetBy = Automatic
+
+	column TermMonths
+		dataType: int64
+		formatString: 0
+		lineageTag: cd92735d-432b-5019-b52a-485b3c3b9a85
+		summarizeBy: none
+		sourceColumn: TermMonths
+
+		annotation SummarizationSetBy = Automatic
+
+	column FinanceCommission
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: ddf9cedb-92ad-5f78-8cc6-4768d059f788
+		summarizeBy: sum
+		sourceColumn: FinanceCommission
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddOnRevenue
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 260d2912-6ece-5171-be2a-81f2aa0cafbc
+		summarizeBy: sum
+		sourceColumn: AddOnRevenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column AddOnCost
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 92722624-6bd8-5d51-88ec-fe1e7ed51e11
+		summarizeBy: sum
+		sourceColumn: AddOnCost
+
+		annotation SummarizationSetBy = Automatic
+
+	column TradeIn
+		dataType: boolean
+		lineageTag: 70f877c4-8889-5db8-b205-68ca68903907
+		summarizeBy: none
+		sourceColumn: TradeIn
+
+		annotation SummarizationSetBy = Automatic
+
+	column TradeInValue
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: a7c19ebc-6f74-55d6-9bc9-a996ccf59d12
+		summarizeBy: sum
+		sourceColumn: TradeInValue
+
+		annotation SummarizationSetBy = Automatic
+
+	column DaysInStock
+		dataType: int64
+		formatString: 0
+		lineageTag: b593d0a5-7a24-5346-95c1-b3ea7a3739d1
+		summarizeBy: none
+		sourceColumn: DaysInStock
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stock Age Band'
+		dataType: string
+		lineageTag: 10a50afc-7b9a-5b70-a135-cdda13eee826
+		summarizeBy: none
+		sourceColumn: Stock Age Band
+		sortByColumn: 'Stock Age Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stock Age Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bb0791be-11f7-59ea-abdd-41ac275b6db4
+		summarizeBy: none
+		sourceColumn: Stock Age Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price Band'
+		dataType: string
+		lineageTag: 0e9029e4-6c73-532b-a01c-462ef6a2a944
+		summarizeBy: none
+		sourceColumn: Price Band
+		sortByColumn: 'Price Band Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price Band Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: eb934018-8fdd-5db0-a9d8-882d1bca4018
+		summarizeBy: none
+		sourceColumn: Price Band Order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "VehicleSales.xlsx"), null, true),
+					#"Sales Table" = Source{[Item="Sales",Kind="Table"]}[Data],
+					#"Added Stock Age Band" = Table.AddColumn(#"Sales Table", "Stock Age Band", each if [DaysInStock] <= 30 then "حتى 30 يوماً" else if [DaysInStock] <= 60 then "31-60 يوماً" else if [DaysInStock] <= 90 then "61-90 يوماً" else "أكثر من 90 يوماً"),
+					#"Added Stock Age Order" = Table.AddColumn(#"Added Stock Age Band", "Stock Age Order", each if [DaysInStock] <= 30 then 1 else if [DaysInStock] <= 60 then 2 else if [DaysInStock] <= 90 then 3 else 4),
+					#"Added Price Band" = Table.AddColumn(#"Added Stock Age Order", "Price Band", each if [SalePrice] < 75000 then "أقل من 75 ألف" else if [SalePrice] < 150000 then "75-150 ألف" else if [SalePrice] < 300000 then "150-300 ألف" else "أكثر من 300 ألف"),
+					#"Added Price Band Order" = Table.AddColumn(#"Added Price Band", "Price Band Order", each if [SalePrice] < 75000 then 1 else if [SalePrice] < 150000 then 2 else if [SalePrice] < 300000 then 3 else 4),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Price Band Order", {{"DealID", Int64.Type}, {"DealDate", type date}, {"BranchID", Int64.Type}, {"EmployeeID", Int64.Type}, {"CustomerID", Int64.Type}, {"VehicleID", Int64.Type}, {"Condition", type text}, {"ListPrice", Currency.Type}, {"DiscountAmount", Currency.Type}, {"SalePrice", Currency.Type}, {"VehicleCost", Currency.Type}, {"PaymentType", type text}, {"FinancePartner", type text}, {"DownPayment", Currency.Type}, {"TermMonths", Int64.Type}, {"FinanceCommission", Currency.Type}, {"AddOnRevenue", Currency.Type}, {"AddOnCost", Currency.Type}, {"TradeIn", type logical}, {"TradeInValue", Currency.Type}, {"DaysInStock", Int64.Type}, {"Stock Age Band", type text}, {"Stock Age Order", Int64.Type}, {"Price Band", type text}, {"Price Band Order", Int64.Type}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

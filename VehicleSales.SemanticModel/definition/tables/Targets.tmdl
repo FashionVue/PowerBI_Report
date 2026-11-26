@@ -1,0 +1,67 @@
+/// Monthly revenue and unit targets by showroom and segment (first day of the month).
+table Targets
+	lineageTag: 11d3fb36-f140-504e-995b-5364606a4da9
+
+	column Month
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: db805c1c-d111-5d44-bf44-3dce337bae38
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column BranchID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 865efacd-3fe6-5d4f-9fc7-b2682df42057
+		summarizeBy: none
+		sourceColumn: BranchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		isHidden
+		lineageTag: 83aa4d97-378b-535f-bdee-c2f932c06691
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column RevenueTarget
+		dataType: decimal
+		isHidden
+		formatString: #,##0
+		lineageTag: ef55549c-80a8-50a8-aaa8-adc404e7b14f
+		summarizeBy: sum
+		sourceColumn: RevenueTarget
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitsTarget
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c3f5c040-41d3-582b-9299-290195a862fe
+		summarizeBy: sum
+		sourceColumn: UnitsTarget
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Targets = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "VehicleSales.xlsx"), null, true),
+					#"Targets Table" = Source{[Item="Targets",Kind="Table"]}[Data],
+					#"Set Column Types" = Table.TransformColumnTypes(#"Targets Table", {{"Month", type date}, {"BranchID", Int64.Type}, {"Segment", type text}, {"RevenueTarget", Currency.Type}, {"UnitsTarget", Int64.Type}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

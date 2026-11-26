@@ -1,0 +1,25 @@
+/// Vehicle segment dimension shared by Vehicles and Targets.
+table Segment
+	lineageTag: a21e14c2-e524-5769-aa24-d63a365a94f7
+
+	column Segment
+		dataType: string
+		lineageTag: 64a6b86e-9ad3-520c-a6a9-b95b46477b4c
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Segment = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "VehicleSales.xlsx"), null, true),
+					#"Targets Table" = Source{[Item="Targets",Kind="Table"]}[Data],
+					#"Kept Segment" = Table.Distinct(Table.SelectColumns(#"Targets Table", {"Segment"})),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Kept Segment", {{"Segment", type text}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

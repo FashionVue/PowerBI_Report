@@ -19,7 +19,8 @@ def retrieve(uri):
 
 
 registry = Registry(retrieve=retrieve)
-files = [p for p in glob.glob(os.path.join(ROOT, "SalesSample*"), recursive=False)]
+PREFIX_NAME = sys.argv[3] if len(sys.argv) > 3 else "SalesSample"
+files = [p for p in glob.glob(os.path.join(ROOT, PREFIX_NAME + "*"), recursive=False)]
 targets = []
 for base in files:
     if os.path.isfile(base):

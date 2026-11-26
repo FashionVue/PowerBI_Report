@@ -1,0 +1,124 @@
+/// Calendar 2023-2025 with Arabic month and day names (week starts Sunday; Friday/Saturday weekend), marked as the date table.
+table Date
+	lineageTag: 458fef9d-1108-5016-96ee-1f924372cf8b
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: Short Date
+		lineageTag: da7c5c1f-0207-57b0-86e4-bbb0c224d715
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 303c5c0c-d8ab-5b52-94eb-c5f41e4c0928
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter
+		dataType: string
+		lineageTag: 742f0b13-3812-5ada-ac15-6c6fa9f87d44
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 79d30759-e8fa-545a-bbe8-f24c485a7522
+		summarizeBy: none
+		sourceColumn: Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: a50195c0-bc3a-58f0-a6bd-243c2a639641
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: 'Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Year Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d1526104-d327-54e3-936e-ced1d9c0f91f
+		summarizeBy: none
+		sourceColumn: Year Month Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Year'
+		dataType: string
+		lineageTag: 070b12dd-8e9c-53c9-95a0-33e8d07d4189
+		summarizeBy: none
+		sourceColumn: Month Year
+		sortByColumn: 'Year Month Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day of Week Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2e145ce9-be69-5c3e-b06f-532229b49253
+		summarizeBy: none
+		sourceColumn: Day of Week Number
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Day Name'
+		dataType: string
+		lineageTag: a28e1f79-e7bc-57e3-911d-d57941a7a479
+		summarizeBy: none
+		sourceColumn: Day Name
+		sortByColumn: 'Day of Week Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Weekend'
+		dataType: boolean
+		lineageTag: a43be60c-01f6-509c-8573-7c984ec8000f
+		summarizeBy: none
+		sourceColumn: Is Weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Date = m
+		mode: import
+		source =
+				let
+					StartDate = #date(2023, 1, 1),
+					EndDate = #date(2025, 12, 31),
+					ArabicMonths = {"يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"},
+					ArabicDays = {"الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"},
+					#"Date List" = List.Dates(StartDate, Duration.Days(EndDate - StartDate) + 1, #duration(1, 0, 0, 0)),
+					#"Date Table" = Table.FromList(#"Date List", Splitter.SplitByNothing(), {"Date"}),
+					#"Added Year" = Table.AddColumn(#"Date Table", "Year", each Date.Year([Date])),
+					#"Added Quarter" = Table.AddColumn(#"Added Year", "Quarter", each "الربع " & Text.From(Date.QuarterOfYear([Date]))),
+					#"Added Month Number" = Table.AddColumn(#"Added Quarter", "Month Number", each Date.Month([Date])),
+					#"Added Month" = Table.AddColumn(#"Added Month Number", "Month", each ArabicMonths{Date.Month([Date]) - 1}),
+					#"Added Year Month Number" = Table.AddColumn(#"Added Month", "Year Month Number", each Date.Year([Date]) * 100 + Date.Month([Date])),
+					#"Added Month Year" = Table.AddColumn(#"Added Year Month Number", "Month Year", each ArabicMonths{Date.Month([Date]) - 1} & " " & Text.From(Date.Year([Date]))),
+					#"Added Day of Week Number" = Table.AddColumn(#"Added Month Year", "Day of Week Number", each Date.DayOfWeek([Date], Day.Sunday) + 1),
+					#"Added Day Name" = Table.AddColumn(#"Added Day of Week Number", "Day Name", each ArabicDays{Date.DayOfWeek([Date], Day.Sunday)}),
+					#"Added Is Weekend" = Table.AddColumn(#"Added Day Name", "Is Weekend", each Date.DayOfWeek([Date], Day.Sunday) >= 5),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Is Weekend", {{"Date", type date}, {"Year", Int64.Type}, {"Quarter", type text}, {"Month Number", Int64.Type}, {"Month", type text}, {"Year Month Number", Int64.Type}, {"Month Year", type text}, {"Day of Week Number", Int64.Type}, {"Day Name", type text}, {"Is Weekend", type logical}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

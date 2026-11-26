@@ -5,7 +5,7 @@ description: Design and build executive-grade Power BI reports in PBIR (PBIP) as
 
 # Power BI report design (PBIR)
 
-The tooling lives in `tools/pbip-builder/` (README there). Run `setup.sh` once, then `build.sh`; look at the previews in `tools/pbip-builder/.cache/previews/` before handing anything over.
+The tooling lives in `tools/pbip-builder/` (README there). Run `setup.sh` once, then `build.sh <project>` (e.g. `salessample`, `vehicles`); look at the previews in `tools/pbip-builder/.cache/previews/` before handing anything over.
 
 ## Design system
 
@@ -47,3 +47,38 @@ The tooling lives in `tools/pbip-builder/` (README there). Run `setup.sh` once, 
 - The schemas don't validate formatting expressions (measure-driven colours, data bars, images); confirm those visually in Desktop.
 - Desktop needs Ctrl+click on buttons while editing; reading view doesn't.
 - Never edit files while the project is open in Desktop; never commit `.pbi/localSettings.json` or `.pbi/cache.abf`.
+
+## Arabic and right-to-left reports (learned on VehicleSales)
+
+Template: `tools/pbip-builder/projects/vehicles/` (`build.sh vehicles`).
+
+- **Names:** keep TMDL object names in English. Everything the reader sees is Arabic:
+  - Arabic data values.
+  - Arabic month and day names in Date (with Month Number / Day of Week Number sort columns).
+  - `displayName` on every projection (axis, legend and column titles).
+  - Arabic DAX text for labels, insights and recommendations.
+  - Western digits, with units written as "مليون"/"ألف" by label measures.
+- **Mirrored layout:**
+  - Nav rail on the right (x 1824–1920); content x=40 to 1792. Use a right-anchored grid helper `rx(col_from_right, span)`.
+  - The most important KPI sits on the right, and the title is right-aligned.
+  - Header controls go on the left: mode, year, branch, comparison.
+- **Charts in RTL:**
+  - Horizontal bars: set `valueAxis.invertAxis true` and `categoryAxis.switchAxisPosition true`, so categories sit on the right and bars grow to the left (both properties are in the schema).
+  - Time axes stay left-to-right.
+  - Tables are laid out left-to-right, so list projections in reverse order (name column ends up rightmost), set `columnFormatting.alignment 'Right'` on the name column and `columnHeaders.alignment 'Right'`, and use `dataBars.reverseDirection true`.
+- **Font (Tajawal):**
+  - Take the TTFs from the npm package `@expo-google-fonts/tajawal` (OFL font, MIT wrapper).
+  - Ship Regular/Medium/Bold/ExtraBold plus `OFL.txt` in `fonts/` next to the `.pbip`, and tell users to install them for all users before opening.
+  - Theme: `textClasses.fontFace` and every visual-style `fontFamily` set to "Tajawal". Don't use comma lists in the theme (the format is strict). Card labels also get a visual-level literal `'Tajawal'`.
+  - Desktop falls back silently if the font isn't installed. The Power BI Service shows a fallback font unless the viewer has it installed.
+- **Arabic in the backgrounds:**
+  - Install the TTFs into `~/.fonts` and run `fc-cache`.
+  - In SVG use `direction="rtl"` with `text-anchor="start"` for right-aligned text.
+  - Chromium shapes Arabic correctly. Numeric ranges such as "2023-2025" display as 2025-2023 inside an RTL run, which reads correctly (2023 first) for Arabic readers.
+  - Verify every page visually.
+- **Cover and conclusion pages:**
+  - Cover: a hero block (title, company, period chip, purpose statement, 4 all-years headline cards from measures with `REMOVEFILTERS('Date')`) and a table of contents whose rows are PageNavigation buttons.
+  - Conclusion: dynamic findings (insight measures), numbered recommendations (measures with numbers in the text), static next steps drawn in the background, and a back-to-cover button.
+  - They are first and last in `pageOrder`.
+- **Identity:** a new brand needs new palettes validated in both modes (`validate_palette.js --pairs all`). Shapes drive the feel too: an angled corner cut, small radii, speed-line motifs and a blueprint grid read "automotive"; large radii and soft glows read "luxury fashion".
+- **Insight panels:** the lead-in and bulb icon (or a number for recommendations) go on the right. With the classic card the text is centred; give each sentence at least 58px.

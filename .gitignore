@@ -18,3 +18,4 @@ tools/pbip-builder/.cache/
 tools/pbip-builder/mparse/node_modules/
 tools/pbip-builder/tmdlcheck/bin/
 tools/pbip-builder/tmdlcheck/obj/
+tools/pbip-builder/**/__pycache__/

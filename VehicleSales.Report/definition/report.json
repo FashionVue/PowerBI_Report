@@ -1,0 +1,136 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/2.0.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY24SU10",
+      "reportVersionAtImport": "5.61",
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "MasarHorizon.json",
+      "reportVersionAtImport": "5.65",
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "visible": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY24SU10",
+          "path": "BaseThemes/CY24SU10.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "MasarHorizon.json",
+          "path": "MasarHorizon.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "bg-cover-dark.jpg",
+          "path": "bg-cover-dark.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-exec-dark.jpg",
+          "path": "bg-exec-dark.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-sales-dark.jpg",
+          "path": "bg-sales-dark.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-stock-dark.jpg",
+          "path": "bg-stock-dark.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-customers-dark.jpg",
+          "path": "bg-customers-dark.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-service-dark.jpg",
+          "path": "bg-service-dark.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-conclusion-dark.jpg",
+          "path": "bg-conclusion-dark.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-cover-light.jpg",
+          "path": "bg-cover-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-exec-light.jpg",
+          "path": "bg-exec-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-sales-light.jpg",
+          "path": "bg-sales-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-stock-light.jpg",
+          "path": "bg-stock-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-customers-light.jpg",
+          "path": "bg-customers-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-service-light.jpg",
+          "path": "bg-service-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-conclusion-light.jpg",
+          "path": "bg-conclusion-light.jpg",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true
+  }
+}

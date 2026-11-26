@@ -1,0 +1,68 @@
+relationship 76daaa7a-431e-568d-bd48-1c3c75b08981
+	fromColumn: Sales.DealDate
+	toColumn: Date.Date
+
+relationship e5598f2e-142a-5e75-a35a-ad2b42f8d1f6
+	fromColumn: Sales.BranchID
+	toColumn: Branches.BranchID
+
+relationship 4d21e562-e999-5da5-bc62-9f241492a5b2
+	fromColumn: Sales.EmployeeID
+	toColumn: Employees.EmployeeID
+
+relationship b331ffc0-43c7-5cf9-93ad-3cfae2b751a9
+	fromColumn: Sales.CustomerID
+	toColumn: Customers.CustomerID
+
+relationship cc6918eb-d84a-5fd6-8501-056b0f9d4186
+	fromColumn: Sales.VehicleID
+	toColumn: Vehicles.VehicleID
+
+relationship 29537b4a-5ccc-534e-9003-e01d71ffae6e
+	fromColumn: Leads.LeadDate
+	toColumn: Date.Date
+
+relationship f533a84e-039a-5ae6-bcc7-cab7cbcb5d67
+	fromColumn: Leads.BranchID
+	toColumn: Branches.BranchID
+
+relationship 21bcb7c1-9f52-5ae4-8a42-6cb3708d06f9
+	fromColumn: Leads.VehicleID
+	toColumn: Vehicles.VehicleID
+
+relationship 6f27741f-0e10-58be-9522-cf3529f53df2
+	fromColumn: Service.VisitDate
+	toColumn: Date.Date
+
+relationship c47e04ed-c8f7-548f-89f1-861748408ff0
+	fromColumn: Service.BranchID
+	toColumn: Branches.BranchID
+
+relationship 677d1c78-9420-505e-893c-60bd20a2a5ef
+	fromColumn: Service.EmployeeID
+	toColumn: Employees.EmployeeID
+
+relationship fc949951-b7b5-5fa7-bde3-212bf06fca7e
+	fromColumn: Service.CustomerID
+	toColumn: Customers.CustomerID
+
+relationship b200c57b-61b3-5f88-8301-d27b841cdc43
+	fromColumn: Service.VehicleID
+	toColumn: Vehicles.VehicleID
+
+relationship 723dbc04-993d-569b-a3d0-9e78de66bc37
+	fromColumn: Vehicles.Segment
+	toColumn: Segment.Segment
+
+relationship fd442092-0608-5d8a-8d68-b17a25fa8e4f
+	fromColumn: Targets.Month
+	toColumn: Date.Date
+
+relationship f8c9af6d-5729-58da-87e2-d05f579bb306
+	fromColumn: Targets.BranchID
+	toColumn: Branches.BranchID
+
+relationship 678125fe-2ceb-599c-934e-8a8ee1e321fb
+	fromColumn: Targets.Segment
+	toColumn: Segment.Segment
+

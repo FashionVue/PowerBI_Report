@@ -1,0 +1,159 @@
+/// After-sales service visits.
+table Service
+	lineageTag: e4996665-d96c-5e85-8f5e-a52b55e67c8b
+
+	column VisitID
+		dataType: int64
+		formatString: 0
+		lineageTag: 923cd0fc-36f5-5026-9786-840b9e817c9a
+		summarizeBy: none
+		sourceColumn: VisitID
+
+		annotation SummarizationSetBy = Automatic
+
+	column VisitDate
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: c76eaca0-817b-5651-b996-cda929f47d17
+		summarizeBy: none
+		sourceColumn: VisitDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column BranchID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bda22d7f-fbbd-52ca-9305-3f4f662b8d0a
+		summarizeBy: none
+		sourceColumn: BranchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0fa98156-b01a-523c-bc2c-4628a4d6ef7c
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 69b18eee-d383-5272-a010-61a6d1aa420c
+		summarizeBy: none
+		sourceColumn: CustomerID
+
+		annotation SummarizationSetBy = Automatic
+
+	column VehicleID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7fd17c17-1b79-58ce-bb82-06c809cefbc9
+		summarizeBy: none
+		sourceColumn: VehicleID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ServiceType
+		dataType: string
+		lineageTag: 1af6f67f-95b3-5170-a535-b301987ce606
+		summarizeBy: none
+		sourceColumn: ServiceType
+
+		annotation SummarizationSetBy = Automatic
+
+	column LaborRevenue
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: f25ad031-1fe0-501c-befa-e75c7d4c5f9a
+		summarizeBy: sum
+		sourceColumn: LaborRevenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column PartsRevenue
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 8f6ed1ad-81d7-5640-80cb-844a1daeb8b7
+		summarizeBy: sum
+		sourceColumn: PartsRevenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column ServiceCost
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 96492ecc-6a2c-5017-8457-1330dbdcf1d5
+		summarizeBy: sum
+		sourceColumn: ServiceCost
+
+		annotation SummarizationSetBy = Automatic
+
+	column TurnaroundHours
+		dataType: double
+		formatString: 0.0
+		lineageTag: 4feb90a4-e3ee-57c4-939a-c146454fbc8b
+		summarizeBy: none
+		sourceColumn: TurnaroundHours
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Turnaround Band'
+		dataType: string
+		lineageTag: 1e616908-6e25-59fc-ac7c-43e6b4441c6b
+		summarizeBy: none
+		sourceColumn: Turnaround Band
+		sortByColumn: 'Turnaround Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Turnaround Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c20ca17c-128b-5344-b8fd-0bfe813aaddc
+		summarizeBy: none
+		sourceColumn: Turnaround Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column CSAT
+		dataType: int64
+		formatString: 0
+		lineageTag: 76a6c156-3927-5048-8f2c-ef9e515aea6b
+		summarizeBy: none
+		sourceColumn: CSAT
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsComeback
+		dataType: boolean
+		lineageTag: 20bbc87a-b13c-5905-98c2-29c88bd3caad
+		summarizeBy: none
+		sourceColumn: IsComeback
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Service = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "VehicleSales.xlsx"), null, true),
+					#"Service Table" = Source{[Item="Service",Kind="Table"]}[Data],
+					#"Added Turnaround Band" = Table.AddColumn(#"Service Table", "Turnaround Band", each if [TurnaroundHours] <= 24 then "حتى 24 ساعة" else if [TurnaroundHours] <= 48 then "24-48 ساعة" else if [TurnaroundHours] <= 72 then "48-72 ساعة" else "أكثر من 72 ساعة"),
+					#"Added Turnaround Order" = Table.AddColumn(#"Added Turnaround Band", "Turnaround Order", each if [TurnaroundHours] <= 24 then 1 else if [TurnaroundHours] <= 48 then 2 else if [TurnaroundHours] <= 72 then 3 else 4),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Turnaround Order", {{"VisitID", Int64.Type}, {"VisitDate", type date}, {"BranchID", Int64.Type}, {"EmployeeID", Int64.Type}, {"CustomerID", Int64.Type}, {"VehicleID", Int64.Type}, {"ServiceType", type text}, {"LaborRevenue", Currency.Type}, {"PartsRevenue", Currency.Type}, {"ServiceCost", Currency.Type}, {"TurnaroundHours", type number}, {"CSAT", Int64.Type}, {"IsComeback", type logical}, {"Turnaround Band", type text}, {"Turnaround Order", Int64.Type}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

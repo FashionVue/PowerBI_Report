@@ -1,0 +1,103 @@
+/// Vehicle models by model year (car makes are real data values; no logos).
+table Vehicles
+	lineageTag: a54c62f7-d8e9-5723-b09e-1d310f685f23
+
+	column VehicleID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f73066c7-91ba-5180-9bf6-6affff89958e
+		summarizeBy: none
+		sourceColumn: VehicleID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Make
+		dataType: string
+		lineageTag: b787665b-b268-5ed1-bde7-d88f67b0ca1f
+		summarizeBy: none
+		sourceColumn: Make
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: b432d0d1-99a0-5462-8c67-75871879736f
+		summarizeBy: none
+		sourceColumn: Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vehicle
+		dataType: string
+		lineageTag: be491d48-8f1f-5620-8d25-3d19461bc321
+		summarizeBy: none
+		sourceColumn: Vehicle
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segment
+		dataType: string
+		isHidden
+		lineageTag: 5508a11f-5356-5ec2-808f-17eefcbbc44f
+		summarizeBy: none
+		sourceColumn: Segment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Powertrain
+		dataType: string
+		lineageTag: 627aac08-869c-55ce-b26c-64fc5381bdc4
+		summarizeBy: none
+		sourceColumn: Powertrain
+
+		annotation SummarizationSetBy = Automatic
+
+	column Origin
+		dataType: string
+		lineageTag: 6bd75e34-e202-513c-991e-2884b3733e03
+		summarizeBy: none
+		sourceColumn: Origin
+
+		annotation SummarizationSetBy = Automatic
+
+	column ModelYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 693b62dc-6dcd-5ca7-97f3-3d26bd05aa22
+		summarizeBy: none
+		sourceColumn: ModelYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MSRP
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 08366a40-b1ed-561c-a350-7e9c33250291
+		summarizeBy: none
+		sourceColumn: MSRP
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cost
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: cd731797-7f3c-5b74-9f59-3b13e110409c
+		summarizeBy: none
+		sourceColumn: Cost
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Vehicles = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "VehicleSales.xlsx"), null, true),
+					#"Vehicles Table" = Source{[Item="Vehicles",Kind="Table"]}[Data],
+					#"Added Vehicle" = Table.AddColumn(#"Vehicles Table", "Vehicle", each [Make] & " " & [Model]),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Vehicle", {{"VehicleID", Int64.Type}, {"Make", type text}, {"Model", type text}, {"Segment", type text}, {"Powertrain", type text}, {"Origin", type text}, {"ModelYear", Int64.Type}, {"MSRP", Currency.Type}, {"Cost", Currency.Type}, {"Vehicle", type text}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

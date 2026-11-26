@@ -1,0 +1,80 @@
+/// Showrooms and service centres.
+table Branches
+	lineageTag: 182485ce-7df6-54e6-85c7-c646558ed33d
+
+	column BranchID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c7d353c0-a694-5eaf-8186-0fbffa104d4f
+		summarizeBy: none
+		sourceColumn: BranchID
+
+		annotation SummarizationSetBy = Automatic
+
+	column BranchName
+		dataType: string
+		lineageTag: c835cf88-88b8-5471-97e8-e52cd82025fc
+		summarizeBy: none
+		sourceColumn: BranchName
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 77e0aa0e-dad5-5929-ad0d-d438b4c91706
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 45f13dfb-eee8-5dc0-a772-c87e7ddfcfaf
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column BranchType
+		dataType: string
+		lineageTag: 121f8208-9813-5ba7-ac92-5c51aee09925
+		summarizeBy: none
+		sourceColumn: BranchType
+
+		annotation SummarizationSetBy = Automatic
+
+	column OpenDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 45da686e-e69c-5d07-a687-84ac76956fe4
+		summarizeBy: none
+		sourceColumn: OpenDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Monthly fixed overhead allocated to after-sales (absorption proxy).
+	column MonthlyFixedCost
+		dataType: decimal
+		isHidden
+		formatString: #,##0
+		lineageTag: 656e88f1-0cf6-54c4-aeb6-9864b41e1925
+		summarizeBy: none
+		sourceColumn: MonthlyFixedCost
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Branches = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "VehicleSales.xlsx"), null, true),
+					#"Branches Table" = Source{[Item="Branches",Kind="Table"]}[Data],
+					#"Set Column Types" = Table.TransformColumnTypes(#"Branches Table", {{"BranchID", Int64.Type}, {"BranchName", type text}, {"City", type text}, {"Region", type text}, {"BranchType", type text}, {"OpenDate", type date}, {"MonthlyFixedCost", Currency.Type}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

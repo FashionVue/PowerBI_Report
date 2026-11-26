@@ -1,0 +1,408 @@
+{
+  "name": "Masar Horizon",
+  "dataColors": [
+    "#12A594",
+    "#E8793A",
+    "#8A93F2",
+    "#D4A72C",
+    "#5FB0D9",
+    "#C9667A",
+    "#8FA35B",
+    "#A57BD1"
+  ],
+  "foreground": "#EEF1F4",
+  "foregroundNeutralSecondary": "#9AA3AE",
+  "foregroundNeutralTertiary": "#6B737E",
+  "background": "#16191E",
+  "backgroundLight": "#1D2127",
+  "backgroundNeutral": "#2A2F37",
+  "tableAccent": "#12A594",
+  "good": "#4CC38A",
+  "neutral": "#8B95A1",
+  "bad": "#F2706C",
+  "maximum": "#12A594",
+  "center": "#6B737E",
+  "minimum": "#1D2127",
+  "null": "#8B95A1",
+  "hyperlink": "#3FD9C2",
+  "visitedHyperlink": "#3FD9C2",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Tajawal",
+      "fontSize": 26,
+      "color": "#EEF1F4"
+    },
+    "title": {
+      "fontFace": "Tajawal",
+      "fontSize": 14,
+      "color": "#EEF1F4"
+    },
+    "header": {
+      "fontFace": "Tajawal",
+      "fontSize": 12,
+      "color": "#9AA3AE"
+    },
+    "label": {
+      "fontFace": "Tajawal",
+      "fontSize": 11,
+      "color": "#9AA3AE"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": false,
+            "transparency": 100
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "title": [
+          {
+            "show": false
+          }
+        ],
+        "padding": [
+          {
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0
+          }
+        ],
+        "visualHeader": [
+          {
+            "background": {
+              "solid": {
+                "color": "#1D2127"
+              }
+            },
+            "foreground": {
+              "solid": {
+                "color": "#9AA3AE"
+              }
+            },
+            "border": {
+              "solid": {
+                "color": "#2A2F37"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "visualTooltip": [
+          {
+            "background": {
+              "solid": {
+                "color": "#1D2127"
+              }
+            },
+            "titleFontColor": {
+              "solid": {
+                "color": "#9AA3AE"
+              }
+            },
+            "valueFontColor": {
+              "solid": {
+                "color": "#EEF1F4"
+              }
+            },
+            "fontSize": 11,
+            "fontFamily": "Tajawal"
+          }
+        ],
+        "categoryAxis": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#9AA3AE"
+              }
+            },
+            "fontSize": 11,
+            "fontFamily": "Tajawal",
+            "showAxisTitle": false,
+            "gridlineShow": false
+          }
+        ],
+        "valueAxis": [
+          {
+            "labelColor": {
+              "solid": {
+                "color": "#9AA3AE"
+              }
+            },
+            "fontSize": 11,
+            "fontFamily": "Tajawal",
+            "showAxisTitle": false,
+            "gridlineShow": true,
+            "gridlineColor": {
+              "solid": {
+                "color": "#262B33"
+              }
+            },
+            "gridlineStyle": "dotted"
+          }
+        ],
+        "legend": [
+          {
+            "show": true,
+            "position": "TopRight",
+            "labelColor": {
+              "solid": {
+                "color": "#9AA3AE"
+              }
+            },
+            "fontSize": 11,
+            "fontFamily": "Tajawal"
+          }
+        ],
+        "labels": [
+          {
+            "color": {
+              "solid": {
+                "color": "#9AA3AE"
+              }
+            },
+            "fontSize": 11,
+            "fontFamily": "Tajawal"
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#0D0F12"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#0D0F12"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    },
+    "card": {
+      "*": {
+        "labels": [
+          {
+            "fontFamily": "Tajawal",
+            "fontSize": 26,
+            "color": {
+              "solid": {
+                "color": "#EEF1F4"
+              }
+            }
+          }
+        ],
+        "categoryLabels": [
+          {
+            "show": false
+          }
+        ],
+        "wordWrap": [
+          {
+            "show": true
+          }
+        ]
+      }
+    },
+    "slicer": {
+      "*": {
+        "header": [
+          {
+            "show": false
+          }
+        ],
+        "items": [
+          {
+            "fontColor": {
+              "solid": {
+                "color": "#EEF1F4"
+              }
+            },
+            "background": {
+              "solid": {
+                "color": "#1D2127"
+              }
+            },
+            "textSize": 12,
+            "fontFamily": "Tajawal"
+          }
+        ],
+        "data": [
+          {
+            "mode": "Dropdown"
+          }
+        ]
+      }
+    },
+    "lineChart": {
+      "*": {
+        "lineStyles": [
+          {
+            "strokeWidth": 3,
+            "showMarker": false
+          }
+        ]
+      }
+    },
+    "clusteredBarChart": {
+      "*": {
+        "valueAxis": [
+          {
+            "show": false,
+            "gridlineShow": false
+          }
+        ],
+        "labels": [
+          {
+            "show": true,
+            "fontSize": 11
+          }
+        ],
+        "layout": [
+          {
+            "clusteredGapSize": 6
+          }
+        ]
+      }
+    },
+    "donutChart": {
+      "*": {
+        "slices": [
+          {
+            "innerRadiusRatio": 68
+          }
+        ],
+        "legend": [
+          {
+            "show": false
+          }
+        ],
+        "dataPoint": [
+          {
+            "borderShow": true,
+            "borderColor": {
+              "solid": {
+                "color": "#16191E"
+              }
+            },
+            "borderSize": 2
+          }
+        ],
+        "labels": [
+          {
+            "show": true,
+            "labelStyle": "Category, percent of total",
+            "color": {
+              "solid": {
+                "color": "#EEF1F4"
+              }
+            },
+            "fontSize": 12,
+            "fontFamily": "Tajawal",
+            "position": "outside"
+          }
+        ]
+      }
+    },
+    "pivotTable": {
+      "*": {
+        "grid": [
+          {
+            "gridHorizontal": true,
+            "gridVertical": false,
+            "rowPadding": 7,
+            "textSize": 12
+          }
+        ],
+        "columnHeaders": [
+          {
+            "fontFamily": "Tajawal",
+            "fontSize": 11,
+            "bold": true
+          }
+        ],
+        "rowHeaders": [
+          {
+            "fontFamily": "Tajawal",
+            "fontSize": 12
+          }
+        ],
+        "values": [
+          {
+            "fontFamily": "Tajawal",
+            "fontSize": 12
+          }
+        ],
+        "total": [
+          {
+            "bold": true
+          }
+        ]
+      }
+    },
+    "tableEx": {
+      "*": {
+        "grid": [
+          {
+            "gridHorizontal": true,
+            "gridVertical": false,
+            "rowPadding": 7,
+            "textSize": 12
+          }
+        ],
+        "columnHeaders": [
+          {
+            "fontFamily": "Tajawal",
+            "fontSize": 11,
+            "bold": true
+          }
+        ],
+        "values": [
+          {
+            "fontFamily": "Tajawal",
+            "fontSize": 12
+          }
+        ],
+        "total": [
+          {
+            "bold": true
+          }
+        ]
+      }
+    },
+    "scatterChart": {
+      "*": {
+        "categoryLabels": [
+          {
+            "fontSize": 10,
+            "fontFamily": "Tajawal"
+          }
+        ]
+      }
+    }
+  }
+}
