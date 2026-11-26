@@ -89,13 +89,14 @@ claude
 
 ## فتح مشروع SalesSample.pbip
 
-في المستودع مشروع Power BI جاهز مبني على نفس ملف الإكسل: `SalesSample.pbip` ومعه المجلدان `SalesSample.SemanticModel` (النموذج بصيغة TMDL) و `SalesSample.Report` (التقرير بصيغة PBIR). فيه علاقات Star Schema وجدول تاريخ مُعلَّم وجدول مقاييس `_Measures`، وصفحة تقرير واحدة اسمها **Overview**.
+في المستودع مشروع Power BI جاهز مبني على نفس ملف الإكسل: `SalesSample.pbip` ومعه المجلدان `SalesSample.SemanticModel` (النموذج بصيغة TMDL) و `SalesSample.Report` (التقرير بصيغة PBIR). فيه علاقات Star Schema وجدول تاريخ مُعلَّم وجدول مقاييس `_Measures`، وتقرير تنفيذي داكن من 4 صفحات بمقاس 1920×1080: **Executive Summary** و **Sales Performance** و **Products** و **Customers & Regions**. التنقل بين الصفحات من الشريط الجانبي الأيسر (الأيقونات أزرار حقيقية؛ في Desktop اضغط **Ctrl** مع النقر، وفي Power BI Service يكفي النقر).
 
 1. اسحب آخر نسخة من المستودع إلى `C:\PowerBI_Report` بالأمر `git pull`.
 2. تأكد أن ملف البيانات موجود في `C:\PowerBI_Report\data\SalesSample.xlsx`. إذا كان المستودع في مجلد آخر فافتح المشروع أولاً ثم غيّر المعامل `DataFolder` من **Transform data ← Edit parameters** إلى مسار مجلد `data` عندك (وانتبه أن ينتهي المسار بالرمز `\`).
 3. افتح المشروع بالنقر المزدوج على `SalesSample.pbip`.
 4. أول مرة ستظهر المرئيات فارغة لأن البيانات لا تُحفظ في git. اضغط **Refresh** من شريط Home لتحميل البيانات من ملف الإكسل.
-5. اختر 2025 من قائمة السنة (Year) أعلى الصفحة، وقارن الأرقام بالجدول أعلاه. ملاحظة: بطاقة `Sales YoY %` تبقى فارغة إلى أن تختار سنة واحدة. أيضاً `Total Orders` يجب أن يكون 1,370 لسنة 2024 و 1,736 لسنة 2025.
+5. بدون أي اختيار في قائمة السنة تعرض البطاقات **آخر سنة متاحة (2025) مقارنة بالسنة التي قبلها (2024)**، ويظهر ذلك في خانة **COMPARING** أعلى الصفحة. قارن الأرقام بالجدول أعلاه، و `Total Orders` يجب أن يكون 1,736 لسنة 2025 (1,370 لسنة 2024). إذا اخترت 2024 ستظهر عبارة «No prior-year data» تحت البطاقات لأن البيانات تبدأ من 2024.
+6. قائمتا السنة (Year) والقناة (Channel) متزامنتان بين الصفحات الأربع.
 
 إذا ظهرت رسالة خطأ عند الفتح عن صيغة الملفات، فحدّث Power BI Desktop إلى نسخة حديثة (المشروع يحتاج نسخة من منتصف 2025 أو أحدث)، أو فعّل من **File ← Options and settings ← Options ← Preview features** الخيارات: **Power BI Project (.pbip) save option** و **Store semantic model using TMDL format** و **Store reports using enhanced metadata format (PBIR)**، ثم أعد تشغيل Desktop.
 

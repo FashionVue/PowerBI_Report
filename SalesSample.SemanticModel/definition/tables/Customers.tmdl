@@ -54,13 +54,31 @@ table Customers
 
 		annotation UnderlyingDateTimeDataType = Date
 
+	column 'Customer Label'
+		dataType: string
+		lineageTag: 52829790-4947-4b5f-b5c3-69fe49860fdc
+		summarizeBy: none
+		sourceColumn: Customer Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Join Month'
+		dataType: string
+		lineageTag: 2aa78c3c-d34b-400f-8e2f-e765db886090
+		summarizeBy: none
+		sourceColumn: Join Month
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Customers = m
 		mode: import
 		source =
 				let
 					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
 					#"Customers Table" = Source{[Item="Customers",Kind="Table"]}[Data],
-					#"Set Column Types" = Table.TransformColumnTypes(#"Customers Table", {{"CustomerID", Int64.Type}, {"CustomerName", type text}, {"City", type text}, {"Region", type text}, {"Segment", type text}, {"JoinDate", type date}})
+					#"Added Customer Label" = Table.AddColumn(#"Customers Table", "Customer Label", each [CustomerName] & " (#" & Text.From([CustomerID]) & ")"),
+					#"Added Join Month" = Table.AddColumn(#"Added Customer Label", "Join Month", each Date.ToText(Date.From([JoinDate]), "yyyy-MM")),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Join Month", {{"CustomerID", Int64.Type}, {"CustomerName", type text}, {"City", type text}, {"Region", type text}, {"Segment", type text}, {"JoinDate", type date}, {"Customer Label", type text}, {"Join Month", type text}})
 				in
 					#"Set Column Types"
 

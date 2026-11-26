@@ -2,7 +2,7 @@
 table _Measures
 	lineageTag: 406c5d78-e162-443e-93cf-12ac15138ca7
 
-	/// Sum of Sales[SalesAmount] (after discount).
+	/// Net sales: sum of Sales[SalesAmount] (after discount).
 	measure 'Total Sales' = SUM ( Sales[SalesAmount] )
 		formatString: #,##0
 		displayFolder: Sales
@@ -36,30 +36,508 @@ table _Measures
 		displayFolder: Volume
 		lineageTag: e12fc27d-0432-4dc2-b795-066cd6ee0d86
 
-	/// Sum of units sold (Sales[Quantity]).
+	/// Units sold: sum of Sales[Quantity].
 	measure 'Total Quantity' = SUM ( Sales[Quantity] )
 		formatString: #,##0
 		displayFolder: Volume
 		lineageTag: 4b58caef-a57f-450c-beac-d8afcf9a3260
 
-	/// Total Sales for the same period one year earlier (uses the marked Date table).
-	measure 'Sales PY' = CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+	/// Total Sales for the same period one year before the latest year in the current filter context. With one year selected this equals SAMEPERIODLASTYEAR; with several years it compares against the year before the latest one.
+	measure 'Sales PY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE (
+			        CALCULATE ( [Total Sales], SAMEPERIODLASTYEAR ( 'Date'[Date] ) ),
+			        KEEPFILTERS ( 'Date'[Year] = _LatestYear )
+			    )
 		formatString: #,##0
 		displayFolder: Time Intelligence
 		lineageTag: 1bbc3012-a7b5-4941-9611-bfd8067c6f3b
 
-	/// Growth of Total Sales versus Sales PY. Returns blank unless exactly one year is in context, because a multi-year total would compare against only part of the previous period.
+	/// Growth of Sales CY over Sales PY (latest year in context vs the year before). Blank only when no prior-year data exists.
 	measure 'Sales YoY %' =
-			VAR _CurrentSales = [Total Sales]
-			VAR _PreviousSales = [Sales PY]
+			VAR _Current = [Sales CY]
+			VAR _Previous = [Sales PY]
 			RETURN
-			    IF (
-			        HASONEVALUE ( 'Date'[Year] ),
-			        DIVIDE ( _CurrentSales - _PreviousSales, _PreviousSales )
-			    )
-		formatString: 0.0%
+			    DIVIDE ( _Current - _Previous, _Previous )
+		formatString: +0.0%;-0.0%;0.0%
 		displayFolder: Time Intelligence
 		lineageTag: 0609cf90-bcc8-4f24-94cd-84dd8bdb3e4b
+
+	/// Sales at list price before discount: Quantity x UnitPrice, summed row by row.
+	measure 'Gross Sales (List)' = SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] )
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: 7eb20f86-fc22-40b7-a91b-a6a8662a5c8a
+
+	/// Discount given: list-price value minus net sales.
+	measure 'Discount Amount' = [Gross Sales (List)] - [Total Sales]
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: 10fe976d-485e-40e7-b8c5-f788cf56fdeb
+
+	/// Average discount weighted by list-price value (Discount Amount / Gross Sales (List)).
+	measure 'Discount %' = DIVIDE ( [Discount Amount], [Gross Sales (List)] )
+		formatString: 0.0%
+		displayFolder: Sales
+		lineageTag: a622d346-f314-4c82-87e3-f2269b1729e1
+
+	/// Average net sales per order.
+	measure 'Avg Order Value' = DIVIDE ( [Total Sales], [Total Orders] )
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: 9020fb26-bda6-43f4-9502-14c253cc1b0a
+
+	/// Average net sales per unit sold.
+	measure 'Avg Selling Price' = DIVIDE ( [Total Sales], [Total Quantity] )
+		formatString: #,##0
+		displayFolder: Sales
+		lineageTag: 161bec88-a28f-43f2-b01d-bf4dae4362c9
+
+	/// Number of distinct customers with at least one order.
+	measure 'Active Customers' = DISTINCTCOUNT ( Sales[CustomerID] )
+		formatString: #,##0
+		displayFolder: Volume
+		lineageTag: e42a675c-9995-4fcf-935e-ac0f557e1402
+
+	/// Number of customers in the Customers table (not filtered by the Date table).
+	measure 'Customer Count' = COUNTROWS ( Customers )
+		formatString: #,##0
+		displayFolder: Volume
+		lineageTag: 29cdb5da-4977-4c38-bc4a-22a023153dac
+
+	/// Customers whose JoinDate falls in the latest year of the current Date context. Uses TREATAS to apply the Date selection to Customers[JoinDate] without a second relationship. Returns 0, not blank, when nobody joined.
+	measure 'New Customers' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _JoinDates =
+			    CALCULATETABLE ( VALUES ( 'Date'[Date] ), KEEPFILTERS ( 'Date'[Year] = _LatestYear ) )
+			RETURN
+			    COALESCE ( CALCULATE ( COUNTROWS ( Customers ), TREATAS ( _JoinDates, Customers[JoinDate] ) ), 0 )
+		formatString: #,##0
+		displayFolder: Volume
+		lineageTag: 50aa1fe7-0136-4196-9fa8-09091ff941ee
+
+	/// Total Sales for the latest year in the current filter context.
+	measure 'Sales CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE ( [Total Sales], KEEPFILTERS ( 'Date'[Year] = _LatestYear ) )
+		formatString: #,##0
+		displayFolder: KPI\Current Year
+		lineageTag: 7677df8d-9ce3-4ca4-a3a5-8fba90ff6f50
+
+	/// Gross Margin for the latest year in context.
+	measure 'Gross Margin CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE ( [Gross Margin], KEEPFILTERS ( 'Date'[Year] = _LatestYear ) )
+		formatString: #,##0
+		displayFolder: KPI\Current Year
+		lineageTag: 83cb7571-88b3-40f5-9233-e61fdd62d910
+
+	/// Margin % for the latest year in context.
+	measure 'Margin % CY' = DIVIDE ( [Gross Margin CY], [Sales CY] )
+		formatString: 0.0%
+		displayFolder: KPI\Current Year
+		lineageTag: c1e409ef-0cf1-440c-b106-f8d5e37f03f1
+
+	/// Total Orders for the latest year in context.
+	measure 'Orders CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE ( [Total Orders], KEEPFILTERS ( 'Date'[Year] = _LatestYear ) )
+		formatString: #,##0
+		displayFolder: KPI\Current Year
+		lineageTag: c82a4707-07c8-4c30-831f-3badaf82e35e
+
+	/// Average order value for the latest year in context.
+	measure 'AOV CY' = DIVIDE ( [Sales CY], [Orders CY] )
+		formatString: #,##0
+		displayFolder: KPI\Current Year
+		lineageTag: 216d2db8-a96d-467c-8e49-2036ad1b2b33
+
+	/// Active Customers for the latest year in context.
+	measure 'Customers CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE ( [Active Customers], KEEPFILTERS ( 'Date'[Year] = _LatestYear ) )
+		formatString: #,##0
+		displayFolder: KPI\Current Year
+		lineageTag: e27bd24b-0e6e-48a6-b064-99ba3466a63a
+
+	/// Units sold in the latest year in context.
+	measure 'Units CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE ( [Total Quantity], KEEPFILTERS ( 'Date'[Year] = _LatestYear ) )
+		formatString: #,##0
+		displayFolder: KPI\Current Year
+		lineageTag: 1d793d14-f4ed-4668-a7d1-a0e3681bc8dd
+
+	/// Average net sales per unit in the latest year in context.
+	measure 'Avg Selling Price CY' = DIVIDE ( [Sales CY], [Units CY] )
+		formatString: #,##0
+		displayFolder: KPI\Current Year
+		lineageTag: 405118bf-74c0-4791-9d99-a8c4ebf02930
+
+	/// Discount given in the latest year in context.
+	measure 'Discount Amount CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE ( [Discount Amount], KEEPFILTERS ( 'Date'[Year] = _LatestYear ) )
+		formatString: #,##0
+		displayFolder: KPI\Current Year
+		lineageTag: 6c1b94fe-dfd4-4cd0-86ff-02af885209cc
+
+	/// Weighted discount % in the latest year in context.
+	measure 'Discount % CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE ( [Discount %], KEEPFILTERS ( 'Date'[Year] = _LatestYear ) )
+		formatString: 0.0%
+		displayFolder: KPI\Current Year
+		lineageTag: 0570738c-0962-495a-9d73-3df39f3830a5
+
+	/// Sales CY divided by Customers CY.
+	measure 'Sales per Customer CY' = DIVIDE ( [Sales CY], [Customers CY] )
+		formatString: #,##0
+		displayFolder: KPI\Current Year
+		lineageTag: d2b2a66d-254c-4534-b535-b2dfbdbaa1b6
+
+	/// Orders CY divided by Customers CY.
+	measure 'Orders per Customer CY' = DIVIDE ( [Orders CY], [Customers CY] )
+		formatString: #,##0.0
+		displayFolder: KPI\Current Year
+		lineageTag: 09fec08f-9fd4-4be2-ba48-1c0f82255e4a
+
+	/// Gross Margin for the year before the latest year in context.
+	measure 'Gross Margin PY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE (
+			        CALCULATE ( [Gross Margin], SAMEPERIODLASTYEAR ( 'Date'[Date] ) ),
+			        KEEPFILTERS ( 'Date'[Year] = _LatestYear )
+			    )
+		formatString: #,##0
+		displayFolder: KPI\Prior Year
+		lineageTag: af5694a9-4625-4313-8d30-0c585ad7a3fe
+
+	/// Margin % for the year before the latest year in context.
+	measure 'Margin % PY' = DIVIDE ( [Gross Margin PY], [Sales PY] )
+		formatString: 0.0%
+		displayFolder: KPI\Prior Year
+		lineageTag: 2b820d4a-d2b3-4176-aaf5-d524629759d4
+
+	/// Total Orders for the year before the latest year in context.
+	measure 'Orders PY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE (
+			        CALCULATE ( [Total Orders], SAMEPERIODLASTYEAR ( 'Date'[Date] ) ),
+			        KEEPFILTERS ( 'Date'[Year] = _LatestYear )
+			    )
+		formatString: #,##0
+		displayFolder: KPI\Prior Year
+		lineageTag: e1ea0f45-9eed-4254-944a-f9b4cce07621
+
+	/// Average order value for the year before the latest year in context.
+	measure 'AOV PY' = DIVIDE ( [Sales PY], [Orders PY] )
+		formatString: #,##0
+		displayFolder: KPI\Prior Year
+		lineageTag: 72780fb9-6dd1-4ce1-a35b-06ba1a5d9c4b
+
+	/// Active Customers for the year before the latest year in context.
+	measure 'Customers PY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE (
+			        CALCULATE ( [Active Customers], SAMEPERIODLASTYEAR ( 'Date'[Date] ) ),
+			        KEEPFILTERS ( 'Date'[Year] = _LatestYear )
+			    )
+		formatString: #,##0
+		displayFolder: KPI\Prior Year
+		lineageTag: f7d592e1-c8b6-4d55-b2c9-5c2b3983fe26
+
+	/// Growth of Gross Margin CY over Gross Margin PY.
+	measure 'Gross Margin vs PY %' =
+			VAR _Current = [Gross Margin CY]
+			VAR _Previous = [Gross Margin PY]
+			RETURN
+			    DIVIDE ( _Current - _Previous, _Previous )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: KPI\vs PY
+		lineageTag: 6bf56da6-283b-40ef-88ff-a49516bcce0b
+
+	/// Change in Margin % in percentage points (Margin % CY minus Margin % PY, x100).
+	measure 'Margin % vs PY (pts)' =
+			VAR _Current = [Margin % CY]
+			VAR _Previous = [Margin % PY]
+			RETURN
+			    IF ( NOT ISBLANK ( _Previous ), ( _Current - _Previous ) * 100 )
+		formatString: +0.00;-0.00;0.00
+		displayFolder: KPI\vs PY
+		lineageTag: cf722acf-add3-4796-bae9-fd64230acbe1
+
+	/// Growth of Orders CY over Orders PY.
+	measure 'Orders vs PY %' =
+			VAR _Current = [Orders CY]
+			VAR _Previous = [Orders PY]
+			RETURN
+			    DIVIDE ( _Current - _Previous, _Previous )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: KPI\vs PY
+		lineageTag: d50b91ca-79b8-46d1-959e-34f095cfbfdb
+
+	/// Growth of AOV CY over AOV PY.
+	measure 'AOV vs PY %' =
+			VAR _Current = [AOV CY]
+			VAR _Previous = [AOV PY]
+			RETURN
+			    DIVIDE ( _Current - _Previous, _Previous )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: KPI\vs PY
+		lineageTag: 28e3b8e1-669f-42bf-a345-e7fefe9cafb4
+
+	/// Growth of Customers CY over Customers PY.
+	measure 'Customers vs PY %' =
+			VAR _Current = [Customers CY]
+			VAR _Previous = [Customers PY]
+			RETURN
+			    DIVIDE ( _Current - _Previous, _Previous )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: KPI\vs PY
+		lineageTag: fda429cb-7788-4fa6-85eb-bbcbb914bc99
+
+	/// Year-to-date Total Sales within the latest year in context (DATESYTD).
+	measure 'Sales YTD' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE ( CALCULATE ( [Total Sales], DATESYTD ( 'Date'[Date] ) ), KEEPFILTERS ( 'Date'[Year] = _LatestYear ) )
+		formatString: #,##0
+		displayFolder: Time Intelligence
+		lineageTag: 5478443e-571d-4953-a376-774b248a47d3
+
+	/// Year-to-date Total Sales for the same dates one year earlier.
+	measure 'Sales PY YTD' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    CALCULATE (
+			        CALCULATE ( [Total Sales], DATESYTD ( SAMEPERIODLASTYEAR ( 'Date'[Date] ) ) ),
+			        KEEPFILTERS ( 'Date'[Year] = _LatestYear )
+			    )
+		formatString: #,##0
+		displayFolder: Time Intelligence
+		lineageTag: 4feddaa5-575c-4766-9aae-ae79413303ed
+
+	/// Growth of Sales YTD over Sales PY YTD.
+	measure 'YTD vs PY %' =
+			VAR _Current = [Sales YTD]
+			VAR _Previous = [Sales PY YTD]
+			RETURN
+			    DIVIDE ( _Current - _Previous, _Previous )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: Time Intelligence
+		lineageTag: 6852223c-4372-412e-a2ee-7dc0e65079b1
+
+	/// Text for the Sales tile: arrow, size of the change vs prior year, or a note when there is no prior-year data.
+	measure 'Sales vs PY Label' =
+			VAR _Delta = [Sales YoY %]
+			RETURN
+			    IF (
+			        ISBLANK ( _Delta ),
+			        "No prior-year data",
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			    )
+		displayFolder: KPI\Labels
+		lineageTag: ed50f00e-0536-4fda-8265-77072712d130
+
+	/// Hex colour for the Sales change: green when up, red when down, grey when there is no prior-year data. Used for conditional formatting.
+	measure 'Sales vs PY Color' =
+			VAR _Delta = [Sales YoY %]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Delta ), "#8B93A7",
+			        _Delta >= 0, "#4CC38A",
+			        "#F2706C"
+			    )
+		displayFolder: KPI\Colors
+		lineageTag: 913eae3b-c896-45df-a1d3-5f7473a2c5d0
+
+	/// Text for the Gross Margin tile: arrow, size of the change vs prior year, or a note when there is no prior-year data.
+	measure 'Gross Margin vs PY Label' =
+			VAR _Delta = [Gross Margin vs PY %]
+			RETURN
+			    IF (
+			        ISBLANK ( _Delta ),
+			        "No prior-year data",
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			    )
+		displayFolder: KPI\Labels
+		lineageTag: b2a4dd59-ee35-464d-8eac-221fb173ab8b
+
+	/// Hex colour for the Gross Margin change: green when up, red when down, grey when there is no prior-year data. Used for conditional formatting.
+	measure 'Gross Margin vs PY Color' =
+			VAR _Delta = [Gross Margin vs PY %]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Delta ), "#8B93A7",
+			        _Delta >= 0, "#4CC38A",
+			        "#F2706C"
+			    )
+		displayFolder: KPI\Colors
+		lineageTag: f6c9e995-c81f-42db-be5c-c62137dc0122
+
+	/// Text for the Margin % tile: arrow, size of the change vs prior year, or a note when there is no prior-year data.
+	measure 'Margin % vs PY Label' =
+			VAR _Delta = [Margin % vs PY (pts)]
+			RETURN
+			    IF (
+			        ISBLANK ( _Delta ),
+			        "No prior-year data",
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.00" ) & " pts" & " vs PY"
+			    )
+		displayFolder: KPI\Labels
+		lineageTag: b491a38d-0522-46eb-8789-4ea546f13df4
+
+	/// Hex colour for the Margin % change: green when up, red when down, grey when there is no prior-year data. Used for conditional formatting.
+	measure 'Margin % vs PY Color' =
+			VAR _Delta = [Margin % vs PY (pts)]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Delta ), "#8B93A7",
+			        _Delta >= 0, "#4CC38A",
+			        "#F2706C"
+			    )
+		displayFolder: KPI\Colors
+		lineageTag: 2cb3933f-0228-4231-8716-8ad3af1901c5
+
+	/// Text for the Orders tile: arrow, size of the change vs prior year, or a note when there is no prior-year data.
+	measure 'Orders vs PY Label' =
+			VAR _Delta = [Orders vs PY %]
+			RETURN
+			    IF (
+			        ISBLANK ( _Delta ),
+			        "No prior-year data",
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			    )
+		displayFolder: KPI\Labels
+		lineageTag: 62a126a5-a21e-48a0-9574-f97550138580
+
+	/// Hex colour for the Orders change: green when up, red when down, grey when there is no prior-year data. Used for conditional formatting.
+	measure 'Orders vs PY Color' =
+			VAR _Delta = [Orders vs PY %]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Delta ), "#8B93A7",
+			        _Delta >= 0, "#4CC38A",
+			        "#F2706C"
+			    )
+		displayFolder: KPI\Colors
+		lineageTag: 7b9994a6-1c18-4c89-9da8-094240836378
+
+	/// Text for the AOV tile: arrow, size of the change vs prior year, or a note when there is no prior-year data.
+	measure 'AOV vs PY Label' =
+			VAR _Delta = [AOV vs PY %]
+			RETURN
+			    IF (
+			        ISBLANK ( _Delta ),
+			        "No prior-year data",
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			    )
+		displayFolder: KPI\Labels
+		lineageTag: 0c3adac7-0643-4408-91a4-def735a215c8
+
+	/// Hex colour for the AOV change: green when up, red when down, grey when there is no prior-year data. Used for conditional formatting.
+	measure 'AOV vs PY Color' =
+			VAR _Delta = [AOV vs PY %]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Delta ), "#8B93A7",
+			        _Delta >= 0, "#4CC38A",
+			        "#F2706C"
+			    )
+		displayFolder: KPI\Colors
+		lineageTag: b6d7f225-3d3a-4f7d-a4e7-c44f5757f122
+
+	/// Text for the Customers tile: arrow, size of the change vs prior year, or a note when there is no prior-year data.
+	measure 'Customers vs PY Label' =
+			VAR _Delta = [Customers vs PY %]
+			RETURN
+			    IF (
+			        ISBLANK ( _Delta ),
+			        "No prior-year data",
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			    )
+		displayFolder: KPI\Labels
+		lineageTag: e07d24a8-95c6-4811-9914-3cb3cedd2928
+
+	/// Hex colour for the Customers change: green when up, red when down, grey when there is no prior-year data. Used for conditional formatting.
+	measure 'Customers vs PY Color' =
+			VAR _Delta = [Customers vs PY %]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Delta ), "#8B93A7",
+			        _Delta >= 0, "#4CC38A",
+			        "#F2706C"
+			    )
+		displayFolder: KPI\Colors
+		lineageTag: ffcc41af-cda0-40e4-905e-f3618b22a751
+
+	/// Text for the YTD tile: arrow, size of the change vs prior year, or a note when there is no prior-year data.
+	measure 'YTD vs PY Label' =
+			VAR _Delta = [YTD vs PY %]
+			RETURN
+			    IF (
+			        ISBLANK ( _Delta ),
+			        "No prior-year data",
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			    )
+		displayFolder: KPI\Labels
+		lineageTag: 1b722497-fb7a-4963-8dc2-e273d3d7f719
+
+	/// Hex colour for the YTD change: green when up, red when down, grey when there is no prior-year data. Used for conditional formatting.
+	measure 'YTD vs PY Color' =
+			VAR _Delta = [YTD vs PY %]
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        ISBLANK ( _Delta ), "#8B93A7",
+			        _Delta >= 0, "#4CC38A",
+			        "#F2706C"
+			    )
+		displayFolder: KPI\Colors
+		lineageTag: 8d42143b-9a39-4d35-871a-f07219774c30
+
+	/// Header text naming the compared years, e.g. 2025 vs 2024.
+	measure 'Period Label' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			RETURN
+			    _LatestYear & " vs " & ( _LatestYear - 1 )
+		displayFolder: KPI\Labels
+		lineageTag: 2a4b54fd-4ea5-4650-8578-f926f641b2b3
+
+	/// Sales CY for customers ranked 1-10 by Sales CY among the customers shown; blank otherwise, so a table using only this measure lists the top 10.
+	measure 'Top 10 Customer Sales' =
+			VAR _Sales = [Sales CY]
+			VAR _Rank =
+			    IF (
+			        ISINSCOPE ( Customers[Customer Label] ),
+			        RANKX (
+			            ALLSELECTED ( Customers[Customer Label], Customers[City], Customers[Segment] ),
+			            [Sales CY], , DESC
+			        )
+			    )
+			RETURN
+			    IF ( NOT ISBLANK ( _Sales ) && _Rank <= 10, _Sales )
+		formatString: #,##0
+		displayFolder: Customers
+		lineageTag: 4b7ae970-6938-438f-945d-70a58ab1e46b
 
 	column Column1
 		dataType: string

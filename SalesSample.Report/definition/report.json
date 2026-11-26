@@ -5,6 +5,11 @@
       "name": "CY24SU10",
       "reportVersionAtImport": "5.61",
       "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "FashionVueExecutive.json",
+      "reportVersionAtImport": "5.65",
+      "type": "RegisteredResources"
     }
   },
   "resourcePackages": [
@@ -16,6 +21,37 @@
           "name": "CY24SU10",
           "path": "BaseThemes/CY24SU10.json",
           "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "FashionVueExecutive.json",
+          "path": "FashionVueExecutive.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "bg-exec.png",
+          "path": "bg-exec.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg-sales.png",
+          "path": "bg-sales.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg-products.png",
+          "path": "bg-products.png",
+          "type": "Image"
+        },
+        {
+          "name": "bg-customers.png",
+          "path": "bg-customers.png",
+          "type": "Image"
         }
       ]
     }

@@ -96,13 +96,23 @@ table Sales
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Discount Band'
+		dataType: string
+		lineageTag: bf55ea05-f0fc-4a67-85d8-19ef7c8d26e9
+		summarizeBy: none
+		sourceColumn: Discount Band
+		sortByColumn: Discount
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Sales = m
 		mode: import
 		source =
 				let
 					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
 					#"Sales Table" = Source{[Item="Sales",Kind="Table"]}[Data],
-					#"Set Column Types" = Table.TransformColumnTypes(#"Sales Table", {{"OrderID", Int64.Type}, {"OrderDate", type date}, {"CustomerID", Int64.Type}, {"ProductID", Int64.Type}, {"Channel", type text}, {"Quantity", Int64.Type}, {"UnitPrice", Currency.Type}, {"Discount", type number}, {"SalesAmount", Currency.Type}, {"CostAmount", Currency.Type}})
+					#"Added Discount Band" = Table.AddColumn(#"Sales Table", "Discount Band", each if [Discount] = 0 then "Full price" else Text.From(Number.Round([Discount] * 100)) & "% off"),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Discount Band", {{"OrderID", Int64.Type}, {"OrderDate", type date}, {"CustomerID", Int64.Type}, {"ProductID", Int64.Type}, {"Channel", type text}, {"Quantity", Int64.Type}, {"UnitPrice", Currency.Type}, {"Discount", type number}, {"SalesAmount", Currency.Type}, {"CostAmount", Currency.Type}, {"Discount Band", type text}})
 				in
 					#"Set Column Types"
 
