@@ -1,12 +1,44 @@
-relationship 687fbfc1-3d82-407a-86e4-e04766778589
+relationship db76985f-e946-5c64-a8b5-414491ac1de1
+	fromColumn: Sales.OrderDate
+	toColumn: Date.Date
+
+relationship ea22ada0-6288-5a0c-a9e1-859c0226e23d
 	fromColumn: Sales.CustomerID
 	toColumn: Customers.CustomerID
 
-relationship 6bfd1f3b-a7c9-48aa-891a-66d37dcd7448
+relationship 40a69857-0bc1-590f-a0c7-f70f692315cc
 	fromColumn: Sales.ProductID
 	toColumn: Products.ProductID
 
-relationship 3dd07d0f-189e-41e4-ab0b-93656aeead93
-	fromColumn: Sales.OrderDate
+relationship 79efea8b-33e0-51d5-9758-f2d0cbdbe5c4
+	fromColumn: Sales.StoreID
+	toColumn: Stores.StoreID
+
+relationship c65dbd16-5fbc-5309-abca-8c39229e4c34
+	fromColumn: Sales.EmployeeID
+	toColumn: Employees.EmployeeID
+
+relationship d63cb4e6-bd08-584e-bfb5-93126e076ca6
+	fromColumn: Sales.CampaignID
+	toColumn: Campaigns.CampaignID
+
+relationship 8b46db04-de48-5bc8-ae5b-3d397b364f0b
+	fromColumn: Customers.Region
+	toColumn: Region.Region
+
+relationship 609957a9-f863-5316-84ce-98214502fc09
+	fromColumn: Products.Category
+	toColumn: Category.Category
+
+relationship c078add3-53c8-544f-8105-2b054ac1f2ea
+	fromColumn: Targets.Month
 	toColumn: Date.Date
+
+relationship 1b2212c5-dab5-5223-ab5c-e269261bfa02
+	fromColumn: Targets.Region
+	toColumn: Region.Region
+
+relationship 024568a2-1562-5d3d-86bb-6f2913172708
+	fromColumn: Targets.Category
+	toColumn: Category.Category
 

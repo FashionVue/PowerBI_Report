@@ -1,0 +1,64 @@
+/// Store and customer-care staff.
+table Employees
+	lineageTag: 0fdd6a60-403f-519a-8662-95d119b1ec95
+
+	column EmployeeID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 83a95b2b-3231-53d5-913b-27778c2d5d8b
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		annotation SummarizationSetBy = User
+
+	column EmployeeName
+		dataType: string
+		lineageTag: e38b4e7a-f70d-5ffb-83b3-59cceb2b6a84
+		summarizeBy: none
+		sourceColumn: EmployeeName
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Home store; not related to Stores to avoid a second filter path to Sales.
+	column StoreID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6f5b70e6-ff83-516a-99ec-1e92456c6f4f
+		summarizeBy: none
+		sourceColumn: StoreID
+
+		annotation SummarizationSetBy = User
+
+	column Role
+		dataType: string
+		lineageTag: 0e407d76-ddf2-5d0b-9e29-4a71b82f227c
+		summarizeBy: none
+		sourceColumn: Role
+
+		annotation SummarizationSetBy = Automatic
+
+	column HireDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: cd399e15-39f6-50e1-b613-6c7f335803e4
+		summarizeBy: none
+		sourceColumn: HireDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition Employees = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
+					#"Employees Table" = Source{[Item="Employees",Kind="Table"]}[Data],
+					#"Set Column Types" = Table.TransformColumnTypes(#"Employees Table", {{"EmployeeID", Int64.Type}, {"EmployeeName", type text}, {"StoreID", Int64.Type}, {"Role", type text}, {"HireDate", type date}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

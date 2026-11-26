@@ -1,0 +1,74 @@
+/// Marketing campaigns with dates and budget.
+table Campaigns
+	lineageTag: f918b993-f84c-5c58-8983-3b680525e00c
+
+	column CampaignID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: edbb4242-54a1-56d9-84fb-7f71fced4f16
+		summarizeBy: none
+		sourceColumn: CampaignID
+
+		annotation SummarizationSetBy = User
+
+	column CampaignName
+		dataType: string
+		lineageTag: 1ff2eb05-9175-513f-882a-594e8128ed37
+		summarizeBy: none
+		sourceColumn: CampaignName
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Campaign Channel'
+		dataType: string
+		lineageTag: 651867e3-0d80-5ab4-a0fe-189a954368e7
+		summarizeBy: none
+		sourceColumn: Campaign Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column StartDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: bb1c8043-cefe-5739-bedc-5b03cac18af1
+		summarizeBy: none
+		sourceColumn: StartDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column EndDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 61b58f52-538b-5fb1-afa0-70f72526a2b9
+		summarizeBy: none
+		sourceColumn: EndDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Budget
+		dataType: decimal
+		formatString: #,##0
+		lineageTag: 3864dc60-6823-5204-b51c-16aeaa279092
+		summarizeBy: sum
+		sourceColumn: Budget
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Campaigns = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
+					#"Campaigns Table" = Source{[Item="Campaigns",Kind="Table"]}[Data],
+					#"Renamed Channel" = Table.RenameColumns(#"Campaigns Table", {{"Channel", "Campaign Channel"}}),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Renamed Channel", {{"CampaignID", Int64.Type}, {"CampaignName", type text}, {"Campaign Channel", type text}, {"StartDate", type date}, {"EndDate", type date}, {"Budget", Currency.Type}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

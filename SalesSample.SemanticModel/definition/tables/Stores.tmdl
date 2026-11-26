@@ -1,0 +1,87 @@
+/// Stores, including the Online store used by app and website orders.
+table Stores
+	lineageTag: 09a382b9-6a33-5c6b-bd10-04f399c8cd4d
+
+	column StoreID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7aeba3ea-2142-5c09-a792-91c4274903fd
+		summarizeBy: none
+		sourceColumn: StoreID
+
+		annotation SummarizationSetBy = User
+
+	column StoreName
+		dataType: string
+		lineageTag: 8d8e6ac6-8669-5491-bd9e-d4d4e3384464
+		summarizeBy: none
+		sourceColumn: StoreName
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 91c2911c-56c5-5a23-92e8-8ce4c5f7b066
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Store location region (Online for the web/app store). Sales by customer region use the Region table.
+	column Region
+		dataType: string
+		lineageTag: d1eb874f-4876-5d59-9102-9ba96b99e37b
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column StoreType
+		dataType: string
+		lineageTag: 81a951ed-b838-5200-a756-43a6a5b74c84
+		summarizeBy: none
+		sourceColumn: StoreType
+
+		annotation SummarizationSetBy = Automatic
+
+	column SizeSqm
+		dataType: int64
+		formatString: #,##0
+		lineageTag: d75e7a26-75d9-5b52-8790-c0753355e231
+		summarizeBy: sum
+		sourceColumn: SizeSqm
+
+		annotation SummarizationSetBy = Automatic
+
+	column OpenDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 52701498-1b50-5b34-88bf-3cbe6ef6aeb7
+		summarizeBy: none
+		sourceColumn: OpenDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Manager
+		dataType: string
+		lineageTag: aff0cd6d-f91c-53b0-b655-90736e750655
+		summarizeBy: none
+		sourceColumn: Manager
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Stores = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
+					#"Stores Table" = Source{[Item="Stores",Kind="Table"]}[Data],
+					#"Set Column Types" = Table.TransformColumnTypes(#"Stores Table", {{"StoreID", Int64.Type}, {"StoreName", type text}, {"City", type text}, {"Region", type text}, {"StoreType", type text}, {"SizeSqm", Int64.Type}, {"OpenDate", type date}, {"Manager", type text}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

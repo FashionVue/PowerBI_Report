@@ -34,23 +34,63 @@
           "type": "CustomTheme"
         },
         {
-          "name": "bg-exec.png",
-          "path": "bg-exec.png",
+          "name": "bg-exec-dark.jpg",
+          "path": "bg-exec-dark.jpg",
           "type": "Image"
         },
         {
-          "name": "bg-sales.png",
-          "path": "bg-sales.png",
+          "name": "bg-targets-dark.jpg",
+          "path": "bg-targets-dark.jpg",
           "type": "Image"
         },
         {
-          "name": "bg-products.png",
-          "path": "bg-products.png",
+          "name": "bg-products-dark.jpg",
+          "path": "bg-products-dark.jpg",
           "type": "Image"
         },
         {
-          "name": "bg-customers.png",
-          "path": "bg-customers.png",
+          "name": "bg-customers-dark.jpg",
+          "path": "bg-customers-dark.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-ops-dark.jpg",
+          "path": "bg-ops-dark.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-marketing-dark.jpg",
+          "path": "bg-marketing-dark.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-exec-light.jpg",
+          "path": "bg-exec-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-targets-light.jpg",
+          "path": "bg-targets-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-products-light.jpg",
+          "path": "bg-products-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-customers-light.jpg",
+          "path": "bg-customers-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-ops-light.jpg",
+          "path": "bg-ops-light.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "bg-marketing-light.jpg",
+          "path": "bg-marketing-light.jpg",
           "type": "Image"
         }
       ]

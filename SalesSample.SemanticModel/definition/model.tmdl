@@ -8,11 +8,17 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["DataFolder","Sales","Products","Customers","Date","_Measures"]
+annotation PBI_QueryOrder = ["DataFolder","Sales","Products","Customers","Stores","Employees","Campaigns","Targets","Region","Category","Date","_Measures"]
 
 ref table Sales
 ref table Products
 ref table Customers
+ref table Stores
+ref table Employees
+ref table Campaigns
+ref table Targets
+ref table Region
+ref table Category
 ref table Date
 ref table _Measures
 

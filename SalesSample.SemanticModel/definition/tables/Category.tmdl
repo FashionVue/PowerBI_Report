@@ -1,0 +1,25 @@
+/// Product category dimension shared by Products and Targets.
+table Category
+	lineageTag: dcbb4fbc-8626-5e03-a135-a08dd6b28908
+
+	column Category
+		dataType: string
+		lineageTag: 67292f9c-1495-5356-92c2-bb6d0e855f2d
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Category = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
+					#"Targets Table" = Source{[Item="Targets",Kind="Table"]}[Data],
+					#"Kept Category" = Table.Distinct(Table.SelectColumns(#"Targets Table", {"Category"})),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Kept Category", {{"Category", type text}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

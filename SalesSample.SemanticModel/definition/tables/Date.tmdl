@@ -1,13 +1,13 @@
-/// Calendar table generated in Power Query (2024-01-01 to 2025-12-31), marked as the date table
+/// Calendar 2023-2025 with KSA weekend and retail seasons (Ramadan and Eid dates per year), marked as the date table.
 table Date
-	lineageTag: e65ada00-62d4-439b-a2cd-81c45148fdd2
+	lineageTag: a2e85acb-2603-5d3f-8f1f-8cc3d4f4ad33
 	dataCategory: Time
 
 	column Date
 		dataType: dateTime
 		isKey
 		formatString: Short Date
-		lineageTag: e4bc2388-52ff-4a65-8cdd-fd43d03c5c03
+		lineageTag: 1c0a66d9-8a86-515b-8303-af9a4af91dc3
 		summarizeBy: none
 		sourceColumn: Date
 
@@ -18,17 +18,25 @@ table Date
 	column Year
 		dataType: int64
 		formatString: 0
-		lineageTag: c9ae6c01-550f-4c3e-8b3b-4f0d119f15d9
+		lineageTag: 9b9627a7-1bde-5b6f-91f0-9197f5ebefee
 		summarizeBy: none
 		sourceColumn: Year
 
 		annotation SummarizationSetBy = User
 
+	column Quarter
+		dataType: string
+		lineageTag: 06e74f49-806b-5263-8e97-398686d4b630
+		summarizeBy: none
+		sourceColumn: Quarter
+
+		annotation SummarizationSetBy = Automatic
+
 	column 'Month Number'
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: 502d200c-1083-4a12-b6a3-f5cdcf7136f4
+		lineageTag: c9b3e892-2626-5bdb-a6a0-c5e5f2fad537
 		summarizeBy: none
 		sourceColumn: Month Number
 
@@ -36,26 +44,76 @@ table Date
 
 	column Month
 		dataType: string
-		lineageTag: 71a8d610-55dd-44f0-b528-4bf9910af3bb
+		lineageTag: e6c8d7d3-4fc4-5284-ba43-bbaa9aa66447
 		summarizeBy: none
 		sourceColumn: Month
 		sortByColumn: 'Month Number'
 
 		annotation SummarizationSetBy = Automatic
 
-	column Year-Month
-		dataType: string
-		lineageTag: 621aa909-d88e-48e8-b05f-6e7258e27d8a
+	column 'Year Month Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 747988e2-a78f-5920-91c7-139ccfb3db7d
 		summarizeBy: none
-		sourceColumn: Year-Month
+		sourceColumn: Year Month Number
+
+		annotation SummarizationSetBy = User
+
+	column 'Month Year'
+		dataType: string
+		lineageTag: c5662bbc-68c7-52b1-875d-b280b7bf6550
+		summarizeBy: none
+		sourceColumn: Month Year
+		sortByColumn: 'Year Month Number'
 
 		annotation SummarizationSetBy = Automatic
 
-	column Quarter
-		dataType: string
-		lineageTag: 351a20ca-4f33-4891-989a-d0ec5f7c2177
+	column Week
+		dataType: int64
+		formatString: 0
+		lineageTag: efdc2924-4cd2-5798-94b8-7744abb5074f
 		summarizeBy: none
-		sourceColumn: Quarter
+		sourceColumn: Week
+
+		annotation SummarizationSetBy = User
+
+	column 'Day of Week Number'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ee7a5dcb-3e2d-568e-b786-b5ccbcb652cb
+		summarizeBy: none
+		sourceColumn: Day of Week Number
+
+		annotation SummarizationSetBy = User
+
+	/// Short day name; the week starts on Sunday (KSA).
+	column 'Day Name'
+		dataType: string
+		lineageTag: 9914a14f-9f56-5ce8-b404-6c9dd5e51bdf
+		summarizeBy: none
+		sourceColumn: Day Name
+		sortByColumn: 'Day of Week Number'
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Friday and Saturday (KSA weekend).
+	column 'Is Weekend'
+		dataType: boolean
+		lineageTag: d0537c70-87c2-556c-b662-e1a7299b120e
+		summarizeBy: none
+		sourceColumn: Is Weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ramadan, Eid al-Fitr (4 days), Eid al-Adha (4 days), Founding Day, National Day, White Friday, Back to School, Summer or Regular.
+	column 'Retail Season'
+		dataType: string
+		lineageTag: 9c8a6bec-0535-5eea-8341-7cee292564d9
+		summarizeBy: none
+		sourceColumn: Retail Season
 
 		annotation SummarizationSetBy = Automatic
 
@@ -63,16 +121,36 @@ table Date
 		mode: import
 		source =
 				let
-					StartDate = #date(2024, 1, 1),
+					StartDate = #date(2023, 1, 1),
 					EndDate = #date(2025, 12, 31),
+					Ramadan = {{#date(2023,3,23), #date(2023,4,20)}, {#date(2024,3,11), #date(2024,4,9)}, {#date(2025,3,1), #date(2025,3,29)}},
+					EidFitr = {#date(2023,4,21), #date(2024,4,10), #date(2025,3,30)},
+					EidAdha = {#date(2023,6,28), #date(2024,6,16), #date(2025,6,6)},
+					SeasonOf = (d as date) as text =>
+						let
+							y = Date.Year(d), md = Date.Month(d) * 100 + Date.Day(d),
+							inRamadan = List.AnyTrue(List.Transform(Ramadan, each d >= _{0} and d <= _{1})),
+							inFitr = List.AnyTrue(List.Transform(EidFitr, each d >= _ and d <= Date.AddDays(_, 3))),
+							inAdha = List.AnyTrue(List.Transform(EidAdha, each d >= _ and d <= Date.AddDays(_, 3)))
+						in
+							if inRamadan then "Ramadan" else if inFitr then "Eid al-Fitr" else if inAdha then "Eid al-Adha"
+							else if md >= 220 and md <= 223 then "Founding Day" else if md >= 918 and md <= 924 then "National Day"
+							else if md >= 1120 and md <= 1130 then "White Friday" else if md >= 815 and md <= 905 then "Back to School"
+							else if md >= 601 and md <= 831 then "Summer" else "Regular",
 					#"Date List" = List.Dates(StartDate, Duration.Days(EndDate - StartDate) + 1, #duration(1, 0, 0, 0)),
 					#"Date Table" = Table.FromList(#"Date List", Splitter.SplitByNothing(), {"Date"}),
 					#"Added Year" = Table.AddColumn(#"Date Table", "Year", each Date.Year([Date])),
-					#"Added Month Number" = Table.AddColumn(#"Added Year", "Month Number", each Date.Month([Date])),
+					#"Added Quarter" = Table.AddColumn(#"Added Year", "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date]))),
+					#"Added Month Number" = Table.AddColumn(#"Added Quarter", "Month Number", each Date.Month([Date])),
 					#"Added Month" = Table.AddColumn(#"Added Month Number", "Month", each Date.ToText([Date], "MMM", "en-US")),
-					#"Added Year-Month" = Table.AddColumn(#"Added Month", "Year-Month", each Text.From(Date.Year([Date])) & "-" & Text.PadStart(Text.From(Date.Month([Date])), 2, "0")),
-					#"Added Quarter" = Table.AddColumn(#"Added Year-Month", "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date]))),
-					#"Set Column Types" = Table.TransformColumnTypes(#"Added Quarter", {{"Date", type date}, {"Year", Int64.Type}, {"Month Number", Int64.Type}, {"Month", type text}, {"Year-Month", type text}, {"Quarter", type text}})
+					#"Added Year Month Number" = Table.AddColumn(#"Added Month", "Year Month Number", each Date.Year([Date]) * 100 + Date.Month([Date])),
+					#"Added Month Year" = Table.AddColumn(#"Added Year Month Number", "Month Year", each Date.ToText([Date], "MMM yyyy", "en-US")),
+					#"Added Week" = Table.AddColumn(#"Added Month Year", "Week", each Date.WeekOfYear([Date], Day.Sunday)),
+					#"Added Day of Week Number" = Table.AddColumn(#"Added Week", "Day of Week Number", each Date.DayOfWeek([Date], Day.Sunday) + 1),
+					#"Added Day Name" = Table.AddColumn(#"Added Day of Week Number", "Day Name", each Date.ToText([Date], "ddd", "en-US")),
+					#"Added Is Weekend" = Table.AddColumn(#"Added Day Name", "Is Weekend", each Date.DayOfWeek([Date], Day.Sunday) >= 5),
+					#"Added Retail Season" = Table.AddColumn(#"Added Is Weekend", "Retail Season", each SeasonOf([Date])),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Retail Season", {{"Date", type date}, {"Year", Int64.Type}, {"Quarter", type text}, {"Month Number", Int64.Type}, {"Month", type text}, {"Year Month Number", Int64.Type}, {"Month Year", type text}, {"Week", Int64.Type}, {"Day of Week Number", Int64.Type}, {"Day Name", type text}, {"Is Weekend", type logical}, {"Retail Season", type text}})
 				in
 					#"Set Column Types"
 

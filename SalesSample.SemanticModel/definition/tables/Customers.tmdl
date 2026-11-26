@@ -1,11 +1,12 @@
-/// Customer dimension imported from the Customers table in SalesSample.xlsx
+/// Customer dimension with loyalty tier, acquisition channel and first order date.
 table Customers
-	lineageTag: a0831293-d7dd-4e31-bd3f-7d551031d15b
+	lineageTag: bcb3759b-cac1-5e5e-af00-9c93195257a6
 
 	column CustomerID
 		dataType: int64
+		isHidden
 		formatString: 0
-		lineageTag: 3a8b79a4-2429-43be-9f28-0fbd980a33ad
+		lineageTag: ca55e2d1-9719-581e-b2e8-c108ed938d30
 		summarizeBy: none
 		sourceColumn: CustomerID
 
@@ -13,15 +14,47 @@ table Customers
 
 	column CustomerName
 		dataType: string
-		lineageTag: a1479568-3b52-48f5-9da7-f520b5f027f5
+		lineageTag: 93421280-d512-5b59-8f95-a7ac2730d6f0
 		summarizeBy: none
 		sourceColumn: CustomerName
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Customer Label'
+		dataType: string
+		lineageTag: 70f76b5a-0692-5862-82d1-85679c4764dd
+		summarizeBy: none
+		sourceColumn: Customer Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 2f206108-1361-5f70-9d37-6affd7459224
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeGroup
+		dataType: string
+		lineageTag: 37c9c81c-b488-5914-a2f1-3d7f70f3e6c6
+		summarizeBy: none
+		sourceColumn: AgeGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nationality
+		dataType: string
+		lineageTag: bd56e7f6-cb18-5916-b36b-27e9a6fda369
+		summarizeBy: none
+		sourceColumn: Nationality
+
+		annotation SummarizationSetBy = Automatic
+
 	column City
 		dataType: string
-		lineageTag: 2d36ef5d-6824-4966-a717-f9d908bda8a7
+		lineageTag: 5916ae85-0414-5a53-9189-cb96aa1aed31
 		summarizeBy: none
 		sourceColumn: City
 
@@ -29,24 +62,44 @@ table Customers
 
 	column Region
 		dataType: string
-		lineageTag: d5b0ca4d-e07c-49ec-8f6c-84c4fc60552b
+		isHidden
+		lineageTag: 999f4956-098e-55a5-a841-105ba98e9962
 		summarizeBy: none
 		sourceColumn: Region
 
 		annotation SummarizationSetBy = Automatic
 
-	column Segment
+	column LoyaltyTier
 		dataType: string
-		lineageTag: 415d3bd8-6402-45ab-a7cf-df92efea63d0
+		lineageTag: 493d545b-ad27-56ef-92ef-dc412a705085
 		summarizeBy: none
-		sourceColumn: Segment
+		sourceColumn: LoyaltyTier
+		sortByColumn: 'Tier Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tier Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: db5d593e-42ba-5026-96ca-0d82402ef2de
+		summarizeBy: none
+		sourceColumn: Tier Order
+
+		annotation SummarizationSetBy = User
+
+	column AcquisitionChannel
+		dataType: string
+		lineageTag: 25eb7ad5-8494-54f5-be0a-30c7a8ed9c55
+		summarizeBy: none
+		sourceColumn: AcquisitionChannel
 
 		annotation SummarizationSetBy = Automatic
 
 	column JoinDate
 		dataType: dateTime
 		formatString: Short Date
-		lineageTag: 71be3e03-3e54-4367-adb8-be75c159d86f
+		lineageTag: ae678109-2096-58ee-ab57-5e29a9552d44
 		summarizeBy: none
 		sourceColumn: JoinDate
 
@@ -54,21 +107,25 @@ table Customers
 
 		annotation UnderlyingDateTimeDataType = Date
 
-	column 'Customer Label'
-		dataType: string
-		lineageTag: 52829790-4947-4b5f-b5c3-69fe49860fdc
-		summarizeBy: none
-		sourceColumn: Customer Label
-
-		annotation SummarizationSetBy = Automatic
-
 	column 'Join Month'
 		dataType: string
-		lineageTag: 2aa78c3c-d34b-400f-8e2f-e765db886090
+		lineageTag: cb5d8151-7c5f-53d7-9e45-9dfdce81f89c
 		summarizeBy: none
 		sourceColumn: Join Month
 
 		annotation SummarizationSetBy = Automatic
+
+	/// Date of the customer's first order (computed in Power Query from Sales).
+	column FirstOrderDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 55489301-be81-5564-9a17-bbf40d4ddf00
+		summarizeBy: none
+		sourceColumn: FirstOrderDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition Customers = m
 		mode: import
@@ -76,9 +133,14 @@ table Customers
 				let
 					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
 					#"Customers Table" = Source{[Item="Customers",Kind="Table"]}[Data],
-					#"Added Customer Label" = Table.AddColumn(#"Customers Table", "Customer Label", each [CustomerName] & " (#" & Text.From([CustomerID]) & ")"),
+					#"Sales Table" = Source{[Item="Sales",Kind="Table"]}[Data],
+					#"First Orders" = Table.Group(#"Sales Table", {"CustomerID"}, {{"FirstOrderDate", each List.Min([OrderDate]), type any}}),
+					#"Merged First Order" = Table.NestedJoin(#"Customers Table", {"CustomerID"}, #"First Orders", {"CustomerID"}, "FirstOrder", JoinKind.LeftOuter),
+					#"Expanded First Order" = Table.ExpandTableColumn(#"Merged First Order", "FirstOrder", {"FirstOrderDate"}),
+					#"Added Customer Label" = Table.AddColumn(#"Expanded First Order", "Customer Label", each [CustomerName] & " (#" & Text.From([CustomerID]) & ")"),
 					#"Added Join Month" = Table.AddColumn(#"Added Customer Label", "Join Month", each Date.ToText(Date.From([JoinDate]), "yyyy-MM")),
-					#"Set Column Types" = Table.TransformColumnTypes(#"Added Join Month", {{"CustomerID", Int64.Type}, {"CustomerName", type text}, {"City", type text}, {"Region", type text}, {"Segment", type text}, {"JoinDate", type date}, {"Customer Label", type text}, {"Join Month", type text}})
+					#"Added Tier Order" = Table.AddColumn(#"Added Join Month", "Tier Order", each List.PositionOf({"Bronze", "Silver", "Gold", "Platinum"}, [LoyaltyTier]) + 1),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Tier Order", {{"CustomerID", Int64.Type}, {"CustomerName", type text}, {"Gender", type text}, {"AgeGroup", type text}, {"Nationality", type text}, {"City", type text}, {"Region", type text}, {"LoyaltyTier", type text}, {"AcquisitionChannel", type text}, {"JoinDate", type date}, {"FirstOrderDate", type date}, {"Customer Label", type text}, {"Join Month", type text}, {"Tier Order", Int64.Type}})
 				in
 					#"Set Column Types"
 

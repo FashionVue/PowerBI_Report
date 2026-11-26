@@ -1,11 +1,12 @@
-/// Product dimension imported from the Products table in SalesSample.xlsx
+/// Product dimension: brand, category, collection and price tier.
 table Products
-	lineageTag: f2de96cd-1f83-4054-bd07-c10fbb49d6bc
+	lineageTag: c25def61-c309-536b-a26d-2f34c0344edf
 
 	column ProductID
 		dataType: int64
+		isHidden
 		formatString: 0
-		lineageTag: 7060c3b5-5ea3-417b-b4d2-07e167896c5b
+		lineageTag: a40ec238-c286-5d2a-ba28-b2e4f94a91b8
 		summarizeBy: none
 		sourceColumn: ProductID
 
@@ -13,37 +14,108 @@ table Products
 
 	column ProductName
 		dataType: string
-		lineageTag: 753bc24a-5098-44d5-bd4d-be627d84ed90
+		lineageTag: 38aa10b8-8e3f-5191-88d8-eb245d159652
 		summarizeBy: none
 		sourceColumn: ProductName
 
 		annotation SummarizationSetBy = Automatic
 
+	column Brand
+		dataType: string
+		lineageTag: 74df4d79-5272-5140-8c49-b8f6fd43b51f
+		summarizeBy: none
+		sourceColumn: Brand
+
+		annotation SummarizationSetBy = Automatic
+
 	column Category
 		dataType: string
-		lineageTag: 593dd49c-bc42-4ce7-ae20-b406ca49b9c9
+		isHidden
+		lineageTag: 00135a0d-71b2-589e-a071-1bcfdc395243
 		summarizeBy: none
 		sourceColumn: Category
 
 		annotation SummarizationSetBy = Automatic
 
+	column SubCategory
+		dataType: string
+		lineageTag: f24245fe-bc51-5720-a216-c54005bc3ed8
+		summarizeBy: none
+		sourceColumn: SubCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 7fecec60-d56c-55ac-881f-57d1153f14d8
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Collection
+		dataType: string
+		lineageTag: fee72035-660b-501d-b004-ed8e99ab7f80
+		summarizeBy: none
+		sourceColumn: Collection
+
+		annotation SummarizationSetBy = Automatic
+
+	column Color
+		dataType: string
+		lineageTag: 21eb44d6-814b-5d1f-bcd0-581c61fabfc3
+		summarizeBy: none
+		sourceColumn: Color
+
+		annotation SummarizationSetBy = Automatic
+
+	column PriceTier
+		dataType: string
+		lineageTag: 6943229f-ee45-5936-bc89-9d6709be9a98
+		summarizeBy: none
+		sourceColumn: PriceTier
+		sortByColumn: 'Price Tier Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price Tier Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: aa723e1b-1c44-58d3-a86d-0a85acf70f3c
+		summarizeBy: none
+		sourceColumn: Price Tier Order
+
+		annotation SummarizationSetBy = User
+
 	column UnitCost
 		dataType: decimal
 		formatString: #,##0.00
-		lineageTag: 36d20dba-6d06-491a-ae99-eb0108c46332
-		summarizeBy: sum
+		lineageTag: e7f4d38d-a53e-536c-990a-8ca5120a63ab
+		summarizeBy: none
 		sourceColumn: UnitCost
 
-		annotation SummarizationSetBy = Automatic
+		annotation SummarizationSetBy = User
 
 	column ListPrice
 		dataType: decimal
 		formatString: #,##0.00
-		lineageTag: 064c22d0-401b-420b-9991-d8fe2863f961
-		summarizeBy: sum
+		lineageTag: f74bf83e-7c0b-5c69-bc14-b76a0c18566a
+		summarizeBy: none
 		sourceColumn: ListPrice
 
+		annotation SummarizationSetBy = User
+
+	column LaunchDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 0b02b23d-1ea6-54ac-a9b9-5c2546a6f758
+		summarizeBy: none
+		sourceColumn: LaunchDate
+
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	partition Products = m
 		mode: import
@@ -51,7 +123,8 @@ table Products
 				let
 					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
 					#"Products Table" = Source{[Item="Products",Kind="Table"]}[Data],
-					#"Set Column Types" = Table.TransformColumnTypes(#"Products Table", {{"ProductID", Int64.Type}, {"ProductName", type text}, {"Category", type text}, {"UnitCost", Currency.Type}, {"ListPrice", Currency.Type}})
+					#"Added Price Tier Order" = Table.AddColumn(#"Products Table", "Price Tier Order", each if [PriceTier] = "Essential" then 1 else if [PriceTier] = "Premium" then 2 else 3),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Price Tier Order", {{"ProductID", Int64.Type}, {"ProductName", type text}, {"Brand", type text}, {"Category", type text}, {"SubCategory", type text}, {"Gender", type text}, {"Collection", type text}, {"Color", type text}, {"PriceTier", type text}, {"UnitCost", Currency.Type}, {"ListPrice", Currency.Type}, {"LaunchDate", type date}, {"Price Tier Order", Int64.Type}})
 				in
 					#"Set Column Types"
 

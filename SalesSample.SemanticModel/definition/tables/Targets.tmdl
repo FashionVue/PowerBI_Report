@@ -1,0 +1,56 @@
+/// Monthly sales targets by region and category (first day of the month).
+table Targets
+	lineageTag: e0d1ed49-ac76-5148-8a79-444445d58c68
+
+	column Month
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: a5e3cbdd-ff29-559c-8896-2955912581cd
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Region
+		dataType: string
+		isHidden
+		lineageTag: 6e298a0a-1e99-5c03-8a98-33a626c57585
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category
+		dataType: string
+		isHidden
+		lineageTag: de7f7d38-56df-546d-9f6e-035081daa47d
+		summarizeBy: none
+		sourceColumn: Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column TargetAmount
+		dataType: decimal
+		isHidden
+		formatString: #,##0
+		lineageTag: 12a20b04-cbbb-55d6-ad20-5ccfee3939f9
+		summarizeBy: sum
+		sourceColumn: TargetAmount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Targets = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
+					#"Targets Table" = Source{[Item="Targets",Kind="Table"]}[Data],
+					#"Set Column Types" = Table.TransformColumnTypes(#"Targets Table", {{"Month", type date}, {"Region", type text}, {"Category", type text}, {"TargetAmount", Currency.Type}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+

@@ -1,13 +1,23 @@
-/// Order lines imported from the Sales table in SalesSample.xlsx (one row per order)
+/// Order lines (one row per product per order), 2023-2025.
 table Sales
-	lineageTag: 5d575466-5a9e-4bc5-b0cb-fe73edd1125a
+	lineageTag: af2d7921-49e4-50f5-90f9-90c15a4c6670
 
 	column OrderID
 		dataType: int64
 		formatString: 0
-		lineageTag: 7aab5f15-8ca8-4064-8ba4-2da7664c800d
+		lineageTag: b34f7ee9-8557-5761-8a16-03b2f5afbf03
 		summarizeBy: none
 		sourceColumn: OrderID
+
+		annotation SummarizationSetBy = User
+
+	column LineNo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8f4f6062-5cb9-5c6e-8c62-8890600b4a15
+		summarizeBy: none
+		sourceColumn: LineNo
 
 		annotation SummarizationSetBy = User
 
@@ -15,7 +25,7 @@ table Sales
 		dataType: dateTime
 		isHidden
 		formatString: Short Date
-		lineageTag: cb67ac19-a323-40e0-8e26-440c9c01aedf
+		lineageTag: 3ab14b96-23b6-5948-b795-b645fae20637
 		summarizeBy: none
 		sourceColumn: OrderDate
 
@@ -27,7 +37,7 @@ table Sales
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: 8539ea56-6b38-4192-8db0-7ef9ac6378bc
+		lineageTag: 7b9878bf-7ba2-59a4-a69f-660ad328bfe5
 		summarizeBy: none
 		sourceColumn: CustomerID
 
@@ -37,24 +47,70 @@ table Sales
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: 61480f2e-bdc2-4127-a21c-ba1ebd8b51ca
+		lineageTag: 9cdb3d9e-7634-5479-a626-8f5725b5917a
 		summarizeBy: none
 		sourceColumn: ProductID
 
 		annotation SummarizationSetBy = User
 
+	column StoreID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2d4d01e1-e231-59fc-994a-c06cba66226f
+		summarizeBy: none
+		sourceColumn: StoreID
+
+		annotation SummarizationSetBy = User
+
+	column EmployeeID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b6ca008c-31c0-5550-aaa2-1e8ff282e779
+		summarizeBy: none
+		sourceColumn: EmployeeID
+
+		annotation SummarizationSetBy = User
+
+	column CampaignID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 51e658a3-74d8-53ba-b32c-b59381533ac2
+		summarizeBy: none
+		sourceColumn: CampaignID
+
+		annotation SummarizationSetBy = User
+
 	column Channel
 		dataType: string
-		lineageTag: 29831482-361a-415f-a46f-e58c83cb3db5
+		lineageTag: 256a997b-a8be-5387-97bc-d091297fede4
 		summarizeBy: none
 		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column PaymentMethod
+		dataType: string
+		lineageTag: 9feae947-6803-5804-840e-49be6ec21594
+		summarizeBy: none
+		sourceColumn: PaymentMethod
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Payment Type'
+		dataType: string
+		lineageTag: 1ae98d54-f724-554e-8ce2-4c68ca14781d
+		summarizeBy: none
+		sourceColumn: Payment Type
 
 		annotation SummarizationSetBy = Automatic
 
 	column Quantity
 		dataType: int64
 		formatString: #,##0
-		lineageTag: d283f2c8-1426-457b-af3b-7870e323ff20
+		lineageTag: 05d82af2-be9f-5cb7-8c3c-64192f67b6c6
 		summarizeBy: sum
 		sourceColumn: Quantity
 
@@ -63,7 +119,7 @@ table Sales
 	column UnitPrice
 		dataType: decimal
 		formatString: #,##0.00
-		lineageTag: 0a4a3734-3091-4c8e-a95a-d7c6f7f81bef
+		lineageTag: 4302f1ce-9546-5908-b5cd-9f8a2bd7cbde
 		summarizeBy: sum
 		sourceColumn: UnitPrice
 
@@ -72,16 +128,25 @@ table Sales
 	column Discount
 		dataType: double
 		formatString: 0%
-		lineageTag: e81fafd5-0f6a-485b-b678-8f695d7f0588
-		summarizeBy: sum
+		lineageTag: 0e8b5e5b-97b1-556a-b88d-ad2b7b08c411
+		summarizeBy: none
 		sourceColumn: Discount
+
+		annotation SummarizationSetBy = User
+
+	column 'Discount Band'
+		dataType: string
+		lineageTag: 706fb00b-ebe9-59b4-9024-195f7785e570
+		summarizeBy: none
+		sourceColumn: Discount Band
+		sortByColumn: Discount
 
 		annotation SummarizationSetBy = Automatic
 
 	column SalesAmount
 		dataType: decimal
 		formatString: #,##0.00
-		lineageTag: 2f83537d-6041-4540-996d-162b2eb6f86b
+		lineageTag: 1166617d-6389-5c3e-a7ee-34129742b611
 		summarizeBy: sum
 		sourceColumn: SalesAmount
 
@@ -90,20 +155,73 @@ table Sales
 	column CostAmount
 		dataType: decimal
 		formatString: #,##0.00
-		lineageTag: f20dfd91-46d9-4e0c-9370-e368ce08671d
+		lineageTag: e94b8e6a-9017-535c-8572-fedd5f593a29
 		summarizeBy: sum
 		sourceColumn: CostAmount
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Discount Band'
-		dataType: string
-		lineageTag: bf55ea05-f0fc-4a67-85d8-19ef7c8d26e9
-		summarizeBy: none
-		sourceColumn: Discount Band
-		sortByColumn: Discount
+	column ShippingCost
+		dataType: decimal
+		formatString: #,##0.00
+		lineageTag: ecaad8b0-5fba-5a8a-8aa0-2574b8fffef1
+		summarizeBy: sum
+		sourceColumn: ShippingCost
 
 		annotation SummarizationSetBy = Automatic
+
+	column DeliveryDays
+		dataType: int64
+		formatString: 0
+		lineageTag: c5ebdd20-550d-52a5-8ca5-68237f1c995c
+		summarizeBy: none
+		sourceColumn: DeliveryDays
+
+		annotation SummarizationSetBy = User
+
+	column 'Delivery Band'
+		dataType: string
+		lineageTag: 0bfa5453-ce33-5e7f-982f-c85563223345
+		summarizeBy: none
+		sourceColumn: Delivery Band
+		sortByColumn: 'Delivery Band Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Delivery Band Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: adf9962a-5169-591f-b98a-e7ce51d00bed
+		summarizeBy: none
+		sourceColumn: Delivery Band Order
+
+		annotation SummarizationSetBy = User
+
+	column IsReturned
+		dataType: boolean
+		lineageTag: 5e558b13-d70f-5018-92f3-3cf969968bbc
+		summarizeBy: none
+		sourceColumn: IsReturned
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReturnReason
+		dataType: string
+		lineageTag: ea34a4e9-ab31-5dd8-a5cb-ab0e5c1a3dd4
+		summarizeBy: none
+		sourceColumn: ReturnReason
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerRating
+		dataType: int64
+		formatString: 0
+		lineageTag: 3dfa387b-1371-53d8-8404-e6a8b18ad931
+		summarizeBy: none
+		sourceColumn: CustomerRating
+
+		annotation SummarizationSetBy = User
 
 	partition Sales = m
 		mode: import
@@ -111,8 +229,11 @@ table Sales
 				let
 					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
 					#"Sales Table" = Source{[Item="Sales",Kind="Table"]}[Data],
-					#"Added Discount Band" = Table.AddColumn(#"Sales Table", "Discount Band", each if [Discount] = 0 then "Full price" else Text.From(Number.Round([Discount] * 100)) & "% off"),
-					#"Set Column Types" = Table.TransformColumnTypes(#"Added Discount Band", {{"OrderID", Int64.Type}, {"OrderDate", type date}, {"CustomerID", Int64.Type}, {"ProductID", Int64.Type}, {"Channel", type text}, {"Quantity", Int64.Type}, {"UnitPrice", Currency.Type}, {"Discount", type number}, {"SalesAmount", Currency.Type}, {"CostAmount", Currency.Type}, {"Discount Band", type text}})
+					#"Added Payment Type" = Table.AddColumn(#"Sales Table", "Payment Type", each if List.Contains({"Tabby", "Tamara"}, [PaymentMethod]) then "BNPL" else if [PaymentMethod] = "Cash" then "Cash" else "Cards & wallets"),
+					#"Added Discount Band" = Table.AddColumn(#"Added Payment Type", "Discount Band", each if [Discount] = 0 then "Full price" else Text.From(Number.Round([Discount] * 100)) & "% off"),
+					#"Added Delivery Band" = Table.AddColumn(#"Added Discount Band", "Delivery Band", each if [DeliveryDays] = null then "In store" else if [DeliveryDays] <= 2 then "1-2 days" else if [DeliveryDays] = 3 then "3 days" else if [DeliveryDays] <= 5 then "4-5 days" else "6+ days"),
+					#"Added Delivery Band Order" = Table.AddColumn(#"Added Delivery Band", "Delivery Band Order", each if [DeliveryDays] = null then 0 else if [DeliveryDays] <= 2 then 1 else if [DeliveryDays] = 3 then 2 else if [DeliveryDays] <= 5 then 3 else 4),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Added Delivery Band Order", {{"OrderID", Int64.Type}, {"LineNo", Int64.Type}, {"OrderDate", type date}, {"CustomerID", Int64.Type}, {"ProductID", Int64.Type}, {"StoreID", Int64.Type}, {"EmployeeID", Int64.Type}, {"CampaignID", Int64.Type}, {"Channel", type text}, {"PaymentMethod", type text}, {"Quantity", Int64.Type}, {"UnitPrice", Currency.Type}, {"Discount", type number}, {"SalesAmount", Currency.Type}, {"CostAmount", Currency.Type}, {"ShippingCost", Currency.Type}, {"DeliveryDays", Int64.Type}, {"IsReturned", type logical}, {"ReturnReason", type text}, {"CustomerRating", Int64.Type}, {"Payment Type", type text}, {"Discount Band", type text}, {"Delivery Band", type text}, {"Delivery Band Order", Int64.Type}})
 				in
 					#"Set Column Types"
 

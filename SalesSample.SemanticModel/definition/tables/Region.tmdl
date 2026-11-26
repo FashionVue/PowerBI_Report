@@ -1,0 +1,25 @@
+/// Customer region dimension shared by Customers and Targets.
+table Region
+	lineageTag: 5e6cf270-def3-59ce-aea5-79362cfc27a1
+
+	column Region
+		dataType: string
+		lineageTag: c3094534-d479-57b0-9edf-7e2d413a0f6f
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Region = m
+		mode: import
+		source =
+				let
+					Source = Excel.Workbook(File.Contents(DataFolder & "SalesSample.xlsx"), null, true),
+					#"Targets Table" = Source{[Item="Targets",Kind="Table"]}[Data],
+					#"Kept Region" = Table.Distinct(Table.SelectColumns(#"Targets Table", {"Region"})),
+					#"Set Column Types" = Table.TransformColumnTypes(#"Kept Region", {{"Region", type text}})
+				in
+					#"Set Column Types"
+
+	annotation PBI_ResultType = Table
+
