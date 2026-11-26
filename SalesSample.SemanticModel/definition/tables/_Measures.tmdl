@@ -1062,14 +1062,15 @@ table _Measures
 		displayFolder: Targets
 		lineageTag: 4f579ca2-891f-5483-a9f4-d345e394498a
 
-	/// Tile text for Sales: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for Sales: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'Sales vs PY Label' =
 			VAR _Delta = [Sales YoY %]
+			VAR _Prior = [Sales PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  vs PY " & IF ( ABS ( _Prior ) >= 1000000, FORMAT ( _Prior / 1000000, "0.0" ) & "M", FORMAT ( _Prior / 1000, "0.0" ) & "K" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 816ea44d-c444-5ab2-80eb-bcf7bf37447d
@@ -1100,14 +1101,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 290d78d2-30de-54e7-bf01-ae4f7e1a0681
 
-	/// Tile text for Gross Margin: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for Gross Margin: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'Gross Margin vs PY Label' =
 			VAR _Delta = [Gross Margin vs PY %]
+			VAR _Prior = [Gross Margin PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  vs PY " & IF ( ABS ( _Prior ) >= 1000000, FORMAT ( _Prior / 1000000, "0.0" ) & "M", FORMAT ( _Prior / 1000, "0.0" ) & "K" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 3e48d168-2272-5609-a76a-822e79ab042a
@@ -1138,14 +1140,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 21768490-3c8d-5ba6-b9f8-78c3874370e3
 
-	/// Tile text for Margin %: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for Margin %: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'Margin % vs PY Label' =
 			VAR _Delta = [Margin % vs PY (pts)]
+			VAR _Prior = [Margin % PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " pts" & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " pts" & "  vs PY " & FORMAT ( _Prior, "0.0%" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 05d80d7d-284e-5faa-90cb-e39f8e17eed6
@@ -1176,14 +1179,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 75d6f326-4f90-5901-919d-0ae3ec009dc7
 
-	/// Tile text for Net Margin %: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for Net Margin %: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'Net Margin % vs PY Label' =
 			VAR _Delta = [Net Margin % vs PY (pts)]
+			VAR _Prior = [Net Margin % PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " pts" & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " pts" & "  vs PY " & FORMAT ( _Prior, "0.0%" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 34f4be46-5502-539e-b9ce-6c2c125b501f
@@ -1214,14 +1218,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: b9b834fb-7e64-53f1-ad0e-9b4cb98bf81c
 
-	/// Tile text for Orders: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for Orders: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'Orders vs PY Label' =
 			VAR _Delta = [Orders vs PY %]
+			VAR _Prior = [Orders PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  vs PY " & FORMAT ( _Prior, "#,0" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: affeeb1c-83ab-5685-b79d-1dfc899b1a7e
@@ -1252,14 +1257,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 5209154e-0685-5c3f-93cf-c6a33cc75a41
 
-	/// Tile text for AOV: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for AOV: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'AOV vs PY Label' =
 			VAR _Delta = [AOV vs PY %]
+			VAR _Prior = [AOV PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  vs PY " & IF ( ABS ( _Prior ) >= 1000000, FORMAT ( _Prior / 1000000, "0.0" ) & "M", FORMAT ( _Prior / 1000, "0.0" ) & "K" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 207f5b37-c722-51e6-b886-45e77aa658ff
@@ -1290,14 +1296,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 2ff4307b-cfc2-5289-9093-b2999d67076b
 
-	/// Tile text for Customers: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for Customers: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'Customers vs PY Label' =
 			VAR _Delta = [Customers vs PY %]
+			VAR _Prior = [Customers PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  vs PY " & FORMAT ( _Prior, "#,0" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: e2c8a0ea-f015-51ff-aafb-5341175c96a0
@@ -1328,14 +1335,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 900d59de-3247-58f4-aae1-aafef2ddbc97
 
-	/// Tile text for New Customers: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for New Customers: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'New Customers vs PY Label' =
 			VAR _Delta = [New Customers vs PY %]
+			VAR _Prior = [New Customers PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  vs PY " & FORMAT ( _Prior, "#,0" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: cda211f5-72e0-5a3c-924b-08c6acf10c03
@@ -1366,14 +1374,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 636ae5d2-bdb1-5f8b-b46d-affc2c2784ea
 
-	/// Tile text for ROAS: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for ROAS: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'ROAS vs PY Label' =
 			VAR _Delta = [ROAS vs PY %]
+			VAR _Prior = [ROAS PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  vs PY " & FORMAT ( _Prior, "0.00" ) & "x"
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 3542c962-061a-5a4e-9d74-aedbc4797980
@@ -1404,14 +1413,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: acebf196-ff3f-5deb-8198-51f3faff1b28
 
-	/// Tile text for Return Rate: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for Return Rate: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'Return Rate vs PY Label' =
 			VAR _Delta = [Return Rate vs PY (pts)]
+			VAR _Prior = [Return Rate PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " pts" & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " pts" & "  vs PY " & FORMAT ( _Prior, "0.0%" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 00587f6a-14bb-57b8-bb4a-63f2aae49c45
@@ -1442,14 +1452,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 601c5eb3-f84b-502d-9eb1-ddbd0c166b9f
 
-	/// Tile text for BNPL Share: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for BNPL Share: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'BNPL Share vs PY Label' =
 			VAR _Delta = [BNPL Share vs PY (pts)]
+			VAR _Prior = [BNPL Share PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " pts" & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " pts" & "  vs PY " & FORMAT ( _Prior, "0.0%" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: d2fea0c2-b9f9-54bb-92ec-32a2e3ead994
@@ -1480,14 +1491,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 800c9336-f055-5c1a-a2cc-a40ee24bffe7
 
-	/// Tile text for Late Deliveries: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for Late Deliveries: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'Late Deliveries vs PY Label' =
 			VAR _Delta = [Late Deliveries vs PY (pts)]
+			VAR _Prior = [Late Deliveries % PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " pts" & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " pts" & "  vs PY " & FORMAT ( _Prior, "0.0%" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 1d287577-a4d6-5e74-ab5a-832861b461aa
@@ -1518,14 +1530,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: be377940-50bc-57a6-b40d-10c96ef7e043
 
-	/// Tile text for Avg Rating: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for Avg Rating: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'Avg Rating vs PY Label' =
 			VAR _Delta = [Avg Rating vs PY]
+			VAR _Prior = [Avg Rating PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.00" ) & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.00" ) & "  vs PY " & FORMAT ( _Prior, "0.00" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 4682024f-d812-5b57-b98b-365aee561c8c
@@ -1556,14 +1569,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: f790616f-7a0a-589e-8d47-9aad7a8e0642
 
-	/// Tile text for YTD: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for YTD: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'YTD vs PY Label' =
 			VAR _Delta = [YTD vs PY %]
+			VAR _Prior = [Sales PY YTD]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  vs PY " & IF ( ABS ( _Prior ) >= 1000000, FORMAT ( _Prior / 1000000, "0.0" ) & "M", FORMAT ( _Prior / 1000, "0.0" ) & "K" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 3ab572cd-8a3e-5139-8f5c-37177d3e8b3a
@@ -1594,14 +1608,15 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 603f64e5-8872-5b37-9ea9-d8b543e95ed0
 
-	/// Tile text for Units: arrow and size of the change vs prior year, or a note when there is no prior-year data.
+	/// Tile text for Units: arrow, size of the change vs prior year and the prior-year value, or a note when there is no prior-year data.
 	measure 'Units vs PY Label' =
 			VAR _Delta = [Units vs PY %]
+			VAR _Prior = [Units PY]
 			RETURN
 			    IF (
 			        ISBLANK ( _Delta ),
 			        "No prior-year data",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & " vs PY"
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  vs PY " & FORMAT ( _Prior, "#,0" )
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: b239bb3d-80d8-5179-98e0-2ddfe392f3ab
@@ -1640,7 +1655,7 @@ table _Measures
 			    IF (
 			        ISBLANK ( _Attainment ),
 			        "No target",
-			        IF ( _Gap >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Gap ) / 1000, "#,0" ) & "K " & IF ( _Gap >= 0, "above", "below" ) & " target"
+			        IF ( _Gap >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Gap ) / 1000, "#,0.0" ) & "K " & IF ( _Gap >= 0, "above", "below" ) & " target " & FORMAT ( [Target CY] / 1000000, "0.00" ) & "M"
 			    )
 		displayFolder: KPI\Labels
 		lineageTag: 9f12cb12-ea4d-5d92-8820-82e8b1336e2b

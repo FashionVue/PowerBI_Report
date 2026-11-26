@@ -3,11 +3,11 @@
   "name": "f4553fbb98e47c18c4f9",
   "position": {
     "x": 1180,
-    "y": 388,
-    "z": 18000,
-    "height": 284,
+    "y": 440,
+    "z": 21000,
+    "height": 256,
     "width": 684,
-    "tabOrder": 18000
+    "tabOrder": 21000
   },
   "visual": {
     "visualType": "scatterChart",

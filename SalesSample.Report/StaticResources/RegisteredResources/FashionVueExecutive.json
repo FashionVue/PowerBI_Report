@@ -1,5 +1,5 @@
 {
-  "name": "FashionVue Executive Dark",
+  "name": "FashionVue Executive",
   "dataColors": [
     "#BF9640",
     "#6A86C9",
@@ -127,7 +127,7 @@
                 "color": "#9AA3B5"
               }
             },
-            "fontSize": 10,
+            "fontSize": 11,
             "fontFamily": "Segoe UI",
             "showAxisTitle": false,
             "gridlineShow": false
@@ -140,7 +140,7 @@
                 "color": "#9AA3B5"
               }
             },
-            "fontSize": 10,
+            "fontSize": 11,
             "fontFamily": "Segoe UI",
             "showAxisTitle": false,
             "gridlineShow": true,
@@ -155,7 +155,7 @@
         "legend": [
           {
             "show": true,
-            "position": "TopRight",
+            "position": "Top",
             "labelColor": {
               "solid": {
                 "color": "#9AA3B5"
@@ -198,53 +198,6 @@
               }
             },
             "transparency": 0
-          }
-        ]
-      }
-    },
-    "cardVisual": {
-      "*": {
-        "value": [
-          {
-            "fontSize": 28,
-            "fontFamily": "Segoe UI Semibold",
-            "fontColor": {
-              "solid": {
-                "color": "#F3EFE7"
-              }
-            },
-            "horizontalAlignment": "left"
-          }
-        ],
-        "label": [
-          {
-            "show": false
-          }
-        ],
-        "layout": [
-          {
-            "alignment": "left",
-            "backgroundShow": false
-          }
-        ],
-        "outline": [
-          {
-            "show": false
-          }
-        ],
-        "accentBar": [
-          {
-            "show": false
-          }
-        ],
-        "shadowCustom": [
-          {
-            "show": false
-          }
-        ],
-        "glowCustom": [
-          {
-            "show": false
           }
         ]
       }
@@ -622,6 +575,31 @@
         ]
       }
     },
+    "card": {
+      "*": {
+        "labels": [
+          {
+            "fontFamily": "DIN",
+            "fontSize": 28,
+            "color": {
+              "solid": {
+                "color": "#F3EFE7"
+              }
+            }
+          }
+        ],
+        "categoryLabels": [
+          {
+            "show": false
+          }
+        ],
+        "wordWrap": [
+          {
+            "show": true
+          }
+        ]
+      }
+    },
     "waterfallChart": {
       "*": {
         "sentimentColors": [
@@ -652,6 +630,12 @@
             },
             "gridlineStyle": "dotted",
             "showAxisTitle": false
+          }
+        ],
+        "labels": [
+          {
+            "show": true,
+            "fontSize": 10
           }
         ]
       }

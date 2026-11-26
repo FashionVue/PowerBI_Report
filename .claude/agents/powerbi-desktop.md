@@ -65,6 +65,7 @@ Pick the route that matches the situation and say which one you are using.
 - Follow the existing theme and page layout. Keep a clear visual hierarchy: KPI cards at the top, trends in the middle, detail tables at the bottom.
 - Prefer measures over implicit aggregations in visuals, and limit visuals per page (roughly 8–12) for performance.
 - When editing PBIR JSON, change only the visual or page you need and keep the schema reference at the top of each file intact.
+- For report design or redesign (designed backgrounds, KPI tiles, dark/light pages), follow the `pbi-report-design` skill and build and validate with `tools/pbip-builder/`.
 
 ## Performance checklist (use when asked why a report is slow)
 
