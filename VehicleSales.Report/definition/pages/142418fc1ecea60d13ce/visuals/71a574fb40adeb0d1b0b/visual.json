@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Revenue CY"
+                  "Property": "Revenue CY Text"
                 }
               },
-              "queryRef": "_Measures.Revenue CY",
-              "nativeQueryRef": "Revenue CY"
+              "queryRef": "_Measures.Revenue CY Text",
+              "nativeQueryRef": "Revenue CY Text"
             }
           ]
         }
@@ -58,7 +58,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "26D"
+                  "Value": "24D"
                 }
               }
             },

@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Target FY"
+                  "Property": "Target FY Text"
                 }
               },
-              "queryRef": "_Measures.Target FY",
-              "nativeQueryRef": "Target FY"
+              "queryRef": "_Measures.Target FY Text",
+              "nativeQueryRef": "Target FY Text"
             }
           ]
         }
@@ -58,7 +58,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "26D"
+                  "Value": "24D"
                 }
               }
             },

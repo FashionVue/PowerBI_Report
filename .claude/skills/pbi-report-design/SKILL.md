@@ -82,3 +82,29 @@ Template: `tools/pbip-builder/projects/vehicles/` (`build.sh vehicles`).
   - They are first and last in `pageOrder`.
 - **Identity:** a new brand needs new palettes validated in both modes (`validate_palette.js --pairs all`). Shapes drive the feel too: an angled corner cut, small radii, speed-line motifs and a blueprint grid read "automotive"; large radii and soft glows read "luxury fashion".
 - **Insight panels:** the lead-in and bulb icon (or a number for recommendations) go on the right. With the classic card the text is centred; give each sentence at least 58px.
+
+## Bidi, animated SVG and button states (learned on VehicleSales v2)
+
+- **Bidi.** Classic cards lay text out with a left-to-right base, so mixed Arabic + numbers + % + arrows come out jumbled. In DAX:
+  - Wrap every Arabic string in `UNICHAR(8295)` (RLI) … `UNICHAR(8297)` (PDI).
+  - Wrap every number group (`FORMAT(...)` result, with its %) in `UNICHAR(8294)` (LRI) … PDI.
+  - Put the arrow first, so it lands on the right.
+  - `projects/vehicles/build_model.py` does this automatically for every label, insight and recommendation measure.
+  - Check by rendering the strings in Chromium under both `dir="ltr"` (centred) and `dir="rtl"`; the check script is `v2checks/bidi.js` in the session scratchpad.
+- **Arabic values.** For money tiles show a text measure such as `"244.8 مليون"` (bidi-wrapped). It returns `"لا توجد بيانات للفترة"` when blank, which is the empty state. On the cover, print the unit in the label line ("مليون ريال") so the value stays short and never truncates.
+- **SVG sparklines** (replace tiny line charts; native ones rendered as grey stubs):
+  - A measure with `dataCategory: ImageUrl` returns `"data:image/svg+xml;utf8,<svg …>"`, with `#` written as `%23` and only single quotes inside.
+  - Monthly points come from `ADDCOLUMNS(VALUES('Date'[Month Number]), "@v", VAR m = … RETURN CALCULATE(base, REMOVEFILTERS('Date'), Year = latest, Month = m))`, joined into a path with `CONCATENATEX`.
+  - Show it in a one-column `tableEx`: projection `displayName " "`; header font 8 in the panel colour; `grid.imageWidth/imageHeight` (e.g. 240×28); no grid; value back colours = panel colour.
+- **Animation (SMIL inside the SVG, plays on load and on every filter change):**
+  - Line draw-in: `pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'` with `<animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keySplines='0.25 0.8 0.25 1'/>`.
+  - Area fade-in, then the end dot pops (`r` 0 → 3.2).
+  - RTL bullet bar: animate `width` and `x` together so the bar grows from the right; the target is a thin marker.
+  - Give elements with delayed animations `opacity='0'` so they don't flash before they start.
+  - Only one infinite motion: a subtle pulse.
+  - Capture frames at 0/400/1200/2600 ms to prove the animation runs and ends in the right state.
+- **Button states.** `@microsoft/powerbi-core-visual-schema` (MIT, `data/instance-selectors.json`) lists actionButton states `default/hover/selected/disabled` for fill, outline, text and icon. Transparent nav buttons over drawn icons get `fill.show true` plus `fillColor` = accent with `transparency` 100 (default) / 84 (hover) / 72 (selected).
+- **Skipped (not validatable here):**
+  - Report-page tooltips, drill-through pages and bookmarks/overlays: their PBIR shapes weren't confirmable from a schema or a Desktop-saved sample.
+  - The image visual's `sourceType` / `sourceField` enum values.
+  - Translating the slicer's "All" text.

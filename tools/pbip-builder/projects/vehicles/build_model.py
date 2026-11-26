@@ -241,8 +241,8 @@ for sfx in ("", " (Light)"):
 add("Period Label", F["lbl"], None, "Header text naming the compared years.", "VAR _Y = MAX ( 'Date'[Year] )", "RETURN", '    _Y & " مقابل " & ( _Y - 1 )')
 for n, e in [("Revenue All Years", "[Revenue]"), ("Units All Years", "[Units]"), ("Total Gross All Years", "[Total Gross]"), ("Visits All Years", "[Visits]")]:
     add(n, F["cov"], MONEY, f"{n.replace(' All Years', '')} across 2023-2025 (ignores date filters) for the cover page.", f"CALCULATE ( {e}, REMOVEFILTERS ( 'Date' ) )")
-add("Cover Revenue Label", F["cov"], None, "Cover headline: three-year revenue in millions.", 'FORMAT ( [Revenue All Years] / 1000000, "#,0" ) & " مليون ريال"')
-add("Cover Gross Label", F["cov"], None, "Cover headline: three-year total gross in millions.", 'FORMAT ( [Total Gross All Years] / 1000000, "#,0.0" ) & " مليون ريال"')
+add("Cover Revenue Label", F["cov"], None, "Cover headline: three-year revenue in SAR millions (unit is printed in the label line).", 'FORMAT ( [Revenue All Years] / 1000000, "#,0" )')
+add("Cover Gross Label", F["cov"], None, "Cover headline: three-year total gross in SAR millions (unit is printed in the label line).", 'FORMAT ( [Total Gross All Years] / 1000000, "#,0.0" )')
 
 INS = {
     "Insight Headline": ["VAR _Y = MAX ( 'Date'[Year] )", "VAR _G = [Revenue YoY %]", "VAR _A = [Attainment CY]", "RETURN",
@@ -283,6 +283,100 @@ REC = {
 }
 for n, lines in REC.items():
     add(n, F["rec"], None, "Arabic recommendation for the conclusion page, with numbers from the data.", *lines)
+
+# ------------------------------------------------------------------ Arabic value texts (empty state instead of blank)
+for n, e in [("Revenue CY Text", "[Revenue CY]"), ("Service Revenue CY Text", "[Service Revenue CY]"), ("Target FY Text", "[Target FY]"), ("Run-rate FY Text", "[Run-rate FY]")]:
+    add(n, F["lbl"], None, f"Arabic tile value for {e}: millions with the word مليون, or an empty-state note.",
+        f"VAR _V = {e}", "RETURN", '    IF ( ISBLANK ( _V ), "لا توجد بيانات للفترة", FORMAT ( _V / 1000000, "0.0" ) & " مليون" )')
+
+# ------------------------------------------------------------------ animated SVG measures (ImageUrl)
+COLORS = {"": ("%2312A594", "%232A2F37"), " (Light)": ("%2300897A", "%23E6E9ED")}
+SPARK = {"Revenue CY": "[Revenue]", "Units CY": "[Units]", "Total GPU CY": "[Total Gross per Unit]", "Attainment CY": "DIVIDE ( [Revenue], [Revenue Target] )",
+         "Finance Penetration CY": "[Finance Penetration %]", "Service Revenue CY": "[Service Revenue]", "Front GPU CY": "[Front Gross per Unit]",
+         "Discount % CY": "[Discount %]", "Avg Days in Stock CY": "[Avg Days in Stock]", "Aged Stock % CY": "[Aged Stock %]",
+         "Electrified Share CY": "[Electrified Share %]", "Chinese Share CY": "[Chinese Share %]", "Leads CY": "[Leads]",
+         "Lead Conversion CY": "[Lead Conversion %]", "Avg CSAT CY": "[Avg CSAT]", "Comeback Rate CY": "[Comeback Rate %]", "Absorption CY": "[Absorption %]"}
+SW, SH = 240, 28
+for cyname, base in SPARK.items():
+    for sfx, (acc, _) in COLORS.items():
+        name = f"Spark {cyname}{sfx}"
+        m.categories[name] = "ImageUrl"
+        add(name, "KPI\\Sparklines", None, f"Animated SVG sparkline (latest year by month) for {cyname}{' on light pages' if sfx else ''}: the line draws in, the area fades in, the end dot pops.",
+            "VAR _LatestYear = MAX ( 'Date'[Year] )",
+            "VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )",
+            f"VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, \"@v\", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( {base}, REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )",
+            "VAR _Min = MINX ( _Pts, [@v] )", "VAR _Max = MAXX ( _Pts, [@v] )", "VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )",
+            f"VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * {(SW - 8) / 11:.3f} + 4, \"0.0\" ) & \",\" & FORMAT ( {SH - 4} - ( [@v] - _Min ) / _Range * {SH - 10}, \"0.0\" ), \" L \", 'Date'[Month Number], ASC )",
+            "VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )", "VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )",
+            "VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )",
+            f"VAR _X = FORMAT ( ( _LastM - 1 ) * {(SW - 8) / 11:.3f} + 4, \"0.0\" )", f"VAR _X0 = FORMAT ( ( _FirstM - 1 ) * {(SW - 8) / 11:.3f} + 4, \"0.0\" )",
+            f"VAR _Y = FORMAT ( {SH - 4} - ( _LastV - _Min ) / _Range * {SH - 10}, \"0.0\" )",
+            "VAR _Svg =",
+            f"    \"<svg xmlns='http://www.w3.org/2000/svg' width='{SW}' height='{SH}' viewBox='0 0 {SW} {SH}'>\"",
+            f"        & \"<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='{acc}' stop-opacity='0.35'/><stop offset='1' stop-color='{acc}' stop-opacity='0'/></linearGradient></defs>\"",
+            f"        & \"<path d='M\" & _Line & \" L\" & _X & \",{SH} L\" & _X0 & \",{SH} Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>\"",
+            f"        & \"<path d='M\" & _Line & \"' fill='none' stroke='{acc}' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>\"",
+            f"        & \"<circle cx='\" & _X & \"' cy='\" & _Y & \"' r='0' fill='{acc}'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>\"",
+            "RETURN", "    IF ( COUNTROWS ( _Pts ) > 1, \"data:image/svg+xml;utf8,\" & _Svg )")
+BW, BH = 300, 22
+for sfx, (acc, track) in COLORS.items():
+    name = f"Branch Bullet SVG{sfx}"
+    m.categories[name] = "ImageUrl"
+    tgt = "%238A93F2" if not sfx else "%234A5FA8"
+    add(name, "KPI\\Sparklines", None, f"Animated right-to-left bullet chart per branch{' (light pages)' if sfx else ''}: revenue bar grows from the right, target shown as a marker.",
+        "VAR _Rev = [Revenue CY]", "VAR _Tgt = [Revenue Target CY]",
+        "VAR _Max = MAXX ( ALLSELECTED ( Branches[BranchName] ), MAX ( [Revenue CY], [Revenue Target CY] ) )",
+        f"VAR _W = DIVIDE ( _Rev, _Max ) * {BW - 4}", f"VAR _T = {BW - 2} - DIVIDE ( _Tgt, _Max ) * {BW - 4}",
+        "VAR _Svg =",
+        f"    \"<svg xmlns='http://www.w3.org/2000/svg' width='{BW}' height='{BH}' viewBox='0 0 {BW} {BH}'>\"",
+        f"        & \"<rect x='2' y='6' width='{BW - 4}' height='10' rx='2' fill='{track}'/>\"",
+        f"        & \"<rect x='{BW - 2}' y='6' width='0' height='10' rx='2' fill='{acc}'><animate attributeName='width' from='0' to='\" & FORMAT ( _W, \"0.0\" ) & \"' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/><animate attributeName='x' from='{BW - 2}' to='\" & FORMAT ( {BW - 2} - _W, \"0.0\" ) & \"' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></rect>\"",
+        f"        & IF ( NOT ISBLANK ( _Tgt ), \"<rect x='\" & FORMAT ( _T - 1, \"0.0\" ) & \"' y='2' width='3' height='18' rx='1' fill='{tgt}'/>\", \"\" ) & \"</svg>\"",
+        "RETURN", "    IF ( NOT ISBLANK ( _Rev ), \"data:image/svg+xml;utf8,\" & _Svg )")
+for sfx, (acc, track) in COLORS.items():
+    name = f"Cover Hero SVG{sfx}"
+    m.categories[name] = "ImageUrl"
+    o2 = "%23E8793A" if not sfx else "%23C2560F"
+    lines = "".join(f"<line x1='{40 + i * 30}' y1='300' x2='{170 + i * 30}' y2='20' stroke='{acc}' stroke-width='3' stroke-opacity='{0.10 + i * 0.05:.2f}' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='{i * 0.08:.2f}s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='{i * 0.08:.2f}s' dur='0.6s' fill='freeze'/></line>" for i in range(8))
+    svg = (f"<svg xmlns='http://www.w3.org/2000/svg' width='360' height='300' viewBox='0 0 360 300'>{lines}"
+           f"<path d='M180 40 L250 120 L222 120 L180 72 L138 120 L110 120 Z' fill='none' stroke='{acc}' stroke-width='3' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' begin='0.4s' dur='1.2s' fill='freeze'/></path>"
+           f"<path d='M180 110 L232 172 L204 172 L180 144 L156 172 L128 172 Z' fill='none' stroke='{o2}' stroke-width='3' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' begin='0.8s' dur='1.2s' fill='freeze'/></path>"
+           f"<circle cx='180' cy='230' r='6' fill='{acc}' opacity='0.9'><animate attributeName='r' values='6;10;6' dur='2.4s' begin='2s' repeatCount='indefinite'/><animate attributeName='opacity' values='0.9;0.3;0.9' dur='2.4s' begin='2s' repeatCount='indefinite'/></circle></svg>")
+    add(name, F["cov"], None, "Animated cover mark: speed lines sweep in, the two chevrons draw, then one subtle pulse repeats.", f'"data:image/svg+xml;utf8,{svg}"')
+
+# ------------------------------------------------------------------ bidi: isolate Arabic text runs (RLI...PDI) and number groups (LRI...PDI)
+def _wrap_formats(text):
+    out, i = "", 0
+    while True:
+        j = text.find("FORMAT (", i)
+        if j < 0:
+            return out + text[i:]
+        depth, k = 0, j + len("FORMAT")
+        while True:
+            if text[k] == "(":
+                depth += 1
+            elif text[k] == ")":
+                depth -= 1
+                if depth == 0:
+                    break
+            k += 1
+        out += text[i:j] + "UNICHAR ( 8294 ) & " + text[j:k + 1] + " & UNICHAR ( 8297 )"
+        i = k + 1
+
+
+BIDI_FOLDERS = {F["lbl"], F["ins"], F["rec"]}
+for idx, (name, folder, fmt, desc, lines) in enumerate(m.measures):
+    if not (folder in BIDI_FOLDERS or name in ("Cover Revenue Label", "Cover Gross Label")) or "Color" in name:
+        continue
+    lines = [_wrap_formats(l) for l in lines]
+    if "RETURN" in lines:
+        r = lines.index("RETURN")
+        lines[r + 1] = lines[r + 1][:4] + "UNICHAR ( 8295 ) & ( " + lines[r + 1][4:]
+        lines[-1] = lines[-1] + " ) & UNICHAR ( 8297 )"
+    else:
+        lines = ["UNICHAR ( 8295 ) & ( " + lines[0]] + lines[1:-1] + [lines[-1] + " ) & UNICHAR ( 8297 )"] if len(lines) > 1 else ["UNICHAR ( 8295 ) & ( " + lines[0] + " ) & UNICHAR ( 8297 )"]
+    m.measures[idx] = (name, folder, fmt, desc + " Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.", lines)
+
 
 m.finish(["Sales", "Leads", "Service", "Vehicles", "Branches", "Employees", "Customers", "Targets", "Segment", "Date"],
          [("Sales.DealDate", "Date.Date"), ("Sales.BranchID", "Branches.BranchID"), ("Sales.EmployeeID", "Employees.EmployeeID"),

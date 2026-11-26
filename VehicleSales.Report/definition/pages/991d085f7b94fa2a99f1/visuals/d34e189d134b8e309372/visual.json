@@ -10,11 +10,56 @@
     "tabOrder": 34000
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "tableEx",
     "query": {
       "queryState": {
-        "Category": {
+        "Values": {
           "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Attainment CY"
+                }
+              },
+              "queryRef": "_Measures.Attainment CY",
+              "nativeQueryRef": "Attainment CY",
+              "displayName": "التحقيق"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Revenue CY Text"
+                }
+              },
+              "queryRef": "_Measures.Revenue CY Text",
+              "nativeQueryRef": "Revenue CY Text",
+              "displayName": "الإيرادات"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Branch Bullet SVG"
+                }
+              },
+              "queryRef": "_Measures.Branch Bullet SVG",
+              "nativeQueryRef": "Branch Bullet SVG",
+              "displayName": " "
+            },
             {
               "field": {
                 "Column": {
@@ -28,41 +73,7 @@
               },
               "queryRef": "Branches.BranchName",
               "nativeQueryRef": "BranchName",
-              "active": true
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Revenue CY"
-                }
-              },
-              "queryRef": "_Measures.Revenue CY",
-              "nativeQueryRef": "Revenue CY",
-              "displayName": "الإيرادات"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Revenue Target CY"
-                }
-              },
-              "queryRef": "_Measures.Revenue Target CY",
-              "nativeQueryRef": "Revenue Target CY",
-              "displayName": "الهدف"
+              "displayName": "الفرع"
             }
           ]
         }
@@ -77,7 +88,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Revenue CY"
+                "Property": "Attainment CY"
               }
             },
             "direction": "Descending"
@@ -86,15 +97,26 @@
       }
     },
     "objects": {
-      "categoryAxis": [
+      "grid": [
         {
           "properties": {
-            "labelColor": {
+            "gridHorizontalColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#9AA3AE'"
+                      "Value": "'#2A2F37'"
+                    }
+                  }
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2A2F37'"
                     }
                   }
                 }
@@ -104,20 +126,34 @@
         },
         {
           "properties": {
-            "switchAxisPosition": {
+            "imageWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "300L"
+                }
+              }
+            },
+            "imageHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "22L"
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "3L"
                 }
               }
             }
           }
         }
       ],
-      "valueAxis": [
+      "columnHeaders": [
         {
           "properties": {
-            "labelColor": {
+            "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
@@ -128,12 +164,91 @@
                 }
               }
             },
-            "gridlineColor": {
+            "backColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#262B33'"
+                      "Value": "'#16191E'"
+                    }
+                  }
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2A2F37'"
+                    }
+                  }
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Right'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#EEF1F4'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#16191E'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#EEF1F4'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#191C21'"
+                    }
+                  }
+                }
+              }
+            },
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2A2F37'"
                     }
                   }
                 }
@@ -143,84 +258,17 @@
         },
         {
           "properties": {
-            "invertAxis": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "legend": [
-        {
-          "properties": {
-            "labelColor": {
+            "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
-                    "Literal": {
-                      "Value": "'#9AA3AE'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "labels": [
-        {
-          "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#9AA3AE'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "labelPrecision": {
-              "expr": {
-                "Literal": {
-                  "Value": "1L"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "dataPoint": [
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#12A594'"
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Attainment Color"
                     }
                   }
                 }
@@ -228,25 +276,58 @@
             }
           },
           "selector": {
-            "metadata": "_Measures.Revenue CY"
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "_Measures.Attainment CY"
           }
-        },
+        }
+      ],
+      "total": [
         {
           "properties": {
-            "fill": {
+            "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#8A93F2'"
+                      "Value": "'#3FD9C2'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1D2127'"
                     }
                   }
                 }
               }
             }
+          }
+        }
+      ],
+      "columnFormatting": [
+        {
+          "properties": {
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Right'"
+                }
+              }
+            }
           },
           "selector": {
-            "metadata": "_Measures.Revenue Target CY"
+            "metadata": "Branches.BranchName"
           }
         }
       ]
@@ -336,7 +417,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'الإيرادات والهدف حسب الفرع'"
+                  "Value": "'الإيرادات مقابل الهدف حسب الفرع'"
                 }
               }
             }

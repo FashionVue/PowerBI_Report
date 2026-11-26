@@ -8,7 +8,7 @@ class Model:
     def __init__(self, definition_dir, namespace):
         self.DEF = definition_dir
         self.NS = uuid.uuid5(uuid.NAMESPACE_URL, namespace)
-        self.tables, self.measures = [], []
+        self.tables, self.measures, self.categories = [], [], {}
         os.makedirs(os.path.join(self.DEF, "tables"), exist_ok=True)
         for f in os.listdir(os.path.join(self.DEF, "tables")):
             os.remove(os.path.join(self.DEF, "tables", f))
@@ -69,6 +69,8 @@ class Model:
             ms += f"{T}measure {self.q(name)} = {lines[0]}\n" if len(lines) == 1 else f"{T}measure {self.q(name)} =\n" + "".join(f"{T*3}{l}\n" for l in lines)
             if fmt:
                 ms += f"{T*2}formatString: {fmt}\n"
+            if name in self.categories:
+                ms += f"{T*2}dataCategory: {self.categories[name]}\n"
             ms += f"{T*2}displayFolder: {folder}\n{T*2}lineageTag: {self.tag('_Measures', 'measure', name)}\n\n"
         return ms
 

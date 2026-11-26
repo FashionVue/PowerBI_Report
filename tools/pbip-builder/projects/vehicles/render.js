@@ -108,8 +108,7 @@ function cover(p) {
   const h = p.extra.hero, t = p.extra.toc;
   o.push(`<path d="${shape(h.x, h.y, h.w, h.h, 40, 8)}" fill="${C.panel}" filter="url(#shadow)"/>`);
   o.push(`<path d="${shape(h.x, h.y, h.w, h.h, 40, 8)}" fill="url(#heroGlow)"/>`);
-  for (let i = 0; i < 9; i++) o.push(`<line x1="${h.x + 60 + i * 26}" y1="${h.y + 560}" x2="${h.x + 220 + i * 26}" y2="${h.y + 40}" stroke="${C.s1}" stroke-opacity="${0.05 + i * 0.025}" stroke-width="3"/>`);
-  o.push(icon("car-front", h.x + 230, h.y + 420, 300, C.s1, 0.6).replace("<g ", '<g opacity="0.10" '));
+  // the animated mark (DAX SVG in a table cell) sits in the hero's top-left corner, beside the title
   o.push(`<rect x="${h.x + h.w - 56}" y="${h.y + 72}" width="6" height="150" fill="${C.s1}"/>`);
   o.push(ar(h.x + h.w - 76, h.y + 118, "تقرير أداء المبيعات", { size: 56, weight: 800 }));
   o.push(ar(h.x + h.w - 76, h.y + 192, "وخدمات ما بعد البيع", { size: 56, weight: 800, color: C.accentText }));

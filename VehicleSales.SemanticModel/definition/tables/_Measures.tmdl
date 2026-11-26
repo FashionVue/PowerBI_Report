@@ -1056,16 +1056,16 @@ table _Measures
 		displayFolder: KPI\vs PY
 		lineageTag: 781f6ff3-ca37-51f7-8b63-15c6e801eea4
 
-	/// Arabic tile text for Units: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Units: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Units vs PY Label' =
 			VAR _Delta = [Units YoY %]
 			VAR _Prior = [Units PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  |  العام السابق " & FORMAT ( _Prior, "#,0" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0%" ) & UNICHAR ( 8297 ) & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "#,0" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: ef1fd20d-13cb-500e-9fa3-d51e8405c53e
 
@@ -1095,16 +1095,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: c60ef22c-8a3a-5b77-a81d-22a563285984
 
-	/// Arabic tile text for Revenue: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Revenue: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Revenue vs PY Label' =
 			VAR _Delta = [Revenue YoY %]
 			VAR _Prior = [Revenue PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  |  العام السابق " & IF ( ABS ( _Prior ) >= 1000000, FORMAT ( _Prior / 1000000, "0.0" ) & " مليون", FORMAT ( _Prior / 1000, "0.0" ) & " ألف" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0%" ) & UNICHAR ( 8297 ) & "  |  العام السابق " & IF ( ABS ( _Prior ) >= 1000000, UNICHAR ( 8294 ) & FORMAT ( _Prior / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون", UNICHAR ( 8294 ) & FORMAT ( _Prior / 1000, "0.0" ) & UNICHAR ( 8297 ) & " ألف" )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: fe8dc7c4-f6c8-54ab-94dd-e21ba845c1ac
 
@@ -1134,16 +1134,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: ceaed30d-6262-50e9-9a88-5dddf442152d
 
-	/// Arabic tile text for Total GPU: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Total GPU: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Total GPU vs PY Label' =
 			VAR _Delta = [Total GPU vs PY %]
 			VAR _Prior = [Total GPU PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  |  العام السابق " & IF ( ABS ( _Prior ) >= 1000000, FORMAT ( _Prior / 1000000, "0.0" ) & " مليون", FORMAT ( _Prior / 1000, "0.0" ) & " ألف" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0%" ) & UNICHAR ( 8297 ) & "  |  العام السابق " & IF ( ABS ( _Prior ) >= 1000000, UNICHAR ( 8294 ) & FORMAT ( _Prior / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون", UNICHAR ( 8294 ) & FORMAT ( _Prior / 1000, "0.0" ) & UNICHAR ( 8297 ) & " ألف" )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 3a26732f-759e-5de4-a19a-62b1e06b79e8
 
@@ -1173,16 +1173,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: cc2f88c2-bb42-50d0-b8e8-80dfdd569e9c
 
-	/// Arabic tile text for Front GPU: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Front GPU: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Front GPU vs PY Label' =
 			VAR _Delta = [Front GPU vs PY %]
 			VAR _Prior = [Front GPU PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  |  العام السابق " & IF ( ABS ( _Prior ) >= 1000000, FORMAT ( _Prior / 1000000, "0.0" ) & " مليون", FORMAT ( _Prior / 1000, "0.0" ) & " ألف" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0%" ) & UNICHAR ( 8297 ) & "  |  العام السابق " & IF ( ABS ( _Prior ) >= 1000000, UNICHAR ( 8294 ) & FORMAT ( _Prior / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون", UNICHAR ( 8294 ) & FORMAT ( _Prior / 1000, "0.0" ) & UNICHAR ( 8297 ) & " ألف" )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: ce7b04ca-8b21-52f3-b7eb-263b8f891308
 
@@ -1212,16 +1212,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: b8e5270e-e1fc-5a9b-8404-e0da458165ec
 
-	/// Arabic tile text for Leads: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Leads: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Leads vs PY Label' =
 			VAR _Delta = [Leads vs PY %]
 			VAR _Prior = [Leads PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  |  العام السابق " & FORMAT ( _Prior, "#,0" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0%" ) & UNICHAR ( 8297 ) & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "#,0" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 1964be2a-8ee1-5bca-95a5-e9f54b75e6d2
 
@@ -1251,16 +1251,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: cee34b2d-bf58-5498-88eb-3f2d850c3693
 
-	/// Arabic tile text for Service Revenue: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Service Revenue: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Service Revenue vs PY Label' =
 			VAR _Delta = [Service Revenue vs PY %]
 			VAR _Prior = [Service Revenue PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0%" ) & "  |  العام السابق " & IF ( ABS ( _Prior ) >= 1000000, FORMAT ( _Prior / 1000000, "0.0" ) & " مليون", FORMAT ( _Prior / 1000, "0.0" ) & " ألف" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0%" ) & UNICHAR ( 8297 ) & "  |  العام السابق " & IF ( ABS ( _Prior ) >= 1000000, UNICHAR ( 8294 ) & FORMAT ( _Prior / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون", UNICHAR ( 8294 ) & FORMAT ( _Prior / 1000, "0.0" ) & UNICHAR ( 8297 ) & " ألف" )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 78634d13-420e-5f7a-894a-58bf08cc28a8
 
@@ -1290,16 +1290,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 3770d5ef-2dff-59d7-bd26-b4cd0d3f5b73
 
-	/// Arabic tile text for Finance Penetration: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Finance Penetration: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Finance Penetration vs PY Label' =
 			VAR _Delta = [Finance Penetration vs PY (pts)]
 			VAR _Prior = [Finance Penetration PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " نقطة" & "  |  العام السابق " & FORMAT ( _Prior, "0.0%" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0" ) & UNICHAR ( 8297 ) & " نقطة" & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "0.0%" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 8ae773bd-e74b-5115-8079-53026f44d62c
 
@@ -1329,16 +1329,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 47e6d00d-6b2d-553d-abce-989ac2d01bf2
 
-	/// Arabic tile text for Lead Conversion: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Lead Conversion: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Lead Conversion vs PY Label' =
 			VAR _Delta = [Lead Conversion vs PY (pts)]
 			VAR _Prior = [Lead Conversion PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " نقطة" & "  |  العام السابق " & FORMAT ( _Prior, "0.0%" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0" ) & UNICHAR ( 8297 ) & " نقطة" & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "0.0%" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 49453f23-1dfe-5eed-9950-6ee2ba4dc9f8
 
@@ -1368,16 +1368,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: f4f5f121-5a2a-5abb-b333-880a241c15fb
 
-	/// Arabic tile text for Electrified: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Electrified: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Electrified vs PY Label' =
 			VAR _Delta = [Electrified vs PY (pts)]
 			VAR _Prior = [Electrified Share PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " نقطة" & "  |  العام السابق " & FORMAT ( _Prior, "0.0%" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0" ) & UNICHAR ( 8297 ) & " نقطة" & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "0.0%" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 6788c4bf-9a91-5752-af2f-8b54cd4f085a
 
@@ -1407,16 +1407,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 9813558d-c887-5543-a33e-7e3b363be765
 
-	/// Arabic tile text for Chinese: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Chinese: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Chinese vs PY Label' =
 			VAR _Delta = [Chinese vs PY (pts)]
 			VAR _Prior = [Chinese Share PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " نقطة" & "  |  العام السابق " & FORMAT ( _Prior, "0.0%" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0" ) & UNICHAR ( 8297 ) & " نقطة" & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "0.0%" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 6b80a3e9-be82-5a89-8562-0f92b18f66f4
 
@@ -1446,16 +1446,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: c8697ef5-c7ea-5c4d-8a72-f6b1a9e925a6
 
-	/// Arabic tile text for Discount: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Discount: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Discount vs PY Label' =
 			VAR _Delta = [Discount vs PY (pts)]
 			VAR _Prior = [Discount % PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " نقطة" & "  |  العام السابق " & FORMAT ( _Prior, "0.0%" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0" ) & UNICHAR ( 8297 ) & " نقطة" & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "0.0%" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 869ec83c-313f-5a88-8cf6-43d64bd5ce76
 
@@ -1485,16 +1485,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: be5a8391-9710-5c24-acde-b3f1bb736d1b
 
-	/// Arabic tile text for Aged: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Aged: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Aged vs PY Label' =
 			VAR _Delta = [Aged vs PY (pts)]
 			VAR _Prior = [Aged Stock % PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " نقطة" & "  |  العام السابق " & FORMAT ( _Prior, "0.0%" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0" ) & UNICHAR ( 8297 ) & " نقطة" & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "0.0%" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 9aab3a99-a703-58ac-9527-0e72b0326fbf
 
@@ -1524,16 +1524,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: ee81b2aa-9216-594e-b2de-2302d7674722
 
-	/// Arabic tile text for Comeback: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Comeback: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Comeback vs PY Label' =
 			VAR _Delta = [Comeback vs PY (pts)]
 			VAR _Prior = [Comeback Rate PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " نقطة" & "  |  العام السابق " & FORMAT ( _Prior, "0.0%" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0" ) & UNICHAR ( 8297 ) & " نقطة" & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "0.0%" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 9494a049-2e4b-59cf-9bb8-2a2f9ad2c00c
 
@@ -1563,16 +1563,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 158397eb-13b6-5170-97f2-4e94fc87423d
 
-	/// Arabic tile text for Absorption: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Absorption: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Absorption vs PY Label' =
 			VAR _Delta = [Absorption vs PY (pts)]
 			VAR _Prior = [Absorption PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " نقطة" & "  |  العام السابق " & FORMAT ( _Prior, "0.0%" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0" ) & UNICHAR ( 8297 ) & " نقطة" & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "0.0%" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: f69f3a27-5440-5002-af8f-04fe8c15a30d
 
@@ -1602,16 +1602,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 0ad4054b-bfe5-5861-9629-acdebcc55f94
 
-	/// Arabic tile text for CSAT: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for CSAT: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'CSAT vs PY Label' =
 			VAR _Delta = [CSAT vs PY]
 			VAR _Prior = [Avg CSAT PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.00" ) & "  |  العام السابق " & FORMAT ( _Prior, "0.00" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.00" ) & UNICHAR ( 8297 ) & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "0.00" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: b0193d1e-d2b9-5feb-8404-f80d10885753
 
@@ -1641,16 +1641,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 8cd9fc5c-2ac4-5426-8a69-e53ab6b858a0
 
-	/// Arabic tile text for Days in Stock: arrow, change vs prior year and the prior-year value.
+	/// Arabic tile text for Days in Stock: arrow, change vs prior year and the prior-year value. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Days in Stock vs PY Label' =
 			VAR _Delta = [Days in Stock vs PY]
 			VAR _Prior = [Avg Days in Stock PY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Delta ),
 			        "لا توجد بيانات للعام السابق",
-			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Delta ), "0.0" ) & " يوم" & "  |  العام السابق " & FORMAT ( _Prior, "0.0" )
-			    )
+			        IF ( _Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Delta ), "0.0" ) & UNICHAR ( 8297 ) & " يوم" & "  |  العام السابق " & UNICHAR ( 8294 ) & FORMAT ( _Prior, "0.0" ) & UNICHAR ( 8297 )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 0ce85b24-7ad7-5ee3-819b-cd7373c88a4b
 
@@ -1680,16 +1680,16 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 4a766b85-9786-50fc-aedd-803edd6b7f44
 
-	/// Arabic tile text: gap to the revenue target.
+	/// Arabic tile text: gap to the revenue target. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Attainment Label' =
 			VAR _Gap = [Gap to Target CY]
 			VAR _Target = [Revenue Target CY]
 			RETURN
-			    IF (
+			    UNICHAR ( 8295 ) & ( IF (
 			        ISBLANK ( _Target ),
 			        "لا يوجد هدف",
-			        IF ( _Gap >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( ABS ( _Gap ) / 1000000, "0.0" ) & " مليون " & IF ( _Gap >= 0, "فوق الهدف", "دون الهدف" )
-			    )
+			        IF ( _Gap >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & UNICHAR ( 8294 ) & FORMAT ( ABS ( _Gap ) / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون " & IF ( _Gap >= 0, "فوق الهدف", "دون الهدف" )
+			    ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: f9d45987-635a-51b0-81f5-0bfda30d8055
 
@@ -1749,11 +1749,11 @@ table _Measures
 		displayFolder: KPI\Colors
 		lineageTag: 458490d9-a24e-517e-ba16-ea4a48ce0d71
 
-	/// Header text naming the compared years.
+	/// Header text naming the compared years. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Period Label' =
 			VAR _Y = MAX ( 'Date'[Year] )
 			RETURN
-			    _Y & " مقابل " & ( _Y - 1 )
+			    UNICHAR ( 8295 ) & ( _Y & " مقابل " & ( _Y - 1 ) ) & UNICHAR ( 8297 )
 		displayFolder: KPI\Labels
 		lineageTag: 1313a614-9d54-5c00-ad37-f8ec906cb255
 
@@ -1781,103 +1781,103 @@ table _Measures
 		displayFolder: Cover
 		lineageTag: 6728f843-9d98-5e71-b515-1ce6a79ec146
 
-	/// Cover headline: three-year revenue in millions.
-	measure 'Cover Revenue Label' = FORMAT ( [Revenue All Years] / 1000000, "#,0" ) & " مليون ريال"
+	/// Cover headline: three-year revenue in SAR millions (unit is printed in the label line). Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Cover Revenue Label' = UNICHAR ( 8295 ) & ( UNICHAR ( 8294 ) & FORMAT ( [Revenue All Years] / 1000000, "#,0" ) & UNICHAR ( 8297 ) ) & UNICHAR ( 8297 )
 		displayFolder: Cover
 		lineageTag: 859ebb0d-a5e0-574c-9ab1-b97ff84e833a
 
-	/// Cover headline: three-year total gross in millions.
-	measure 'Cover Gross Label' = FORMAT ( [Total Gross All Years] / 1000000, "#,0.0" ) & " مليون ريال"
+	/// Cover headline: three-year total gross in SAR millions (unit is printed in the label line). Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Cover Gross Label' = UNICHAR ( 8295 ) & ( UNICHAR ( 8294 ) & FORMAT ( [Total Gross All Years] / 1000000, "#,0.0" ) & UNICHAR ( 8297 ) ) & UNICHAR ( 8297 )
 		displayFolder: Cover
 		lineageTag: 1f9f7307-2e66-55fe-913b-9ffe726c96e8
 
-	/// Arabic insight sentence written from the data.
+	/// Arabic insight sentence written from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Insight Headline' =
 			VAR _Y = MAX ( 'Date'[Year] )
 			VAR _G = [Revenue YoY %]
 			VAR _A = [Attainment CY]
 			RETURN
-			    "بلغت الإيرادات " & FORMAT ( [Revenue CY] / 1000000, "0.0" ) & " مليون ريال في " & _Y
-			        & IF ( NOT ISBLANK ( _G ), "، بتغير " & FORMAT ( _G, "+0.0%;-0.0%" ) & " عن " & ( _Y - 1 ), "" )
-			        & IF ( NOT ISBLANK ( _A ), "، وحققت " & FORMAT ( _A, "0.0%" ) & " من الهدف", "" ) & "."
+			    UNICHAR ( 8295 ) & ( "بلغت الإيرادات " & UNICHAR ( 8294 ) & FORMAT ( [Revenue CY] / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون ريال في " & _Y
+			        & IF ( NOT ISBLANK ( _G ), "، بتغير " & UNICHAR ( 8294 ) & FORMAT ( _G, "+0.0%;-0.0%" ) & UNICHAR ( 8297 ) & " عن " & ( _Y - 1 ), "" )
+			        & IF ( NOT ISBLANK ( _A ), "، وحققت " & UNICHAR ( 8294 ) & FORMAT ( _A, "0.0%" ) & UNICHAR ( 8297 ) & " من الهدف", "" ) & "." ) & UNICHAR ( 8297 )
 		displayFolder: Insights
 		lineageTag: 4f970918-d191-5814-a830-a4e8da178f99
 
-	/// Arabic insight sentence written from the data.
+	/// Arabic insight sentence written from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Insight Branch Target' =
 			VAR _B = FILTER ( ADDCOLUMNS ( VALUES ( Branches[BranchName] ), "@A", [Attainment CY] ), NOT ISBLANK ( [@A] ) )
 			VAR _W = TOPN ( 1, _B, [@A], ASC )
 			RETURN
-			    IF ( ISEMPTY ( _W ), "لا يوجد هدف لهذا الاختيار.", "فرع " & CONCATENATEX ( _W, Branches[BranchName], " / " ) & " الأبعد عن هدفه بنسبة تحقيق " & FORMAT ( MAXX ( _W, [@A] ), "0.0%" ) & "." )
+			    UNICHAR ( 8295 ) & ( IF ( ISEMPTY ( _W ), "لا يوجد هدف لهذا الاختيار.", "فرع " & CONCATENATEX ( _W, Branches[BranchName], " / " ) & " الأبعد عن هدفه بنسبة تحقيق " & UNICHAR ( 8294 ) & FORMAT ( MAXX ( _W, [@A] ), "0.0%" ) & UNICHAR ( 8297 ) & "." ) ) & UNICHAR ( 8297 )
 		displayFolder: Insights
 		lineageTag: e86629ab-325a-5f13-8a8a-a90d4dff4cba
 
-	/// Arabic insight sentence written from the data.
+	/// Arabic insight sentence written from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Insight Chinese' =
 			VAR _Now = [Chinese Share CY]
 			VAR _Before = [Chinese Share PY]
 			RETURN
-			    "حصة العلامات الصينية " & FORMAT ( _Now, "0.0%" ) & " من الوحدات المباعة" & IF ( NOT ISBLANK ( _Before ), " مقابل " & FORMAT ( _Before, "0.0%" ) & " في العام السابق", "" ) & "."
+			    UNICHAR ( 8295 ) & ( "حصة العلامات الصينية " & UNICHAR ( 8294 ) & FORMAT ( _Now, "0.0%" ) & UNICHAR ( 8297 ) & " من الوحدات المباعة" & IF ( NOT ISBLANK ( _Before ), " مقابل " & UNICHAR ( 8294 ) & FORMAT ( _Before, "0.0%" ) & UNICHAR ( 8297 ) & " في العام السابق", "" ) & "." ) & UNICHAR ( 8297 )
 		displayFolder: Insights
 		lineageTag: dca4d383-2578-529b-b0e4-d788eed53444
 
-	/// Arabic insight sentence written from the data.
+	/// Arabic insight sentence written from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Insight Electrified' =
 			VAR _Now = [Electrified Share CY]
 			VAR _Before = [Electrified Share PY]
 			RETURN
-			    "السيارات الهجينة والكهربائية " & FORMAT ( _Now, "0.0%" ) & " من المبيعات" & IF ( NOT ISBLANK ( _Before ), "، بزيادة " & FORMAT ( ( _Now - _Before ) * 100, "0.0" ) & " نقطة عن العام السابق", "" ) & "."
+			    UNICHAR ( 8295 ) & ( "السيارات الهجينة والكهربائية " & UNICHAR ( 8294 ) & FORMAT ( _Now, "0.0%" ) & UNICHAR ( 8297 ) & " من المبيعات" & IF ( NOT ISBLANK ( _Before ), "، بزيادة " & UNICHAR ( 8294 ) & FORMAT ( ( _Now - _Before ) * 100, "0.0" ) & UNICHAR ( 8297 ) & " نقطة عن العام السابق", "" ) & "." ) & UNICHAR ( 8297 )
 		displayFolder: Insights
 		lineageTag: 306224a6-698f-5037-b4b9-190f6a52f321
 
-	/// Arabic insight sentence written from the data.
+	/// Arabic insight sentence written from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Insight Discount' =
 			VAR _B = FILTER ( ADDCOLUMNS ( VALUES ( Branches[BranchName] ), "@D", [Discount % CY], "@G", [Front GPU CY] ), NOT ISBLANK ( [@D] ) )
 			VAR _Top = TOPN ( 1, _B, [@D], DESC )
 			RETURN
-			    "فرع " & CONCATENATEX ( _Top, Branches[BranchName], " / " ) & " يمنح أعلى خصم (" & FORMAT ( MAXX ( _Top, [@D] ), "0.0%" ) & ") فينخفض الربح الأمامي للسيارة إلى " & FORMAT ( MAXX ( _Top, [@G] ), "#,0" ) & " ريال فقط."
+			    UNICHAR ( 8295 ) & ( "فرع " & CONCATENATEX ( _Top, Branches[BranchName], " / " ) & " يمنح أعلى خصم (" & UNICHAR ( 8294 ) & FORMAT ( MAXX ( _Top, [@D] ), "0.0%" ) & UNICHAR ( 8297 ) & ") فينخفض الربح الأمامي للسيارة إلى " & UNICHAR ( 8294 ) & FORMAT ( MAXX ( _Top, [@G] ), "#,0" ) & UNICHAR ( 8297 ) & " ريال فقط." ) & UNICHAR ( 8297 )
 		displayFolder: Insights
 		lineageTag: abdd80da-f184-5530-a5fe-9efa2c3b74c6
 
-	/// Arabic insight sentence written from the data.
-	measure 'Insight Finance' = "التمويل والتأجير يشملان " & FORMAT ( [Finance Penetration CY], "0.0%" ) & " من الصفقات ويولّدان " & FORMAT ( CALCULATE ( [Back-end Share from Financed %], KEEPFILTERS ( 'Date'[Year] = MAX ( 'Date'[Year] ) ) ), "0%" ) & " من الربح الخلفي."
+	/// Arabic insight sentence written from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Insight Finance' = UNICHAR ( 8295 ) & ( "التمويل والتأجير يشملان " & UNICHAR ( 8294 ) & FORMAT ( [Finance Penetration CY], "0.0%" ) & UNICHAR ( 8297 ) & " من الصفقات ويولّدان " & UNICHAR ( 8294 ) & FORMAT ( CALCULATE ( [Back-end Share from Financed %], KEEPFILTERS ( 'Date'[Year] = MAX ( 'Date'[Year] ) ) ), "0%" ) & UNICHAR ( 8297 ) & " من الربح الخلفي." ) & UNICHAR ( 8297 )
 		displayFolder: Insights
 		lineageTag: 7c87707d-2cfd-5b9a-9505-12415d45b56a
 
-	/// Arabic insight sentence written from the data.
+	/// Arabic insight sentence written from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Insight Leads' =
 			VAR _S = FILTER ( ADDCOLUMNS ( VALUES ( Leads[Source] ), "@C", [Lead Conversion CY], "@N", [Leads CY] ), NOT ISBLANK ( [@C] ) )
 			VAR _Best = TOPN ( 1, _S, [@C], DESC )
 			VAR _Big = TOPN ( 1, _S, [@N], DESC )
 			RETURN
-			    "مصدر " & CONCATENATEX ( _Best, Leads[Source], " / " ) & " يتحول بنسبة " & FORMAT ( MAXX ( _Best, [@C] ), "0.0%" ) & " مقابل " & FORMAT ( MAXX ( _Big, [@C] ), "0.0%" ) & " لـ" & CONCATENATEX ( _Big, Leads[Source], " / " ) & " رغم أنه الأعلى في عدد العملاء المحتملين."
+			    UNICHAR ( 8295 ) & ( "مصدر " & CONCATENATEX ( _Best, Leads[Source], " / " ) & " يتحول بنسبة " & UNICHAR ( 8294 ) & FORMAT ( MAXX ( _Best, [@C] ), "0.0%" ) & UNICHAR ( 8297 ) & " مقابل " & UNICHAR ( 8294 ) & FORMAT ( MAXX ( _Big, [@C] ), "0.0%" ) & UNICHAR ( 8297 ) & " لـ" & CONCATENATEX ( _Big, Leads[Source], " / " ) & " رغم أنه الأعلى في عدد العملاء المحتملين." ) & UNICHAR ( 8297 )
 		displayFolder: Insights
 		lineageTag: 4c91d064-c737-5c2e-a298-b76e1c01666a
 
-	/// Arabic insight sentence written from the data.
+	/// Arabic insight sentence written from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Insight Aged' =
 			VAR _Aged = CALCULATE ( [Discount % CY], Sales[DaysInStock] > 90 )
 			VAR _Fresh = CALCULATE ( [Discount % CY], Sales[DaysInStock] <= 90 )
 			RETURN
-			    "السيارات التي بقيت أكثر من 90 يوماً في المخزون بيعت بخصم " & FORMAT ( _Aged, "0.0%" ) & " مقابل " & FORMAT ( _Fresh, "0.0%" ) & " للمخزون الأحدث."
+			    UNICHAR ( 8295 ) & ( "السيارات التي بقيت أكثر من 90 يوماً في المخزون بيعت بخصم " & UNICHAR ( 8294 ) & FORMAT ( _Aged, "0.0%" ) & UNICHAR ( 8297 ) & " مقابل " & UNICHAR ( 8294 ) & FORMAT ( _Fresh, "0.0%" ) & UNICHAR ( 8297 ) & " للمخزون الأحدث." ) & UNICHAR ( 8297 )
 		displayFolder: Insights
 		lineageTag: c2ede5b0-b70f-5583-a7c3-1a74afabca5a
 
-	/// Arabic insight sentence written from the data.
+	/// Arabic insight sentence written from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Insight Service' =
 			VAR _Long = CALCULATE ( [Comeback Rate CY], Service[TurnaroundHours] > 48 )
 			VAR _Short = CALCULATE ( [Comeback Rate CY], Service[TurnaroundHours] <= 48 )
 			RETURN
-			    "الزيارات التي تجاوزت 48 ساعة عادت للإصلاح بنسبة " & FORMAT ( _Long, "0.0%" ) & " مقابل " & FORMAT ( _Short, "0.0%" ) & " للزيارات الأسرع."
+			    UNICHAR ( 8295 ) & ( "الزيارات التي تجاوزت 48 ساعة عادت للإصلاح بنسبة " & UNICHAR ( 8294 ) & FORMAT ( _Long, "0.0%" ) & UNICHAR ( 8297 ) & " مقابل " & UNICHAR ( 8294 ) & FORMAT ( _Short, "0.0%" ) & UNICHAR ( 8297 ) & " للزيارات الأسرع." ) & UNICHAR ( 8297 )
 		displayFolder: Insights
 		lineageTag: 8dbb1bbc-763d-5c87-93de-8b5f5d5b066b
 
-	/// Arabic insight sentence written from the data.
-	measure 'Insight Absorption' = "أرباح ما بعد البيع تغطي " & FORMAT ( [Absorption CY], "0.0%" ) & " من التكاليف الثابتة المخصصة للفروع."
+	/// Arabic insight sentence written from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Insight Absorption' = UNICHAR ( 8295 ) & ( "أرباح ما بعد البيع تغطي " & UNICHAR ( 8294 ) & FORMAT ( [Absorption CY], "0.0%" ) & UNICHAR ( 8297 ) & " من التكاليف الثابتة المخصصة للفروع." ) & UNICHAR ( 8297 )
 		displayFolder: Insights
 		lineageTag: 38a79c60-52f7-5edf-8b2f-a219e44cd523
 
-	/// Arabic recommendation for the conclusion page, with numbers from the data.
+	/// Arabic recommendation for the conclusion page, with numbers from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
 	measure 'Recommendation Discount' =
 			VAR _B = FILTER ( ADDCOLUMNS ( VALUES ( Branches[BranchName] ), "@D", [Discount % CY], "@L", [List Value CY] ), NOT ISBLANK ( [@D] ) )
 			VAR _Top = TOPN ( 1, _B, [@D], DESC )
@@ -1885,24 +1885,1022 @@ table _Measures
 			VAR _Others = CALCULATE ( [Discount % CY], Branches[BranchName] <> _Name )
 			VAR _Gain = ( MAXX ( _Top, [@D] ) - _Others ) * MAXX ( _Top, [@L] )
 			RETURN
-			    "ضبط سياسة الخصم في فرع " & _Name & ": إعادته إلى متوسط بقية الفروع (" & FORMAT ( _Others, "0.0%" ) & ") يضيف نحو " & FORMAT ( _Gain / 1000000, "0.0" ) & " مليون ريال من الربح الأمامي سنوياً."
+			    UNICHAR ( 8295 ) & ( "ضبط سياسة الخصم في فرع " & _Name & ": إعادته إلى متوسط بقية الفروع (" & UNICHAR ( 8294 ) & FORMAT ( _Others, "0.0%" ) & UNICHAR ( 8297 ) & ") يضيف نحو " & UNICHAR ( 8294 ) & FORMAT ( _Gain / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون ريال من الربح الأمامي سنوياً." ) & UNICHAR ( 8297 )
 		displayFolder: Conclusion
 		lineageTag: 3a1a2d31-a045-54fd-85f9-f89c0cb5aee2
 
-	/// Arabic recommendation for the conclusion page, with numbers from the data.
-	measure 'Recommendation Leads' = "تحويل جزء من ميزانية سناب شات إلى برامج الإحالة ودعوات زيارة المعرض، فهي الأعلى تحويلاً، مع متابعة أسرع للعملاء المحتملين من الإعلانات."
+	/// Arabic recommendation for the conclusion page, with numbers from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Recommendation Leads' = UNICHAR ( 8295 ) & ( "تحويل جزء من ميزانية سناب شات إلى برامج الإحالة ودعوات زيارة المعرض، فهي الأعلى تحويلاً، مع متابعة أسرع للعملاء المحتملين من الإعلانات." ) & UNICHAR ( 8297 )
 		displayFolder: Conclusion
 		lineageTag: cbdfcc3c-0d11-5cd9-82e2-bf01b2b6c8fc
 
-	/// Arabic recommendation for the conclusion page, with numbers from the data.
-	measure 'Recommendation Stock' = "خطة تصريف شهرية للمخزون الذي تجاوز 90 يوماً (" & FORMAT ( [Aged Stock % CY], "0.0%" ) & " من الوحدات المباعة) قبل أن يحتاج خصماً أعمق، وربط طلبيات الطرازات بسرعة دورانها."
+	/// Arabic recommendation for the conclusion page, with numbers from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Recommendation Stock' = UNICHAR ( 8295 ) & ( "خطة تصريف شهرية للمخزون الذي تجاوز 90 يوماً (" & UNICHAR ( 8294 ) & FORMAT ( [Aged Stock % CY], "0.0%" ) & UNICHAR ( 8297 ) & " من الوحدات المباعة) قبل أن يحتاج خصماً أعمق، وربط طلبيات الطرازات بسرعة دورانها." ) & UNICHAR ( 8297 )
 		displayFolder: Conclusion
 		lineageTag: 4a62f3dd-b4df-52ec-8ba3-2f2221bbfb4b
 
-	/// Arabic recommendation for the conclusion page, with numbers from the data.
-	measure 'Recommendation Service' = "هدف زمن إنجاز أقل من 48 ساعة في مراكز الصيانة، مع فحص جودة قبل التسليم، لخفض الزيارات المتكررة ورفع رضا العملاء عن " & FORMAT ( [Avg CSAT CY], "0.00" ) & "."
+	/// Arabic recommendation for the conclusion page, with numbers from the data. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Recommendation Service' = UNICHAR ( 8295 ) & ( "هدف زمن إنجاز أقل من 48 ساعة في مراكز الصيانة، مع فحص جودة قبل التسليم، لخفض الزيارات المتكررة ورفع رضا العملاء عن " & UNICHAR ( 8294 ) & FORMAT ( [Avg CSAT CY], "0.00" ) & UNICHAR ( 8297 ) & "." ) & UNICHAR ( 8297 )
 		displayFolder: Conclusion
 		lineageTag: 072d3a49-79f7-5db6-9781-cd7a7f0f420e
+
+	/// Arabic tile value for [Revenue CY]: millions with the word مليون, or an empty-state note. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Revenue CY Text' =
+			VAR _V = [Revenue CY]
+			RETURN
+			    UNICHAR ( 8295 ) & ( IF ( ISBLANK ( _V ), "لا توجد بيانات للفترة", UNICHAR ( 8294 ) & FORMAT ( _V / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون" ) ) & UNICHAR ( 8297 )
+		displayFolder: KPI\Labels
+		lineageTag: 421193e5-5d7f-5a00-9519-a45af18cde68
+
+	/// Arabic tile value for [Service Revenue CY]: millions with the word مليون, or an empty-state note. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Service Revenue CY Text' =
+			VAR _V = [Service Revenue CY]
+			RETURN
+			    UNICHAR ( 8295 ) & ( IF ( ISBLANK ( _V ), "لا توجد بيانات للفترة", UNICHAR ( 8294 ) & FORMAT ( _V / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون" ) ) & UNICHAR ( 8297 )
+		displayFolder: KPI\Labels
+		lineageTag: 839b3a02-f275-5ef2-8b9d-711878585317
+
+	/// Arabic tile value for [Target FY]: millions with the word مليون, or an empty-state note. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Target FY Text' =
+			VAR _V = [Target FY]
+			RETURN
+			    UNICHAR ( 8295 ) & ( IF ( ISBLANK ( _V ), "لا توجد بيانات للفترة", UNICHAR ( 8294 ) & FORMAT ( _V / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون" ) ) & UNICHAR ( 8297 )
+		displayFolder: KPI\Labels
+		lineageTag: 722a344c-aad1-5560-8155-bd52a9f12fa3
+
+	/// Arabic tile value for [Run-rate FY]: millions with the word مليون, or an empty-state note. Text is wrapped in Unicode bidi isolates (RLI/LRI/PDI) so it reads correctly in left-to-right cards.
+	measure 'Run-rate FY Text' =
+			VAR _V = [Run-rate FY]
+			RETURN
+			    UNICHAR ( 8295 ) & ( IF ( ISBLANK ( _V ), "لا توجد بيانات للفترة", UNICHAR ( 8294 ) & FORMAT ( _V / 1000000, "0.0" ) & UNICHAR ( 8297 ) & " مليون" ) ) & UNICHAR ( 8297 )
+		displayFolder: KPI\Labels
+		lineageTag: f0f62b1b-a2ca-50c1-9fa0-4a9d141da6c8
+
+	/// Animated SVG sparkline (latest year by month) for Revenue CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Revenue CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Revenue], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 385a98d4-45d0-5752-a794-560ad6b305ab
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Revenue CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Revenue CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Revenue], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 12cfbf94-97a3-5821-b4be-7a0de6027aa9
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Units CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Units CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Units], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: d805b651-183f-5dac-8277-da9631b964b2
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Units CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Units CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Units], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 478c5646-5d98-5a61-ba09-71072ad5e9cc
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Total GPU CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Total GPU CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Total Gross per Unit], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 70a81e2d-5f6d-5e66-8fb8-b855d810c4ae
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Total GPU CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Total GPU CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Total Gross per Unit], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: d68deb1a-0fb3-527b-8d53-333fc5947017
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Attainment CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Attainment CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( DIVIDE ( [Revenue], [Revenue Target] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: d161007a-4d8a-54ed-a1fd-1d28a84f8481
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Attainment CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Attainment CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( DIVIDE ( [Revenue], [Revenue Target] ), REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: fa0edfce-8fe2-5029-bfe9-54307abd97cf
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Finance Penetration CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Finance Penetration CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Finance Penetration %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 32ed3625-1bbf-5b91-9a8c-9bafc4c00b18
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Finance Penetration CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Finance Penetration CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Finance Penetration %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: ce341f84-ba22-5570-88ec-66d14078a2b6
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Service Revenue CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Service Revenue CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Service Revenue], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 771044c4-8646-52bc-a934-4ba1c600cead
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Service Revenue CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Service Revenue CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Service Revenue], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 89e9bb69-bad8-5d31-bf8b-500e0c453e5e
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Front GPU CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Front GPU CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Front Gross per Unit], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: a2d4d099-f1d8-5dec-bdb3-d246c96c4ccb
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Front GPU CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Front GPU CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Front Gross per Unit], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 0b206998-bc07-58f5-b3ea-1db998f9086a
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Discount % CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Discount % CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Discount %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: fd573dd9-dcbd-558f-ab38-4e13b58d55f0
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Discount % CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Discount % CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Discount %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 5aa3fd8e-a132-5536-b9a4-3847646113a4
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Avg Days in Stock CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Avg Days in Stock CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Avg Days in Stock], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 17e736cc-b803-5d0e-a76b-c513279beb1c
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Avg Days in Stock CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Avg Days in Stock CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Avg Days in Stock], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 0c26d569-68c5-5719-862b-257a8383bfdb
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Aged Stock % CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Aged Stock % CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Aged Stock %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: ab754710-5418-5dbb-aff3-4a48c84db69b
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Aged Stock % CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Aged Stock % CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Aged Stock %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 16073766-3b47-5db2-b2ba-f2eebee2ce82
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Electrified Share CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Electrified Share CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Electrified Share %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: b44cab2f-0f09-5811-b636-6056afc32e95
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Electrified Share CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Electrified Share CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Electrified Share %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: e8a4a770-8563-5ce9-9811-51c9072cd8e6
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Chinese Share CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Chinese Share CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Chinese Share %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 3f541965-b681-59f6-b70e-6aac409121a3
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Chinese Share CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Chinese Share CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Chinese Share %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 9af9eff5-642d-5191-80a0-fdc0b4d832a6
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Leads CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Leads CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Leads], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 0cbc306d-4c21-57ce-af7c-1734610b0a8a
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Leads CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Leads CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Leads], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 37640e2c-4e7b-5abd-9cbf-1ea725b8b480
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Lead Conversion CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Lead Conversion CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Lead Conversion %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 91bf0ee2-70cb-5b96-9fcb-ca5a59fedf9f
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Lead Conversion CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Lead Conversion CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Lead Conversion %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: ebe61170-acc4-5d09-ae9b-3598eaa31c3b
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Avg CSAT CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Avg CSAT CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Avg CSAT], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 3d6a702a-332c-5c74-86d7-672a47aae835
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Avg CSAT CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Avg CSAT CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Avg CSAT], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: ab10b896-193b-5b5c-9f74-be82714ac662
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Comeback Rate CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Comeback Rate CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Comeback Rate %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: 4e11e3b1-c770-5a44-81b1-260f1234e850
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Comeback Rate CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Comeback Rate CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Comeback Rate %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: d137f8a8-96d9-5195-9013-7a417ec54319
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Absorption CY: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Absorption CY' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Absorption %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2312A594' stop-opacity='0.35'/><stop offset='1' stop-color='%2312A594' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2312A594' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2312A594'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: c56647ee-f08f-525c-96d4-aac4c40c12d4
+		dataCategory: ImageUrl
+
+	/// Animated SVG sparkline (latest year by month) for Absorption CY on light pages: the line draws in, the area fades in, the end dot pops.
+	measure 'Spark Absorption CY (Light)' =
+			VAR _LatestYear = MAX ( 'Date'[Year] )
+			VAR _Months = CALCULATETABLE ( VALUES ( 'Date'[Month Number] ), REMOVEFILTERS ( 'Date' ) )
+			VAR _Pts = FILTER ( ADDCOLUMNS ( _Months, "@v", VAR _M = 'Date'[Month Number] RETURN CALCULATE ( [Absorption %], REMOVEFILTERS ( 'Date' ), 'Date'[Year] = _LatestYear, 'Date'[Month Number] = _M ) ), NOT ISBLANK ( [@v] ) )
+			VAR _Min = MINX ( _Pts, [@v] )
+			VAR _Max = MAXX ( _Pts, [@v] )
+			VAR _Range = IF ( _Max = _Min, 1, _Max - _Min )
+			VAR _Line = CONCATENATEX ( _Pts, FORMAT ( ( 'Date'[Month Number] - 1 ) * 21.091 + 4, "0.0" ) & "," & FORMAT ( 24 - ( [@v] - _Min ) / _Range * 18, "0.0" ), " L ", 'Date'[Month Number], ASC )
+			VAR _LastM = MAXX ( _Pts, 'Date'[Month Number] )
+			VAR _FirstM = MINX ( _Pts, 'Date'[Month Number] )
+			VAR _LastV = MAXX ( FILTER ( _Pts, 'Date'[Month Number] = _LastM ), [@v] )
+			VAR _X = FORMAT ( ( _LastM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _X0 = FORMAT ( ( _FirstM - 1 ) * 21.091 + 4, "0.0" )
+			VAR _Y = FORMAT ( 24 - ( _LastV - _Min ) / _Range * 18, "0.0" )
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='240' height='28' viewBox='0 0 240 28'>"
+			        & "<defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%2300897A' stop-opacity='0.35'/><stop offset='1' stop-color='%2300897A' stop-opacity='0'/></linearGradient></defs>"
+			        & "<path d='M" & _Line & " L" & _X & ",28 L" & _X0 & ",28 Z' fill='url(%23g)' opacity='0'><animate attributeName='opacity' from='0' to='1' begin='0.5s' dur='0.7s' fill='freeze'/></path>"
+			        & "<path d='M" & _Line & "' fill='none' stroke='%2300897A' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' dur='1.1s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></path>"
+			        & "<circle cx='" & _X & "' cy='" & _Y & "' r='0' fill='%2300897A'><animate attributeName='r' from='0' to='3.2' begin='1s' dur='0.3s' fill='freeze'/></circle></svg>"
+			RETURN
+			    IF ( COUNTROWS ( _Pts ) > 1, "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: c055a367-289e-5cd1-9507-c2b9d44d99ce
+		dataCategory: ImageUrl
+
+	/// Animated right-to-left bullet chart per branch: revenue bar grows from the right, target shown as a marker.
+	measure 'Branch Bullet SVG' =
+			VAR _Rev = [Revenue CY]
+			VAR _Tgt = [Revenue Target CY]
+			VAR _Max = MAXX ( ALLSELECTED ( Branches[BranchName] ), MAX ( [Revenue CY], [Revenue Target CY] ) )
+			VAR _W = DIVIDE ( _Rev, _Max ) * 296
+			VAR _T = 298 - DIVIDE ( _Tgt, _Max ) * 296
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='300' height='22' viewBox='0 0 300 22'>"
+			        & "<rect x='2' y='6' width='296' height='10' rx='2' fill='%232A2F37'/>"
+			        & "<rect x='298' y='6' width='0' height='10' rx='2' fill='%2312A594'><animate attributeName='width' from='0' to='" & FORMAT ( _W, "0.0" ) & "' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/><animate attributeName='x' from='298' to='" & FORMAT ( 298 - _W, "0.0" ) & "' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></rect>"
+			        & IF ( NOT ISBLANK ( _Tgt ), "<rect x='" & FORMAT ( _T - 1, "0.0" ) & "' y='2' width='3' height='18' rx='1' fill='%238A93F2'/>", "" ) & "</svg>"
+			RETURN
+			    IF ( NOT ISBLANK ( _Rev ), "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: bd6bc275-de24-575e-8543-57d4d0459db7
+		dataCategory: ImageUrl
+
+	/// Animated right-to-left bullet chart per branch (light pages): revenue bar grows from the right, target shown as a marker.
+	measure 'Branch Bullet SVG (Light)' =
+			VAR _Rev = [Revenue CY]
+			VAR _Tgt = [Revenue Target CY]
+			VAR _Max = MAXX ( ALLSELECTED ( Branches[BranchName] ), MAX ( [Revenue CY], [Revenue Target CY] ) )
+			VAR _W = DIVIDE ( _Rev, _Max ) * 296
+			VAR _T = 298 - DIVIDE ( _Tgt, _Max ) * 296
+			VAR _Svg =
+			    "<svg xmlns='http://www.w3.org/2000/svg' width='300' height='22' viewBox='0 0 300 22'>"
+			        & "<rect x='2' y='6' width='296' height='10' rx='2' fill='%23E6E9ED'/>"
+			        & "<rect x='298' y='6' width='0' height='10' rx='2' fill='%2300897A'><animate attributeName='width' from='0' to='" & FORMAT ( _W, "0.0" ) & "' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/><animate attributeName='x' from='298' to='" & FORMAT ( 298 - _W, "0.0" ) & "' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.25 0.8 0.25 1'/></rect>"
+			        & IF ( NOT ISBLANK ( _Tgt ), "<rect x='" & FORMAT ( _T - 1, "0.0" ) & "' y='2' width='3' height='18' rx='1' fill='%234A5FA8'/>", "" ) & "</svg>"
+			RETURN
+			    IF ( NOT ISBLANK ( _Rev ), "data:image/svg+xml;utf8," & _Svg )
+		displayFolder: KPI\Sparklines
+		lineageTag: ba9a697f-385b-5a4b-8e5f-78339ae03d47
+		dataCategory: ImageUrl
+
+	/// Animated cover mark: speed lines sweep in, the two chevrons draw, then one subtle pulse repeats.
+	measure 'Cover Hero SVG' = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='300' viewBox='0 0 360 300'><line x1='40' y1='300' x2='170' y2='20' stroke='%2312A594' stroke-width='3' stroke-opacity='0.10' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.00s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.00s' dur='0.6s' fill='freeze'/></line><line x1='70' y1='300' x2='200' y2='20' stroke='%2312A594' stroke-width='3' stroke-opacity='0.15' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.08s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.08s' dur='0.6s' fill='freeze'/></line><line x1='100' y1='300' x2='230' y2='20' stroke='%2312A594' stroke-width='3' stroke-opacity='0.20' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.16s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.16s' dur='0.6s' fill='freeze'/></line><line x1='130' y1='300' x2='260' y2='20' stroke='%2312A594' stroke-width='3' stroke-opacity='0.25' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.24s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.24s' dur='0.6s' fill='freeze'/></line><line x1='160' y1='300' x2='290' y2='20' stroke='%2312A594' stroke-width='3' stroke-opacity='0.30' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.32s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.32s' dur='0.6s' fill='freeze'/></line><line x1='190' y1='300' x2='320' y2='20' stroke='%2312A594' stroke-width='3' stroke-opacity='0.35' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.40s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.40s' dur='0.6s' fill='freeze'/></line><line x1='220' y1='300' x2='350' y2='20' stroke='%2312A594' stroke-width='3' stroke-opacity='0.40' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.48s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.48s' dur='0.6s' fill='freeze'/></line><line x1='250' y1='300' x2='380' y2='20' stroke='%2312A594' stroke-width='3' stroke-opacity='0.45' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.56s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.56s' dur='0.6s' fill='freeze'/></line><path d='M180 40 L250 120 L222 120 L180 72 L138 120 L110 120 Z' fill='none' stroke='%2312A594' stroke-width='3' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' begin='0.4s' dur='1.2s' fill='freeze'/></path><path d='M180 110 L232 172 L204 172 L180 144 L156 172 L128 172 Z' fill='none' stroke='%23E8793A' stroke-width='3' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' begin='0.8s' dur='1.2s' fill='freeze'/></path><circle cx='180' cy='230' r='6' fill='%2312A594' opacity='0.9'><animate attributeName='r' values='6;10;6' dur='2.4s' begin='2s' repeatCount='indefinite'/><animate attributeName='opacity' values='0.9;0.3;0.9' dur='2.4s' begin='2s' repeatCount='indefinite'/></circle></svg>"
+		displayFolder: Cover
+		lineageTag: 754e480f-9e99-5ae5-b98b-ad94dd4065ab
+		dataCategory: ImageUrl
+
+	/// Animated cover mark: speed lines sweep in, the two chevrons draw, then one subtle pulse repeats.
+	measure 'Cover Hero SVG (Light)' = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='360' height='300' viewBox='0 0 360 300'><line x1='40' y1='300' x2='170' y2='20' stroke='%2300897A' stroke-width='3' stroke-opacity='0.10' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.00s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.00s' dur='0.6s' fill='freeze'/></line><line x1='70' y1='300' x2='200' y2='20' stroke='%2300897A' stroke-width='3' stroke-opacity='0.15' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.08s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.08s' dur='0.6s' fill='freeze'/></line><line x1='100' y1='300' x2='230' y2='20' stroke='%2300897A' stroke-width='3' stroke-opacity='0.20' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.16s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.16s' dur='0.6s' fill='freeze'/></line><line x1='130' y1='300' x2='260' y2='20' stroke='%2300897A' stroke-width='3' stroke-opacity='0.25' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.24s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.24s' dur='0.6s' fill='freeze'/></line><line x1='160' y1='300' x2='290' y2='20' stroke='%2300897A' stroke-width='3' stroke-opacity='0.30' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.32s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.32s' dur='0.6s' fill='freeze'/></line><line x1='190' y1='300' x2='320' y2='20' stroke='%2300897A' stroke-width='3' stroke-opacity='0.35' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.40s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.40s' dur='0.6s' fill='freeze'/></line><line x1='220' y1='300' x2='350' y2='20' stroke='%2300897A' stroke-width='3' stroke-opacity='0.40' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.48s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.48s' dur='0.6s' fill='freeze'/></line><line x1='250' y1='300' x2='380' y2='20' stroke='%2300897A' stroke-width='3' stroke-opacity='0.45' opacity='0'><animateTransform attributeName='transform' type='translate' from='-60 0' to='0 0' begin='0.56s' dur='0.9s' fill='freeze' calcMode='spline' keyTimes='0;1' keySplines='0.2 0.8 0.2 1'/><animate attributeName='opacity' from='0' to='1' begin='0.56s' dur='0.6s' fill='freeze'/></line><path d='M180 40 L250 120 L222 120 L180 72 L138 120 L110 120 Z' fill='none' stroke='%2300897A' stroke-width='3' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' begin='0.4s' dur='1.2s' fill='freeze'/></path><path d='M180 110 L232 172 L204 172 L180 144 L156 172 L128 172 Z' fill='none' stroke='%23C2560F' stroke-width='3' pathLength='1' stroke-dasharray='1' stroke-dashoffset='1'><animate attributeName='stroke-dashoffset' from='1' to='0' begin='0.8s' dur='1.2s' fill='freeze'/></path><circle cx='180' cy='230' r='6' fill='%2300897A' opacity='0.9'><animate attributeName='r' values='6;10;6' dur='2.4s' begin='2s' repeatCount='indefinite'/><animate attributeName='opacity' values='0.9;0.3;0.9' dur='2.4s' begin='2s' repeatCount='indefinite'/></circle></svg>"
+		displayFolder: Cover
+		lineageTag: a61c8b8c-3d93-55ee-a6c0-a48f2a73564e
+		dataCategory: ImageUrl
 
 	column Column1
 		dataType: string

@@ -190,15 +190,26 @@ class Page:
                           "dataPoint": [{"properties": {"fill": solid(self.m["s1"])}, "selector": {"metadata": qref(f)}}]},
                  vco=merge(dict(CLEAR), {"visualHeader": [{"properties": {"show": lit("false")}}], "visualTooltip": mode_vco(self.m)["visualTooltip"]}))
 
-    def tile(self, i, x, w, label, icon, measure, delta=None, color=None, caption=None, units=None):
+    def svgcell(self, key, x, y, w, h, measure, img_w, img_h, label):
+        """Shows an ImageUrl (SVG) measure in a one-column table whose header, grid and backgrounds are blended into the panel."""
+        m = self.m
+        self.add(key, x, y, w, h, "tableEx", {"Values": {"projections": [proj(mea(measure + SUFFIX[self.mode]), " ")]}}, style=False, label=label, alt=label,
+                 objects={"columnHeaders": [{"properties": {"fontSize": lit("8D"), "fontColor": solid(m["panel"]), "backColor": solid(m["panel"]), "outlineColor": solid(m["panel"])}}],
+                          "grid": [{"properties": {"imageWidth": lit(f"{img_w}L"), "imageHeight": lit(f"{img_h}L"), "gridHorizontal": lit("false"), "gridVertical": lit("false"),
+                                                   "outlineColor": solid(m["panel"]), "rowPadding": lit("0L")}}],
+                          "values": [{"properties": {"backColorPrimary": solid(m["panel"]), "backColorSecondary": solid(m["panel"]), "outlineColor": solid(m["panel"])}}],
+                          "total": [{"properties": {"totals": lit("false")}}]},
+                 vco=merge(dict(CLEAR), {"visualHeader": [{"properties": {"show": lit("false")}}], "visualTooltip": [{"properties": {"show": lit("false")}}]}))
+
+    def tile(self, i, x, w, label, icon, measure, delta=None, color=None, caption=None, units=None, text=None):
         y = 136
         self.tiles.append(dict(x=x, y=y, w=w, h=TILE_H, label=label, icon=icon, caption=caption))
-        self.card(f"kpi{i}-v", x + 12, y + 58, w - 24, 60, measure, size=26, units=units, bold=True, label=f"{label} القيمة")
+        self.card(f"kpi{i}-v", x + 12, y + 58, w - 24, 60, text or measure, size=24 if text else 26, units=None if text else units, bold=True, label=f"{label} القيمة")
         if delta:
             lbl = delta if delta.endswith("Label") else f"{delta} vs PY Label"
             self.card(f"kpi{i}-d", x + 12, y + 118, w - 24, 30, lbl, size=11, color=color or f"{delta} vs PY Color", label=f"{label} التغير")
         if measure not in NO_SPARK:
-            self.sparkline(f"kpi{i}-s", x + 16, y + 152, w - 32, 38, measure)
+            self.svgcell(f"kpi{i}-s", x + 12, y + 148, w - 24, 50, f"Spark {measure}", 240, 28, f"Sparkline {measure}")
 
     def tiles_row(self, items):
         w = (CW - (len(items) - 1) * G) // len(items)
@@ -225,7 +236,9 @@ class Page:
 
     def button(self, key, x, y, w, h, target, tip, label):
         self.add(key, x, y, w, h, "actionButton", style=False, label=label, alt=tip, objects={
-            "icon": [{"properties": {"shapeType": lit("'blank'")}, "selector": {"id": "default"}}], "fill": [{"properties": {"show": lit("false")}}],
+            "icon": [{"properties": {"shapeType": lit("'blank'")}, "selector": {"id": "default"}}],
+            "fill": [{"properties": {"show": lit("true")}}] + [{"properties": {"fillColor": solid(self.m["s1"]), "transparency": lit(f"{t}D")}, "selector": {"id": st}}
+                                                               for st, t in (("default", 100), ("hover", 84), ("selected", 72))],
             "outline": [{"properties": {"show": lit("false")}}], "text": [{"properties": {"show": lit("false")}}]},
             vco={"background": [{"properties": {"show": lit("false")}}], "border": [{"properties": {"show": lit("false")}}],
                  "dropShadow": [{"properties": {"show": lit("false")}}], "title": [{"properties": {"show": lit("false")}}],
@@ -283,12 +296,13 @@ def build(spec, mode):
         pg.chrome(slicers=False)
         hx, hw = rx(0, 7), span(7)
         pg.extra["hero"] = dict(x=hx, y=40, w=hw, h=1008)
-        for i, (lbl, msr, units) in enumerate([("إيرادات المبيعات 2023-2025", "Cover Revenue Label", None), ("سيارة مُباعة", "Units All Years", 1),
-                                               ("إجمالي الربح", "Cover Gross Label", None), ("زيارة صيانة", "Visits All Years", 1)]):
+        for i, (lbl, msr, units) in enumerate([("إيرادات المبيعات (مليون ريال)", "Cover Revenue Label", None), ("سيارة مُباعة", "Units All Years", 1),
+                                               ("إجمالي الربح (مليون ريال)", "Cover Gross Label", None), ("زيارة صيانة", "Visits All Years", 1)]):
             tw = (hw - 64 - 3 * 16) // 4
             tx = hx + hw - 32 - (i + 1) * tw - i * 16
             pg.tiles.append(dict(x=tx, y=800, w=tw, h=168, label=lbl, icon=None, caption=None, hero=True))
-            pg.card(f"cover{i}", tx + 8, 828, tw - 16, 56, msr, size=24, units=units, bold=True, label=lbl)
+            pg.card(f"cover{i}", tx + 8, 826, tw - 16, 64, msr, size=30, units=units, bold=True, label=lbl)
+        pg.svgcell("hero-mark", hx + 48, 72, 340, 300, "Cover Hero SVG", 320, 266, "Animated cover mark")
         tx, tw = rx(7, 5), span(5)
         pg.extra["toc"] = dict(x=tx, y=136, w=tw, h=912)
         for i, p in enumerate(PAGES[1:]):
@@ -296,18 +310,23 @@ def build(spec, mode):
         return pg
     pg.chrome()
     if k == "exec":
-        pg.tiles_row([("الإيرادات", "banknote", "Revenue CY", dict(delta="Revenue")), ("الوحدات المباعة", "car", "Units CY", dict(delta="Units", units=1)),
+        pg.tiles_row([("الإيرادات", "banknote", "Revenue CY", dict(delta="Revenue", text="Revenue CY Text")), ("الوحدات المباعة", "car", "Units CY", dict(delta="Units", units=1)),
                       ("إجمالي الربح للسيارة", "coins", "Total GPU CY", dict(delta="Total GPU", units=1)),
                       ("تحقيق الهدف", "target", "Attainment CY", dict(delta="Attainment Label", color="Attainment Color")),
                       ("نسبة التمويل", "landmark", "Finance Penetration CY", dict(delta="Finance Penetration")),
-                      ("إيرادات الصيانة", "wrench", "Service Revenue CY", dict(delta="Service Revenue"))])
+                      ("إيرادات الصيانة", "wrench", "Service Revenue CY", dict(delta="Service Revenue", text="Service Revenue CY Text"))])
         x, y, w, h = pg.panel(rx(0, 8), ROW2, span(8), 368, "الإيرادات الشهرية مقابل الهدف", "آخر سنة مقارنةً بالهدف والعام السابق (ريال)")
         pg.add("trend", x, y, w, h, "lineChart", {"Category": {"projections": [proj(MONTH, active=True)]},
                "Y": {"projections": [proj(RCY, "هذا العام"), proj(RT, "الهدف"), proj(RPY, "العام السابق")]}}, sort=[(MONTH, "Ascending")],
                objects=pg.series([(RCY, m["s1"]), (RT, m["s3"]), (RPY, m["s2"])], dashed=[RT, RPY]), label="Revenue vs target (line)", alt="الإيرادات الشهرية مقابل الهدف")
         pg.insights(rx(8, 4), ROW2, span(4), 368, "أبرز المؤشرات", ["Insight Headline", "Insight Chinese", "Insight Electrified"])
-        x, y, w, h = pg.panel(rx(0, 5), 752, span(5), 296, "الإيرادات مقابل الهدف حسب الفرع", "آخر سنة")
-        bar(pg, "branch", x, y, w, h, BRN, [(RCY, "الإيرادات"), (RT, "الهدف")], sort=[(RCY, "Descending")], colors=[m["s1"], m["s3"]], label="Branch vs target (bar)", alt="الإيرادات والهدف حسب الفرع")
+        x, y, w, h = pg.panel(rx(0, 5), 752, span(5), 296, "الإيرادات مقابل الهدف حسب الفرع", "الشريط = الإيرادات، العلامة = الهدف، آخر سنة")
+        att, bul = mea("Attainment CY"), mea("Branch Bullet SVG" + SUFFIX[mode])
+        pg.add("branch", x, y, w, h, "tableEx", {"Values": {"projections": [proj(att, "التحقيق"), proj(mea("Revenue CY Text"), "الإيرادات"), proj(bul, " "), proj(BRN, "الفرع")]}},
+               sort=[(att, "Descending")], label="Branch bullet table", alt="الإيرادات مقابل الهدف حسب الفرع",
+               objects={"grid": [{"properties": {"imageWidth": lit("300L"), "imageHeight": lit("22L"), "rowPadding": lit("3L")}}],
+                        "columnFormatting": [{"properties": {"alignment": lit("'Right'")}, "selector": {"metadata": qref(BRN)}}],
+                        "values": [{"properties": {"fontColor": solid_m("Attainment Color" + SUFFIX[mode])}, "selector": wild(att)}]})
         x, y, w, h = pg.panel(rx(5, 4), 752, span(4), 296, "الوحدات حسب منشأ العلامة", "آخر سنة")
         bar(pg, "origin", x, y, w, h, col("Vehicles", "Origin"), [(UCY, "الوحدات")], sort=[(UCY, "Descending")], units=1, precision=0, label="Origin (bar)", alt="الوحدات حسب المنشأ")
         x, y, w, h = pg.panel(rx(9, 3), 752, span(3), 296, "نوع المحرك", "حصة الوحدات، آخر سنة")
@@ -315,8 +334,8 @@ def build(spec, mode):
                "Y": {"projections": [proj(UCY, "الوحدات")]}}, label="Powertrain (donut)", alt="حصة أنواع المحركات")
     elif k == "sales":
         pg.tiles_row([("الربح الأمامي للسيارة", "coins", "Front GPU CY", dict(delta="Front GPU", units=1)), ("نسبة الخصم", "percent", "Discount % CY", dict(delta="Discount")),
-                      ("التوقع السنوي", "gauge", "Run-rate FY", dict(caption="بحسب وتيرة البيع منذ بداية العام")),
-                      ("هدف العام", "flag", "Target FY", dict(caption="مجموع الأهداف الشهرية للفروع والفئات"))])
+                      ("التوقع السنوي", "gauge", "Run-rate FY", dict(caption="بحسب وتيرة البيع منذ بداية العام", text="Run-rate FY Text")),
+                      ("هدف العام", "flag", "Target FY", dict(caption="مجموع الأهداف الشهرية للفروع والفئات", text="Target FY Text"))])
         x, y, w, h = pg.panel(rx(0, 7), ROW2, span(7), 336, "تحقيق الهدف حسب الفرع والفئة", "الإيرادات ÷ الهدف؛ أخضر ≥ 100%، كهرماني 90-100%، أحمر < 90%")
         att = mea("Attainment CY")
         pg.add("attmatrix", x, y, w, h, "pivotTable", {"Rows": {"projections": [proj(BRN, "الفرع", active=True)]}, "Columns": {"projections": [proj(SEG, "الفئة", active=True)]},
@@ -370,7 +389,7 @@ def build(spec, mode):
         bar(pg, "ctype", x, y, w, h, col("Customers", "CustomerType"), [(RCY, "الإيرادات")], sort=[(RCY, "Descending")], label="Customer type (bar)", alt="الإيرادات حسب نوع العميل")
         pg.insights(rx(8, 4), 736, span(4), 312, "مؤشرات العملاء", ["Insight Finance", "Insight Leads"])
     elif k == "service":
-        pg.tiles_row([("إيرادات الصيانة", "wrench", "Service Revenue CY", dict(delta="Service Revenue")), ("رضا العملاء", "smile", "Avg CSAT CY", dict(delta="CSAT")),
+        pg.tiles_row([("إيرادات الصيانة", "wrench", "Service Revenue CY", dict(delta="Service Revenue", text="Service Revenue CY Text")), ("رضا العملاء", "smile", "Avg CSAT CY", dict(delta="CSAT")),
                       ("نسبة العودة للإصلاح", "rotate-ccw", "Comeback Rate CY", dict(delta="Comeback")), ("نسبة الاستيعاب", "shield-check", "Absorption CY", dict(delta="Absorption"))])
         x, y, w, h = pg.panel(rx(0, 5), ROW2, span(5), 336, "الإيرادات حسب نوع الخدمة", "العمالة وقطع الغيار، آخر سنة")
         bar(pg, "stype", x, y, w, h, col("Service", "ServiceType"), [(mea("Labor Revenue CY"), "العمالة"), (mea("Parts Revenue CY"), "قطع الغيار")],

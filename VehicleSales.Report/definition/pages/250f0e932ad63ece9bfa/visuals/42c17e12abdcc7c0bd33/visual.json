@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Run-rate FY"
+                  "Property": "Run-rate FY Text"
                 }
               },
-              "queryRef": "_Measures.Run-rate FY",
-              "nativeQueryRef": "Run-rate FY"
+              "queryRef": "_Measures.Run-rate FY Text",
+              "nativeQueryRef": "Run-rate FY Text"
             }
           ]
         }
@@ -58,7 +58,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "26D"
+                  "Value": "24D"
                 }
               }
             },

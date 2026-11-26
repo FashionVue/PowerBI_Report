@@ -3,9 +3,9 @@
   "name": "64e96487d98d9035b320",
   "position": {
     "x": 1061,
-    "y": 828,
+    "y": 826,
     "z": 11000,
-    "height": 56,
+    "height": 64,
     "width": 209,
     "tabOrder": 11000
   },
@@ -58,7 +58,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "24D"
+                  "Value": "30D"
                 }
               }
             },
@@ -257,7 +257,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'إجمالي الربح'"
+                  "Value": "'إجمالي الربح (مليون ريال)'"
                 }
               }
             }
